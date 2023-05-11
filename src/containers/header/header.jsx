@@ -3,11 +3,12 @@ import './header.module.css'
 import style from './header.module.css'
 
 import planetLogo6 from '../../assets/planet-6.png'
-import planetLogo5 from '../../assets/planet-5.png'
-import planetLogo3 from '../../assets/planet-3.png'
+// import planetLogo5 from '../../assets/planet-5.png'
+// import planetLogo3 from '../../assets/planet-3.png'
 
 import CustomNavLink from '../../components/custom-navlink/custom-navlink'
 
+import clsx from 'clsx'
 
 
 const Header = () => (
@@ -30,6 +31,21 @@ const Header = () => (
                 </li> */}
             </ul>
         </nav>
+
+        <nav>
+            <ul className={clsx(style['nav-links'], style['auth'])}>
+                <li>
+                    <CustomNavLink to='/login' text='Se connecter' />
+                </li>
+                <li>
+                    <a>/</a>
+                </li>
+                <li>
+                    <CustomNavLink to='/register' text='Créer un compte' />
+                </li>
+            </ul>
+        </nav>
+
     </header>
 )
 

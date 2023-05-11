@@ -16,9 +16,9 @@
     background-image: linear-gradient(to bottom, #4e9cd1, #060c37);
 
 
-    color: #dddddd;
+    color: #efefef;
     
-    padding: 8vh 10vw;
+    padding: 8vh 10vw 8vh;
 
     /* background-color: #6a0e7f;
     background-image: linear-gradient(to bottom, #6a0e7f, #000000); */
@@ -35,31 +35,86 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
-
 }
 
 .home-content h1 {
-    font-size: 2.8rem;
+    text-align: center;
+    font-size: 2rem;
     padding-bottom: 2rem;
+    color: #efefef;
+    text-shadow: 
+        1px 1px #919191,
+        1px 2px #919191,
+        1px 3px #919191,
+        1px 4px #919191,
+        1px 5px #919191,
+        /* 1px 6px #919191,
+        1px 7px #919191,
+        1px 8px #919191,
+        1px 9px #919191,
+        1px 10px 1px #919191, */
+    1px 18px 6px #2d2d2d66,
+    1px 22px 10px #2d2d2d66,
+    1px 25px 35px #2d2d2d66,
+    1px 30px 60px #2d2d2d66;
   }
 
 
 
 .logo {
     height: 10rem;
-    padding-bottom: 5rem;
+    padding-bottom: 4rem;
 }
 
 .about {
     text-align: center;
-    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 70vw;
 }
 
 .about h2 {
-    font-size: 1.5rem;
-    padding-bottom: 2rem;
-    line-height: 1.2;
+    font-size: 1.2rem;
+    padding-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.about p {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 400;
 }
 
 
+
+/* MEDIA QUERIES */
+
+
+@media screen and (min-width: 400px) {
+    .home-content h1 {
+        font-size: 2.5rem;
+        padding-bottom: 2rem;
+    }
+    .about h2 {
+        font-size: 1.3rem;
+    }
+    .about p {
+        font-size: 1rem;
+    }
+}
+
+/* @media screen and (min-width: 1095px) {
+    .home-content {
+        max-width: 75vw;
+    }
+} */
+
+@media screen and (min-width: 1095px) {
+    .home-content {
+        max-width: 75vw;
+    }
+    .about p {
+        font-style: 1rem;
+    }
+}
