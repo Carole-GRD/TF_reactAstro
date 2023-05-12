@@ -3,7 +3,7 @@
 import authStyle from '../../pages/auth.page.module.css';
 // import style from './login.module.css';
 
-import CustomNavLink from '../../../components/custom-navlink/custom-navlink';
+import CustomNavlink from '../../../components/custom-navlink/custom-navlink';
 
 const RegisterPage = () => (
 
@@ -14,7 +14,7 @@ const RegisterPage = () => (
 
         <ul className={authStyle['nav-links']}>
             <li>
-                <CustomNavLink to='/login' text='Se connecter' />
+                <CustomNavlink to='/login' text='Login' />
             </li>
         </ul>
     </div>

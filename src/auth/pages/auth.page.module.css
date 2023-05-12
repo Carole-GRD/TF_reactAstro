@@ -2,6 +2,7 @@
 .home-container {
     
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 
@@ -14,40 +15,125 @@
     
     background-color: #9d5dc6;
     background-image: linear-gradient(to bottom, #9d5dc6, #060c37);
-
-    
     color: #efefef;
-    color: #dddddd;
     
 }
 
 
-.nav-links {
+
+/* ==========   FORMULAIRE   ========== */
+
+.form-container {
+    background-color: rgba(255, 255, 255, .6);
+    border: 1px solid #efefef;
+    border-radius: 1rem;
+    padding: 3rem;
+
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+
+
+
+.form-container label {
+    color: #060c37;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.form-container input {
+    background-color: rgba(255, 255, 255, 0);
     padding: 0.5rem;
+    letter-spacing: .1rem;
+    border: none;
+    border-bottom: 1px solid #777;
+    margin-bottom: 1rem;
+}
+.form-container input::placeholder {
+    color: #777;
+}
+.form-container input:focus {
+    color: #060c37;
+    outline: none;
+}
+
+
+.form-container button {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    background-color: #9d5dc6;
+    color: #efefef;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.form-container button:hover {
+    background-color: #7e3cb1;
+}
+
+
+
+
+
+
+
+/* ==========   NAVIGATION BUTTON   ========== */
+.nav-links {
     display: flex;
     flex-direction: row;
     list-style: none;
-    margin: 0;
-    gap: 2ch;
-    padding-left: 1rem;
+    margin-bottom: 2rem;
 }
+
+
+
 .nav-links > li {
-    font-size: 1.6rem;
-    margin: 0;
-    padding: 0.5rem 2rem;
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    background-color: #dddddd;
     border: 1px solid #dddddd;
-    border-radius: 0.5rem;
 }
-.nav-links a {
-    color: #dddddd;
-    text-decoration: none;
-    font-weight: bold;
+.nav-links > li:nth-child(1) {
+    border-radius: 0.5rem 0 0 0.5rem;
+}
+.nav-links > li:nth-child(2) {
+    border-radius: 0 0.5rem 0.5rem 0;
 }
 
 .nav-links:hover > li {
-    background-color: #dddddd;
-    border-radius: 0.5rem;
+    background-color: #efefef;
+    border: 1px solid #b4b4b4;
 }
-.nav-links:hover a {
+
+
+
+.nav-links a {
+    font-size: 1rem;
     color: #060c37;
+    text-decoration: none;
+    font-weight: bold;
+}  
+
+
+
+/* ACTIVE-LINK */
+.nav-links li:has(a.active-link) {
+    background-color: #9d5dc6;
 }
+.nav-links li:has(a.active-link):hover {
+    background-color: #7e3cb1;
+}
+
+.nav-links a.active-link {
+    color: #efefef; 
+}
+
+
+

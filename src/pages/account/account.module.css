@@ -1,5 +1,3 @@
-
-
 .home-container {
     
     display: flex;
@@ -11,10 +9,17 @@
 
     font-family: Lato, Helvetica, sans-serif;
 
-    
     padding: 8vh 10vw 8vh;
 
+    /* background-color: #9d5dc6; */
+    /* background-image: linear-gradient(to bottom, #9d5dc6, #6a0e7f); */
+
     background-color: #efefef;
+    
     color: #060c37;
     
+}
+
+p {
+    font-style: 1rem;
 }
