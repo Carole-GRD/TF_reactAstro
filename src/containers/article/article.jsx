@@ -1,12 +1,12 @@
 
 
-import style from './articles.module.css';
+import style from './article.module.css';
 
 import article from '../../assets/article.png';
 import { useNavigate } from 'react-router-dom';
 
 
-const Articles = ({id, name}) => {
+const Article = ({id, name}) => {
 
     const navigate = useNavigate();
 
@@ -30,4 +30,4 @@ const Articles = ({id, name}) => {
 
 }
 
-export default Articles;
+export default Article;

@@ -1,6 +1,6 @@
 
 
-import style from './articles-detail.module.css';
+import style from './article-detail.module.css';
 
 import axios from 'axios';
 import { useEffect } from 'react';
@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 
-const ArticlesDetail = () => {
+const ArticleDetail = () => {
 
 
     const { articleId } = useParams();
@@ -72,4 +72,4 @@ const ArticlesDetail = () => {
 
 }
 
-export default ArticlesDetail;
+export default ArticleDetail;
