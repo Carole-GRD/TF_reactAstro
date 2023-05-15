@@ -8,8 +8,8 @@ const initialState = {
     errorMsg: null, 
     userId: '', 
     userRole: '', 
-    userFirstName: '', 
-    userLastName: '',
+    userFirstname: '', 
+    userLastname: '',
     userAvatar: null 
 }; 
 
@@ -17,21 +17,22 @@ const authReducer = createReducer(initialState, (builder) => {
     builder 
         .addCase(registerUser.fulfilled, (state, action) => { 
             state.isConnected = true; 
-            state.token = action.payload.token;                    // payload -> response.data 
-            state.userId = action.payload.userId;                  // payload -> response.data 
-            state.userRole = action.payload.userRole;              // payload -> response.data 
-            state.userFirstName = action.payload.userFirstName;    // payload -> response.data  
-            state.userLastName = action.payload.userLastName;      // payload -> response.data 
+            state.token = action.payload.result.token;                      // payload -> response.data 
+            state.userId = action.payload.result.user.id;                   // payload -> response.data 
+            state.userRole = action.payload.result.user.role;               // payload -> response.data 
+            state.userFirstname = action.payload.result.user.firstname;     // payload -> response.data  
+            state.userLastname = action.payload.result.user.lastname;       // payload -> response.data 
             state.errorMsg = null; 
-            state.userAvatar = action.payload.userAvatar;
+            state.userAvatar = action.payload.result.user.avatar;
         }) 
         .addCase(loginUser.fulfilled, (state, action) => { 
+            // console.log('action.payload : ', action.payload);
             state.isConnected = true; 
             state.token = action.payload.result.token; 
             state.userId = action.payload.result.userToConnect.id; 
             state.userRole = action.payload.result.userToConnect.role; 
-            state.userFirstName = action.payload.result.userToConnect.firstname; 
-            state.userLastName = action.payload.result.userToConnect.lastname; 
+            state.userFirstname = action.payload.result.userToConnect.firstname; 
+            state.userLastname = action.payload.result.userToConnect.lastname; 
             state.errorMsg = null; 
             state.userAvatar = action.payload.result.userToConnect.avatar;
         }) 
@@ -48,8 +49,8 @@ const authReducer = createReducer(initialState, (builder) => {
             state.token = null; 
             state.userId = ''; 
             state.userRole = ''; 
-            state.userFirstName = ''; 
-            state.userLastName = ''; 
+            state.userFirstname = ''; 
+            state.userLastname = ''; 
             state.errorMsg = null; 
             state.userAvatar = null;
         }); 

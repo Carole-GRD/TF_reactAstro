@@ -5,6 +5,7 @@ import NotFoundPage from "../pages/not-found/not-found.page";
 import LoginPage from '../auth/pages/login/login.page';
 import RegisterPage from '../auth/pages/register/register.page';
 import AccountPage from "../pages/account/account.page";
+import ArticlesDetail from "../containers/articles/articles-detail";
 
 export const route = [
     {
@@ -16,19 +17,23 @@ export const route = [
                 element: <HomePage />
             },
             {
-                path: '/articles',
-                element: <ArticlesPage />
+                path: 'articles',
+                element: <ArticlesPage />,
             },
             {
-                path: '/login',
+                path: 'articleDetail/:articleId',
+                element: <ArticlesDetail />
+            },
+            {
+                path: 'login',
                 element: <LoginPage />
             },
             {
-                path: '/register',
+                path: 'register',
                 element: <RegisterPage />
             },
             {
-                path: '/account',
+                path: 'account',
                 element: <AccountPage />
             },
             {

@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'; 
 import { useNavigate } from 'react-router-dom'; 
 import { NavLink } from 'react-router-dom';
-import { useEffect } from 'react'; 
+// import { useEffect } from 'react'; 
 
 
 import authStyle from '../../pages/auth.page.module.css';
 // import style from './login.module.css';
-
+import clsx from 'clsx';
 
 
 const AuthNavlink = ({ to, text }) => (
@@ -22,19 +22,18 @@ const AuthNavlink = ({ to, text }) => (
 const LoginPage = () => { 
     const { handleSubmit, register, reset } = useForm(); 
     const dispatch = useDispatch(); 
-    const isConnected = useSelector(state => state.auth.isConnected); 
+    // const isConnected = useSelector(state => state.auth.isConnected); 
     const errorMsg = useSelector(state => state.auth.errorMsg); 
     const navigate = useNavigate(); 
 
-    // TODO : QUESTION -> intérêt du code suivant ? 
-    useEffect(() => { 
-        if (isConnected) { navigate('/account'); } 
-    }, [isConnected, navigate]) 
+    // ↓ Pas d'intérêt ca mon bouton "Login" disparait lorsque l'utilisateur est connecté
+    // useEffect(() => { 
+    //     if (isConnected) { navigate('/account'); } 
+    // }, [isConnected, navigate]) 
     
 
     const onLogin = (data) => { 
         dispatch(loginUser(data)); 
-        // TODO : QUESTION -> intérêt du code suivant ? 
         reset(); 
         navigate('/account');
     } 
@@ -42,7 +41,7 @@ const LoginPage = () => {
     return (
         <> 
             
-            <div className={authStyle['home-container']}>
+            <div className={clsx(authStyle['home-container'], authStyle['form-login'])}>
 
                 <div className={authStyle['form-container']}>
 
@@ -62,9 +61,9 @@ const LoginPage = () => {
                         </div> 
                         <div className={authStyle['form-group']}> 
                             <label htmlFor="password">Mot de passe</label> 
-                            <input id='password' type='text' placeholder='Mot de passe' {...register('password')} /> 
+                            <input id='password' type='password' placeholder='Mot de passe' {...register('password')} /> 
                         </div> 
-                        <div> 
+                        <div className={authStyle.btn}> 
                             <button type='submit'>Connexion</button> 
                         </div> 
                         <div>

@@ -7,21 +7,21 @@ import { useSelector } from 'react-redux';
 
 const AccountPage = () =>  {
     
-    const userFirstName = useSelector(state => state.auth.userFirstName)
-    const userLastName = useSelector(state => state.auth.userLastName)
+    const userFirstname = useSelector(state => state.auth.userFirstname)
+    const userLastname = useSelector(state => state.auth.userLastname)
 
     return (
         <>
-            {(!userFirstName || !userLastName) && (
+            {(!userFirstname || !userLastname) && (
                 <div className={style['home-container']}>
                     <p>Patientez ...</p>
                 </div>
             )}
 
-            {(userFirstName && userLastName) && (
+            {(userFirstname && userLastname) && (
                 <div className={style['home-container']}>
         
-                    <p>Heureux de vous revoir {userFirstName} {userLastName} !</p>
+                    <p>Heureux de vous revoir {userFirstname} {userLastname} !</p>
                     
                 </div>
             )}

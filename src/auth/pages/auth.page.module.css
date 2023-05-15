@@ -4,14 +4,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
 
     min-height: calc(100vh - 6rem);
     max-width: 100vw;
 
     font-family: Lato, Helvetica, sans-serif;
     
-    padding: 8vh 10vw 8vh;
+    padding: 6vh 10vw 6vh;
     
     background-color: #9d5dc6;
     background-image: linear-gradient(to bottom, #9d5dc6, #060c37);
@@ -19,15 +19,24 @@
     
 }
 
+/* p {
+    font-size: 1.3rem;   
+    color: #060c37;
+    padding-left: 0;
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+    margin-bottom: 1rem;
+} */
+
 
 
 /* ==========   FORMULAIRE   ========== */
 
 .form-container {
     background-color: rgba(255, 255, 255, .6);
-    border: 1px solid #efefef;
+    /* border: 1px solid #efefef; */
     border-radius: 1rem;
-    padding: 3rem;
+    padding: 2.5rem 2.5rem 2rem;
 
 }
 .form-group {
@@ -61,6 +70,11 @@
 }
 
 
+.btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
 .form-container button {
     font-size: 1rem;
     font-weight: 600;
@@ -86,8 +100,9 @@
 .nav-links {
     display: flex;
     flex-direction: row;
+    /* justify-content: center; */
     list-style: none;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 
@@ -137,3 +152,68 @@
 
 
 
+
+
+
+
+/* ==========   MEDIA QUERIES   ========== */
+
+@media screen and (min-width: 1064px) {
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 55vw;
+    }
+
+
+    .form-register form {
+        min-width: 100%;
+    }
+
+
+    .form-login form {
+        margin-top: 10%;
+        width: 60%;
+    }
+    .form-login .form-group {
+        margin-bottom: 2rem;
+    }
+    .form-login .btn {
+        margin-top: 20%;
+    }
+
+
+    .form-register label {
+        margin-bottom: 0.1rem;
+    }
+    .form-register input {
+        margin-bottom: 0.4rem;
+    }
+
+    
+    .form-container {
+        min-height: 536px;
+    }
+
+    
+    
+
+
+
+    
+    section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+    article:first-of-type {
+        /* margin-right: 10%; */
+        width: 40%;
+    }
+    article:last-of-type {
+        /* margin-left: 10%; */
+        width: 40%;
+    }
+}

@@ -1,0 +1,28 @@
+
+.article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 15vw;
+    max-width: 25vw;
+
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid red;
+}
+
+.article p {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.article img {
+    max-width: 10vw;
+    max-height: 15vh;
+    margin: 1rem;
+}
