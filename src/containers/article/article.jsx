@@ -20,10 +20,13 @@ const Article = ({id, name}) => {
 
             <section className={style['article']} onClick={onDetail}>
 
+                
+
                     {/* TODO: récupérer les images du téléscope et supprimer l'image "type" (+ supprimer l'import) */}
                     <p>{name}</p>
                     <img src={article} alt={`Image de ${name}`} />
 
+                
             </section>
 
     )

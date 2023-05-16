@@ -2,18 +2,14 @@
 .article {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    
-
-    flex-grow: 1;
-    flex-shrink: 1;
-    min-width: 15vw;
-    max-width: 25vw;
-
+    width: 100%;
+    flex: 0 0 20em; /* Fixer la largeur à 20em */
     cursor: pointer;
+    /* margin-bottom: 1rem;  */
     background-color: white;
-    border: 1px solid red;
+    /* background-color: white; */
+    /* border: 1px solid red; */
 }
 
 .article p {

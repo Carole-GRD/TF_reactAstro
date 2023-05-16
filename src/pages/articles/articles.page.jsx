@@ -22,12 +22,13 @@ const ArticlesPage = () => {
     return (
         <div className={style['article-container']}>
 
-
-            <div className={style['article-list']}>
-                {/* {listArticles.map(article => <Articles key={article.id} {...article}/>)} */}
-                {listArticles.map((article, index) => (
-                    <Articles key={article.id} {...article} />
-                ))}
+            <div className={style['article-content']}>
+                <div className={style['article-list']}>
+                    {/* {listArticles.map(article => <Articles key={article.id} {...article}/>)} */}
+                    {listArticles.map((article, index) => (
+                        <Articles key={article.id} {...article} />
+                    ))}
+                </div>
             </div>
     
 
