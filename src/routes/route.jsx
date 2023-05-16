@@ -5,7 +5,7 @@ import NotFoundPage from "../pages/not-found/not-found.page";
 import LoginPage from '../auth/pages/login/login.page';
 import RegisterPage from '../auth/pages/register/register.page';
 import AccountPage from "../pages/account/account.page";
-import ArticleDetail from "../containers/article/article-detail";
+import ArticleDetail from "../containers/article/article-detail/article-detail";
 
 
 export const route = [
@@ -22,7 +22,7 @@ export const route = [
                 element: <ArticlesPage />,
             },
             {
-                path: 'articleDetail/:articleId',
+                path: 'articleDetail/:articleId/store/:storeId',
                 element: <ArticleDetail />
             },
             {

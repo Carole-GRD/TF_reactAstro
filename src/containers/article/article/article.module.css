@@ -22,3 +22,8 @@
     max-height: 15vh;
     margin: 1rem;
 }
+
+.articleLink {
+    color: inherit;
+    text-decoration: inherit;
+}

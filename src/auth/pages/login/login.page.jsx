@@ -3,12 +3,13 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'; 
 import { useNavigate } from 'react-router-dom'; 
 import { NavLink } from 'react-router-dom';
-// import { useEffect } from 'react'; 
+import { useEffect } from 'react'; 
 
 
 import authStyle from '../../pages/auth.page.module.css';
 // import style from './login.module.css';
 import clsx from 'clsx';
+import { useState } from 'react';
 
 
 const AuthNavlink = ({ to, text }) => (
@@ -22,21 +23,27 @@ const AuthNavlink = ({ to, text }) => (
 const LoginPage = () => { 
     const { handleSubmit, register, reset } = useForm(); 
     const dispatch = useDispatch(); 
-    // const isConnected = useSelector(state => state.auth.isConnected); 
+    const isConnected = useSelector(state => state.auth.isConnected); 
     const errorMsg = useSelector(state => state.auth.errorMsg); 
     const navigate = useNavigate(); 
 
+    const [buttonText, setButtonText] = useState('Connexion');
+
     // ↓ Pas d'intérêt ca mon bouton "Login" disparait lorsque l'utilisateur est connecté
-    // useEffect(() => { 
-    //     if (isConnected) { navigate('/account'); } 
-    // }, [isConnected, navigate]) 
+    useEffect(() => { 
+        if (isConnected) { navigate('/account'); } 
+    }, [isConnected, navigate]) 
+    
+    
     
 
     const onLogin = (data) => { 
+        setButtonText('Chargement...');
         dispatch(loginUser(data)); 
         reset(); 
-        navigate('/account');
+        // navigate('/account');
     } 
+    
     
     return (
         <> 
@@ -64,8 +71,11 @@ const LoginPage = () => {
                             <input id='password' type='password' placeholder='Mot de passe' {...register('password')} /> 
                         </div> 
                         <div className={authStyle.btn}> 
-                            <button type='submit'>Connexion</button> 
+                            <button type='submit'>{buttonText}</button> 
                         </div> 
+                        {/* <div>
+                            {loading && (<p>Chargement...</p>)}
+                        </div> */}
                         <div>
                             {errorMsg && (<p>{errorMsg}</p>)} 
                         </div>

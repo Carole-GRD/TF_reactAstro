@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import Articles from '../../containers/article/article';
+import Articles from '../../containers/article/article/article';
 import style from './articles.module.css';
 
 
@@ -23,12 +23,15 @@ const ArticlesPage = () => {
         <div className={style['article-container']}>
 
             <div className={style['article-content']}>
+
                 <div className={style['article-list']}>
-                    {/* {listArticles.map(article => <Articles key={article.id} {...article}/>)} */}
-                    {listArticles.map((article, index) => (
+                    
+                    {listArticles.map(article => (
                         <Articles key={article.id} {...article} />
                     ))}
+
                 </div>
+                
             </div>
     
 

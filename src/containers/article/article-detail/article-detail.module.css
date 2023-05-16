@@ -23,6 +23,8 @@
     align-items: center;
     justify-content: center;
     padding: 2rem 5rem;
+    width: 100%;
+    
 }
 
 
@@ -33,6 +35,8 @@
     align-items: center;
     cursor: pointer;
     background-color: white;
+    padding: 2rem;
+    min-width : 20em;
 
     /* border: 1px solid red; */
 }
@@ -40,11 +44,33 @@
 .article p {
     font-size: 1rem;
     text-align: center;
+    padding: 0.5rem;
+}
+
+.article .description {
+    font-size: 0.8rem;
+    /* font-weight: 300; */
+    line-height: 1.2rem;
 }
 
 .article img {
     max-width: 10vw;
     max-height: 15vh;
     margin: 1rem;
+}
+
+
+
+
+@media screen and (min-width: 500px) {
+    .article {
+        min-width : 30em;
+    }
+}
+
+@media screen and (min-width: 1300px) {
+    .article {
+        max-width : 50em;
+    }
 }
 
