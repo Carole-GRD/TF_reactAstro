@@ -14,7 +14,10 @@ const AllOrders = (
 
                     ) => {
 
+    console.log('all articles : ', Articles);
+
     return (
+        
         <article className={style['data']}>
             <p>Commande n°{id}</p>
             <p>Statut de la commande : {order_status}</p>
@@ -22,14 +25,12 @@ const AllOrders = (
             <p>Mode de paiement : {payment_method}</p>
             <p>Status de paiement : {payment_status}</p>
 
+            
             {
-                Articles &&
-                    Articles.map(article => {
-                        <div>
-                            <p key={article.id}>{article.name}</p>
-                        </div>
-                    })  
+                Articles && Articles.map(article => <p key={article.id} className={style.article}>- {article.name}</p>)
+                    
             }
+        
         </article>
     )
 }

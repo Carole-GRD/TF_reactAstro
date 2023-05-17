@@ -1,11 +1,13 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './reducers/auth-reducer';
+import currentOrderReducer from './reducers/store-reducer';
 
 
 const store = configureStore({
     reducer: {
-        auth: authReducer
+        auth: authReducer,
+        currentOrder: currentOrderReducer
     },
     devTools: import.meta.env.dev,
     // preloadedState: JSON.parse(localStorage.getItem('state') ?? '{}')

@@ -7,6 +7,11 @@
     flex-direction: column; */
 }
 
+.basket h3 {
+    margin: 2rem 0;
+    cursor: pointer;
+}
+
 .data {
     width: 100%;
     border-left: 1px solid #060c37;
@@ -18,3 +23,61 @@
     padding: 0 0 0 1rem;
     line-height: 1.5rem;
 }
+
+/* Avatar affiché dans "Mes données" */
+.data img {
+    padding: 0 0 0 1rem;
+    width: 5rem;
+}
+
+/* Table affichée dans "Mon panier" */
+/* Table comprenant tous les articles de la commande */
+.data table {
+    margin: 0 0 0 1rem;
+    width: 70vw;
+    border-collapse: collapse;
+}
+
+.data th,
+.data td {
+    width: 10vw;
+    text-align: center;
+    border: 1px solid #060c37;
+    padding: 0.5rem 0;
+}
+.data th:first-child,
+.data td:first-child {
+    width: 45vw;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+}
+.data th {
+    font-size: 0.9rem; 
+}
+.data td {
+    font-size: 0.8rem;  
+}
+.data td:first-child {
+    text-align: left;
+}
+
+.data tr:last-child {
+    font-weight: 800;
+}
+
+
+.data th:nth-child(3),
+.data td:nth-child(3) {
+    border-right: none;
+}
+.data th:nth-child(4),
+.data td:nth-child(4) {
+    border-left: none;
+    width: 10vw;
+}
+.data button {
+    cursor: pointer;
+    /* border: none; */
+    margin: 0 0.3rem;
+    padding: 0.2rem 0.5rem;
+}
+
