@@ -1,31 +1,22 @@
 
+import { useSelector } from 'react-redux';
 import style from './basket.module.css';
 
 
-const CurrentOrder = ({currentOrder}) => {
+
+const CurrentOrder = () => {
 
     // Evolution => Utiliser le store pour récup le currentOrder
+    const currentOrder = useSelector(state => state.shop.currentOrder);
 
-    console.log('currentOrder : ', currentOrder);
-    // console.log('currentOrder.Articles : ', currentOrder.Articles);
-    // console.log('currentOrder.Articles.map(article => article.name) : ', currentOrder.Articles.map(article => article.name));
-    // ============================================================================================================================================================
-    // const allArticles = currentOrder.Articles;
-    // console.log('allArticles : ', allArticles);
-    // console.log('allArticles.map(article => article.MM_Article_Order.quantity ) : ', allArticles.map(article => article.MM_Article_Order.quantity ));
-    // console.log('allArticles.map(article => article.MM_Article_Order.store ) : ', allArticles.map(article => article.MM_Article_Order.store ));
-    // ============================================================================================================================================================
-    // console.log('allArticles[0] : ', allArticles[0]);
-    // console.log('allArticles[0].MM_Article_Order : ', allArticles[0].MM_Article_Order);
-    // console.log('allArticles[0].MM_Article_Order.quantity : ', allArticles[0].MM_Article_Order.quantity);
-    // console.log('allArticles[0].MM_Article_Order.store : ', allArticles[0].MM_Article_Order.store);
-    // ============================================================================================================================================================
-    // console.log('allArticles[0].Stores.map(store => store) : ', allArticles[0].Stores.map(store => store));
-    // console.log('allArticles[0].Stores.find(store => store.id === 4) : ', allArticles[0].Stores.find(store => store.id === 4));
-    // console.log('allArticles[0].Stores.find(store => store.id === 4).MM_Article_Store.price : ', allArticles[0].Stores.find(store => store.id === 4).MM_Article_Store.price);
-    // ============================================================================================================================================================
-    // console.log(allArticles[0].MM_Article_Order.store);
-    // console.log(allArticles[0].Stores.find(store => store.id === allArticles[0].MM_Article_Order.store).MM_Article_Store.price);
+    if (!currentOrder) {
+        return (
+            <article className={style['data']}>
+                <p>Vous n'avez pas de commande en cours pour le moment.</p>
+                <p>Parcourez notre catalogue et ajoutez des produits à votre panier pour commencer une nouvelle commande !</p>
+            </article>
+        )
+    }
 
 
 

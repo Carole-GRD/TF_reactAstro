@@ -7,7 +7,7 @@ import currentOrderReducer from './reducers/store-reducer';
 const store = configureStore({
     reducer: {
         auth: authReducer,
-        currentOrder: currentOrderReducer
+        shop: currentOrderReducer
     },
     devTools: import.meta.env.dev,
     // preloadedState: JSON.parse(localStorage.getItem('state') ?? '{}')
