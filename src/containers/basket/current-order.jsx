@@ -7,7 +7,7 @@ import style from './basket.module.css';
 const CurrentOrder = () => {
 
     // Evolution => Utiliser le store pour récup le currentOrder
-    const currentOrder = useSelector(state => state.shop.currentOrder);
+    const currentOrder = useSelector(state => state.order.currentOrder);
 
     if (!currentOrder) {
         return (

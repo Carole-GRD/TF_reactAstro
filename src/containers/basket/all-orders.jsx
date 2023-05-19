@@ -4,7 +4,7 @@ import style from './basket.module.css';
 
 
 const AllOrders = () => {
-    const orders = useSelector(state => state.shop.allOrders);
+    const orders = useSelector(state => state.order.allOrders);
 
     if (orders.length === 0) {
         return (

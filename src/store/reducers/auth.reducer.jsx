@@ -1,6 +1,6 @@
 
 import { createReducer } from '@reduxjs/toolkit'; 
-import { loginUser, registerUser, logoutUser } from '../actions/auth-action'; 
+import { loginUser, registerUser, logoutUser } from '../actions/auth.action'; 
 
 const initialState = { 
     isConnected: false, 
@@ -72,8 +72,15 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userRole = ''; 
             state.userFirstname = ''; 
             state.userLastname = ''; 
+            state.userPseudo = '',
+            state.userEmail = '',
             state.errorMsg = null; 
-            state.userAvatar = null;
+            state.userAvatar = null; 
+            state.userAddressStreet = '',
+            state.userAddressNumber = null,
+            state.userAddressCity = '',
+            state.userAddressPostalCode = null,
+            state.userAddressCountry = '' 
         }); 
 }); 
 
