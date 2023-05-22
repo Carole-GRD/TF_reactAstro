@@ -29,13 +29,20 @@
 // configureStore.js
 
 import { configureStore } from '@reduxjs/toolkit';
-// OU BIEN ... ???
-// import { configureStore } from '@reduxjs/toolkit';
 
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
  
-import rootReducer from './root.reducer';
+
+import { combineReducers } from "redux";
+
+import authReducer from "./reducers/auth.reducer";
+import currentOrderReducer from './reducers/order.reducer';
+
+const rootReducer = combineReducers({
+    auth: authReducer,
+    order: currentOrderReducer
+});
  
 const persistConfig = {
   key: 'root',
