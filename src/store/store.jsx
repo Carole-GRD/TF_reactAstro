@@ -36,10 +36,12 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { configureStore } from '@reduxjs/toolkit';
 
 
+// import rootReducer from './root.reducer';
 const rootReducer = combineReducers({
     auth: authReducer,
     order: currentOrderReducer
 });
+
 
 const persistConfig = {
   key: 'root',

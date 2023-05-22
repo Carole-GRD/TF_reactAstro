@@ -13,12 +13,14 @@ import clsx from 'clsx';
 
 import { logoutUser } from '../../store/actions/auth.action'; 
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 const Header = () => {
 
     const isConnected = useSelector(state => state.auth.isConnected);
+    const currentOrder = useSelector(state => state.order.currentOrder);
+    // console.log('currentOrder.Articles.length : ', currentOrder.Articles.length);
+    const countArticlesInCurrentOrder = currentOrder.Articles.length;
 
     const dispatch = useDispatch();
 
@@ -50,6 +52,7 @@ const Header = () => {
                         {isConnected && (
                             <li>
                                 <CustomNavlink to='/account' text='Mon compte' />
+                                <div className={style['count-display']}><p>{countArticlesInCurrentOrder}</p></div>
                             </li>
                         )}
                     </ul>

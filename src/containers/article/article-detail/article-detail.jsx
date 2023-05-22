@@ -13,8 +13,8 @@ import { useState } from 'react';
 const ArticleDetail = () => {
 
     const { articleId, storeId } = useParams();
-    console.log('articleId', articleId);
-    console.log('storeId', storeId);
+    // console.log('articleId', articleId);
+    // console.log('storeId', storeId);
 
     const [details, setDetails] = useState([]);
     const [mark, setMark] = useState();
@@ -45,14 +45,14 @@ const ArticleDetail = () => {
         
         axios.get(`http://localhost:8080/api/article/${articleId}/store/${storeId}`)
             .then((response) => {
-                console.log('response : ', response);
+                // console.log('response : ', response);
                 setStoreInfos(response.data.result)
             })
             
     }, []);
 
     // console.log('details : ', details);
-    console.log('storeInfos : ', storeInfos);
+    // console.log('storeInfos : ', storeInfos);
 
 
     return (
