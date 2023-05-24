@@ -12,10 +12,12 @@ const AccountPage = () =>  {
     
     const userFirstname = useSelector(state => state.auth.userFirstname);
     const userLastname = useSelector(state => state.auth.userLastname);
+    const userId = useSelector(state => state.auth.userId);
 
     const navigate = useNavigate();
 
     useEffect(() => {
+        // console.log('account.page - userId : ', userId);
         if (!userFirstname || !userLastname) {
             navigate('/login');    
             }
@@ -28,7 +30,7 @@ const AccountPage = () =>  {
         
                     <h2>Heureux de vous revoir {userFirstname} {userLastname} !</h2>
 
-                    <Basket />
+                    <Basket userId={userId} />
                     
                 </div>
             )}

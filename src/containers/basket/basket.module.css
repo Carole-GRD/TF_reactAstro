@@ -30,6 +30,8 @@
     width: 5rem;
 }
 
+
+
 /* Table affichée dans "Mon panier" */
 /* Table comprenant tous les articles de la commande */
 .data table {
@@ -43,7 +45,7 @@
     width: 10vw;
     text-align: center;
     border: 1px solid #060c37;
-    padding: 0.5rem 0;
+    padding: 0.5rem;
 }
 .data th:first-child,
 .data td:first-child {
@@ -65,12 +67,12 @@
 }
 
 
-.data th:nth-child(3),
-.data td:nth-child(3) {
-    border-right: none;
-}
 .data th:nth-child(4),
 .data td:nth-child(4) {
+    border-right: none;
+}
+.data th:nth-child(5),
+.data td:nth-child(5) {
     border-left: none;
     width: 10vw;
 }

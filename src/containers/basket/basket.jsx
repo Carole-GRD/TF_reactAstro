@@ -9,13 +9,12 @@ import MyPersonalData from "./my-personal-data";
 import style from './basket.module.css';
 import { useDispatch } from "react-redux";
 import { currentOrderActionSave } from "../../store/actions/order.action";
+// import fetchOrders from '../../api/fetchOrders.api';
 
 
+const Basket = ({userId}) => {
 
-const Basket = () => {
-
-    const userId = useSelector(state => state.auth.userId);
-    // console.log('userId : ', userId);
+    // console.log('basket.jsx - userId : ', userId);
 
     const [displayAllOrders, setDisplayAllOrders] = useState(false);
     const [displayMyPersonalData, setDisplayMyPersonalData] = useState(false);
@@ -24,14 +23,18 @@ const Basket = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        async function fetchOrders() {
-            const response = await axios.get(`http://localhost:8080/api/order/user/${userId}`);
-            // console.log('response - order : ', response.data.results.find(order => order.order_status === 'En attente'));
+        // async function fetchOrders() {
+        //     const response = await axios.get(`http://localhost:8080/api/order/user/${userId}`);
+        //     // console.log('response - order : ', response.data.results.find(order => order.order_status === 'En attente'));
     
-            dispatch(currentOrderActionSave(response.data.results));
-        };
-        fetchOrders();
-    }, [userId])
+        //     dispatch(currentOrderActionSave(response.data.results));
+        // };
+        // fetchOrders();
+        // //////////////////////////////////////////////////////////////////////////////
+        console.log('basket - userId : ', userId);
+        // currentOrderActionSave(userId);
+        dispatch(currentOrderActionSave(userId));
+    }, [])
 
 
 

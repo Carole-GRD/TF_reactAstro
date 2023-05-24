@@ -31,15 +31,19 @@
 import { combineReducers } from "redux";
 import authReducer from "./reducers/auth.reducer";
 import currentOrderReducer from './reducers/order.reducer';
+import addArticleReducer from './reducers/addArticle.reducer';
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import { persistStore, persistReducer } from 'redux-persist';
 import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import loggerMiddleware from 'redux-logger';
 
 
 // import rootReducer from './root.reducer';
 const rootReducer = combineReducers({
     auth: authReducer,
-    order: currentOrderReducer
+    order: currentOrderReducer,
+    addArticle: addArticleReducer
 });
 
 
@@ -54,7 +58,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
-    devTools: import.meta.env.dev 
+    devTools: import.meta.env.dev,
+    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), loggerMiddleware, thunk]
+    // middleware: (getDefaultMiddleware) => [...getDefaultMiddleware().concat(loggerMiddleware), thunk ]
 })
 
 export const persistor = persistStore(store);

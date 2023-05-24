@@ -1,13 +1,25 @@
 
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import style from './basket.module.css';
-
+import { currentOrderActionSave } from '../../store/actions/order.action';
 
 
 const CurrentOrder = () => {
 
     // Evolution => Utiliser le store pour récup le currentOrder
     const currentOrder = useSelector(state => state.order.currentOrder);
+    const dispatch = useDispatch();
+
+    const userId = useSelector(state => state.auth.userId);
+    // const dispatch = useDispatch();
+    useEffect(() => {
+        console.log('useEffect');
+        dispatch(currentOrderActionSave(userId));
+    }, [])
+
+    
 
     if (!currentOrder) {
         return (
@@ -25,6 +37,16 @@ const CurrentOrder = () => {
         total += (article.Stores.find(store => store.id === article.MM_Article_Order.store).MM_Article_Store.price * article.MM_Article_Order.quantity);
     }
 
+
+    const onIncrArticle = (articleId, quantity) => {
+        console.log('onIncrArticle', ' -> articleId : ', articleId, ' -> quantity : ', quantity);
+    }
+
+    const onDecrArticle = (articleId, quantity) => {
+        console.log('onDecrArticle', ' -> articleId : ', articleId, ' -> quantity : ', quantity);
+    }
+    
+
     return (
 
         <>
@@ -39,6 +61,7 @@ const CurrentOrder = () => {
                     <thead>
                         <tr>
                             <th>Articles</th>
+                            <th>Magasin</th>
                             <th>Prix unitaire</th>
                             <th>Quantité</th>
                             <th></th>
@@ -51,9 +74,10 @@ const CurrentOrder = () => {
                                 <tr key={article.id}>
                                     <td>{article.name}</td>
                                     {/* {console.log("article: ",article)} */}
+                                    <td>{article.Stores.find(store => store.id === article.MM_Article_Order.store).name}</td> 
                                     <td>{article.Stores.find(store => store.id === article.MM_Article_Order.store).MM_Article_Store.price.toFixed(2)} €</td> 
                                     <td>{article.MM_Article_Order.quantity}</td>
-                                    <td><button>+</button>/<button>-</button></td>
+                                    <td><button onClick={() => {onIncrArticle(article.id, article.MM_Article_Order.quantity)}}>+</button>/<button onClick={() => {onDecrArticle(article.id, article.MM_Article_Order.quantity)}}>-</button></td>
                                     <td>{(article.Stores.find(store => store.id === article.MM_Article_Order.store).MM_Article_Store.price * article.MM_Article_Order.quantity).toFixed(2)} €</td>                                    
                                 </tr>
                             ))    
