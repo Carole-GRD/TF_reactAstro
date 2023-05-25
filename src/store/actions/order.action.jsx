@@ -86,7 +86,7 @@ export const currentOrderActionSave = createAsyncThunk(
         // console.log('userId => ', userId);
       // Requête AJAX vers le serveur Backend
       const response = await axios.get(`http://localhost:8080/api/order/user/${userId}`);
-      console.log('response : ', response);
+      console.log('response.data.results : ', response.data.results);
       return response.data.results;
     } catch (error) {
       console.error('Erreur lors de la sauvegarde de la commande : ', error);
@@ -120,7 +120,7 @@ export const currentOrderActionAddArticle = createAsyncThunk(
       // console.log('commande n° : ', orderId);
 
       const response3 = await axios.post(`http://localhost:8080/api/order/${orderId}/createArticle`, articleData);
-      console.log('createArticle.api (response3) : ', response3);
+      console.log('createArticle.api (response3.data) : ', response3.data);
 
       return response3.data;
     } 

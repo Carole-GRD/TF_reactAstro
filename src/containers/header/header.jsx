@@ -1,4 +1,3 @@
-
 import './header.module.css';
 import style from './header.module.css';
 
@@ -14,13 +13,25 @@ import clsx from 'clsx';
 import { logoutUser } from '../../store/actions/auth.action'; 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { current } from '@reduxjs/toolkit';
 
 const Header = () => {
 
     const isConnected = useSelector(state => state.auth.isConnected);
     const currentOrder = useSelector(state => state.order.currentOrder);
-    // console.log('currentOrder.Articles.length : ', currentOrder.Articles.length);
-    const countArticlesInCurrentOrder = currentOrder.Articles.length;
+    // console.log('currentOrder : ', currentOrder);
+    // console.log('currentOrder.Article_Orders.length : ', currentOrder.Article_Orders.length);
+    
+    let countArticlesInCurrentOrder;
+    if (currentOrder) {
+        // console.log('currentOrder OK');
+        countArticlesInCurrentOrder = currentOrder.Article_Orders.length
+        console.log('countArticlesInCurrentOrder : ', countArticlesInCurrentOrder);
+    } 
+    else {
+        console.log('PAS de currentOrder');
+    }
+
 
     const dispatch = useDispatch();
 
@@ -52,7 +63,11 @@ const Header = () => {
                         {isConnected && (
                             <li>
                                 <CustomNavlink to='/account' text='Mon compte' />
-                                <div className={style['count-display']}><p>{countArticlesInCurrentOrder}</p></div>
+                                {
+                                    countArticlesInCurrentOrder && (
+                                        <div className={style['count-display']}><p>{countArticlesInCurrentOrder}</p></div>
+                                    )
+                                }
                             </li>
                         )}
                     </ul>

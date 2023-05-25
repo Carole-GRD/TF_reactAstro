@@ -18,6 +18,7 @@ const ArticlesPage = () => {
                 setListArticles(response.data.results);
             })
     }, [])
+    // console.log('listArticles : ', listArticles);
 
     return (
         <div className={style['article-container']}>

@@ -50,8 +50,11 @@ const initialState = {
 
 const currentOrderReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(currentOrderActionSave, (state, action) => {
+    .addCase(currentOrderActionSave.fulfilled, (state, action) => {
+      // console.log('action.payload : ', action.payload);
+      
       const orders = action.payload;
+      console.log('orders : ', orders);
 
       state.allOrders = orders.filter((order) => order.order_status !== 'En attente');
       state.currentOrder = orders.find((order) => order.order_status === 'En attente');

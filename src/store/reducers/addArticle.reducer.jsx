@@ -10,7 +10,8 @@ const initialState = {
 const addArticleReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(currentOrderActionAddArticle, (state, action) => {
-      console.log('addArticleReducer - state.currentOrder : ', state.currentOrder);
+      console.log('addArticleReducer - action.payload : ', action.payload);
+      // state.articleToAdd = action.payload;
     });
 });
 

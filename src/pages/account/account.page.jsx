@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import Basket from '../../containers/basket/basket';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { currentOrderActionSave } from '../../store/actions/order.action';
 
 
 const AccountPage = () =>  {
@@ -15,12 +17,16 @@ const AccountPage = () =>  {
     const userId = useSelector(state => state.auth.userId);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // console.log('account.page - userId : ', userId);
         if (!userFirstname || !userLastname) {
             navigate('/login');    
-            }
+        }
+        console.log('account.page - useEffect (userId) : ', userId);
+        dispatch(currentOrderActionSave(userId));
+
     }, []); 
 
     return (
