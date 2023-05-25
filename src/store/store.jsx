@@ -1,7 +1,6 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 // import addArticleReducer from './reducers/addArticle.reducer';
-import articlesReducer from './reducers/articles.reducer';
 import authReducer from './reducers/auth.reducer';
 import currentOrderReducer from './reducers/order.reducer';
 
@@ -10,7 +9,6 @@ const store = configureStore({
     reducer: {
         auth: authReducer,
         order: currentOrderReducer,
-        articles : articlesReducer
         // addArticle: addArticleReducer
     },
     devTools: import.meta.env.dev,

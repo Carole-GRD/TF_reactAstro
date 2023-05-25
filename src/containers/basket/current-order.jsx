@@ -4,35 +4,23 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import style from './basket.module.css';
 import { currentOrderActionSave } from '../../store/actions/order.action';
-import { articlesActionSave } from '../../store/actions/articles.action';
+
 
 
 const CurrentOrder = () => {
 
-    const userId = useSelector(state => state.auth.userId);
+    // const userId = useSelector(state => state.auth.userId);
     const currentOrder = useSelector(state => state.order.currentOrder);
     // console.log('currentOrder :  ', currentOrder);
     
 
-    const allArticlesIdAndStoreId = currentOrder.Article_Orders.map(article => {   
-        return {
-            ArticleId : article.ArticleId,
-            StoreId : article.store
-        }
-    })
-    console.log('allArticlesIdAndStoreId :  ', allArticlesIdAndStoreId);
-
-
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     
     useEffect(() => {
         console.log('useEffect');
         // dispatch(currentOrderActionSave(userId));
-        allArticlesIdAndStoreId.forEach(article => {
-            dispatch(articlesActionSave({ArticleId: article.ArticleId, StoreId: article.StoreId}));
-        });
-        // dispatch(articlesActionSave());
+        
     }, [])
 
     
@@ -89,7 +77,7 @@ const CurrentOrder = () => {
                             currentOrder.Article_Orders.map(article => (
                                 <tr key={article.id}>
                                     {/* <td>{article.name}</td> */}
-                                    {console.log("article: ", article)}
+                                    {/* {console.log("article: ", article)} */}
                                     {/* <td>{article.Stores.find(store => store.id === article.MM_Article_Order.store).name}</td>  */}
                                     {/* <td>{article.Stores.find(store => store.id === article.MM_Article_Order.store).MM_Article_Store.price.toFixed(2)} €</td>  */}
                                     {/* <td>{article.quantity}</td> */}
