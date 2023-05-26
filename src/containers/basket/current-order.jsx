@@ -9,21 +9,9 @@ import style from './basket.module.css';
 
 const CurrentOrder = () => {
 
-    // const userId = useSelector(state => state.auth.userId);
+
     const currentOrder = useSelector(state => state.order.currentOrder);
-    // console.log('currentOrder :  ', currentOrder);
-    
-
-    // const dispatch = useDispatch();
-
-    
-    // useEffect(() => {
-    //     console.log('useEffect');
-    //     // dispatch(currentOrderActionSave(userId));
-        
-    // }, [])
-
-    
+    const articles = useSelector(state => state.order.articles);
 
     if (!currentOrder) {
         return (
@@ -37,18 +25,30 @@ const CurrentOrder = () => {
 
 
     let total = 0;
-    // for (let article of currentOrder.Articles) {
-    //     total += (article.Stores.find(store => store.id === article.MM_Article_Order.store).MM_Article_Store.price * article.MM_Article_Order.quantity);
-    // }
+    for (let article of articles) {
+        total += parseInt((article.Stores.find(store => store.id === (currentOrder.Article_Orders.find(a => a.ArticleId === article.id).store)).MM_Article_Store.price * currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity).toFixed(2));
+    }
+    console.log('total : ', total);
 
 
-    // const onIncrArticle = (articleId, quantity) => {
-    //     console.log('onIncrArticle', ' -> articleId : ', articleId, ' -> quantity : ', quantity);
-    // }
 
-    // const onDecrArticle = (articleId, quantity) => {
-    //     console.log('onDecrArticle', ' -> articleId : ', articleId, ' -> quantity : ', quantity);
-    // }
+    
+    
+    const onIncrArticle = (articleId, quantity) => {
+        console.log('onIncrArticle', ' -> articleId : ', articleId, ' -> quantity : ', quantity);
+        // identifiant de la commande pour l'url
+        // Data à envoyer (voir insomnia) :
+        //  {
+		// 	    "ArticleId": 1,
+		// 	    "quantity": 1,
+		// 	    "store": 5
+	    //  }
+    }
+
+    const onDecrArticle = (articleId, quantity) => {
+        console.log('onDecrArticle', ' -> articleId : ', articleId, ' -> quantity : ', quantity);
+    }
+
     
 
     return (
@@ -74,15 +74,23 @@ const CurrentOrder = () => {
                     </thead>
                     <tbody>
                         {
-                            currentOrder.Article_Orders.map(article => (
+                            articles.map(article => (
                                 <tr key={article.id}>
-                                    {/* <td>{article.name}</td> */}
-                                    {/* {console.log("article: ", article)} */}
-                                    {/* <td>{article.Stores.find(store => store.id === article.MM_Article_Order.store).name}</td>  */}
-                                    {/* <td>{article.Stores.find(store => store.id === article.MM_Article_Order.store).MM_Article_Store.price.toFixed(2)} €</td>  */}
-                                    {/* <td>{article.quantity}</td> */}
-                                    {/* <td><button onClick={() => {onIncrArticle(article.id, article.MM_Article_Order.quantity)}}>+</button>/<button onClick={() => {onDecrArticle(article.id, article.MM_Article_Order.quantity)}}>-</button></td> */}
-                                    {/* <td>{(article.Stores.find(store => store.id === article.MM_Article_Order.store).MM_Article_Store.price * article.MM_Article_Order.quantity).toFixed(2)} €</td>                                     */}
+                                    {/* Nom de l'article */}
+                                    <td>{article.name}</td>
+                                    {/* Nom du magasin */}
+                                    <td>{article.Stores.find(store => store.id === (currentOrder.Article_Orders.find(a => a.ArticleId === article.id).store)).name}</td> 
+                                    {/* Prix unitaire */}
+                                    <td>{article.Stores.find(store => store.id === (currentOrder.Article_Orders.find(a => a.ArticleId === article.id).store)).MM_Article_Store.price.toFixed(2)} €</td> 
+                                    {/* Quantité */}
+                                    <td>{currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity}</td>
+                                    <td>
+                                        <button onClick={() => {onIncrArticle(article.id, currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity)}}>+</button>
+                                        /
+                                        <button onClick={() => {onDecrArticle(article.id, currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity)}}>-</button>
+                                    </td>
+                                    {/* Prix pour cet article en fonction de la quantité */}
+                                    <td>{(article.Stores.find(store => store.id === (currentOrder.Article_Orders.find(a => a.ArticleId === article.id).store)).MM_Article_Store.price * currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity).toFixed(2)} €</td>                                    
                                 </tr>
                             ))    
                         }
@@ -91,10 +99,13 @@ const CurrentOrder = () => {
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td>{total.toFixed(2)} €</td>
                         </tr>
                     </tbody>
                 </table>   
+
+                <button className={style['btn-current-order']}>Commander</button>
             </article>
         </>
     )

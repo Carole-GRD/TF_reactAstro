@@ -18,10 +18,10 @@ const currentOrderReducer = createReducer(initialState, (builder) => {
           if (orders.length > 0) {
               state.allOrders = orders.filter((order) => order.order_status !== 'En attente');
 
+              
               const currentOrder = orders.find((order) => order.order_status === 'En attente');
               // console.log('currentOrder : ', currentOrder);
-              
-              
+                  
               if (currentOrder) {
                   state.currentOrder = currentOrder;
                   // console.log('currentOrder.Article_Orders.map(article => article.Article) : ', currentOrder.Article_Orders.map(article => article.Article));

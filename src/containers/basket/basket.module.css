@@ -24,6 +24,12 @@
     line-height: 1.5rem;
 }
 
+
+
+/* ==================== */
+/* MY-PERSONAL-DATA.JSX */
+/* ==================== */
+
 /* Avatar affiché dans "Mes données" */
 .data img {
     padding: 0 0 0 1rem;
@@ -31,6 +37,10 @@
 }
 
 
+
+/* ================= */
+/* CURRENT-ORDER.JSX */
+/* ================= */
 
 /* Table affichée dans "Mon panier" */
 /* Table comprenant tous les articles de la commande */
@@ -81,5 +91,13 @@
     /* border: none; */
     margin: 0 0.3rem;
     padding: 0.2rem 0.5rem;
+}
+
+/* Bouton "Commander */
+.btn-current-order {
+    /* border: 1px solid red; */
+    margin: 0.5rem 0.5rem 0.5rem 1rem !important;
+    padding: 0.5rem 1rem !important;
+    cursor: pointer;
 }
 
