@@ -14,6 +14,7 @@ import { logoutUser } from '../../store/actions/auth.action';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { current } from '@reduxjs/toolkit';
+import { orderActionClear } from '../../store/actions/order.action';
 
 const Header = () => {
 
@@ -42,6 +43,7 @@ const Header = () => {
         // if (isConnected) { 
         //     navigate('/account');
         // } 
+        dispatch(orderActionClear());
     } 
 
     return (

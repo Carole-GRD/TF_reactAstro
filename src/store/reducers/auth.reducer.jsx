@@ -22,9 +22,9 @@ const initialState = {
     userAddressPostalCode: null,
     userAddressCountry: '',
     // order
-    allOrders: [],
-    currentOrder: null,
-    articles: []
+    // allOrders: [],
+    // currentOrder: null,
+    // articles: []
 }; 
 
 const authReducer = createReducer(initialState, (builder) => { 
@@ -50,44 +50,44 @@ const authReducer = createReducer(initialState, (builder) => {
             console.log('loginUser - action.payload : ', action.payload);
             // auth
             state.isConnected = true; 
-            state.token = action.payload.auth.token; 
-            state.userId = action.payload.auth.userToConnect.id; 
-            state.userRole = action.payload.auth.userToConnect.role; 
-            state.userFirstname = action.payload.auth.userToConnect.firstname; 
-            state.userLastname = action.payload.auth.userToConnect.lastname; 
-            state.userPseudo = action.payload.auth.userToConnect.pseudo;
-            state.userEmail = action.payload.auth.userToConnect.email;
+            state.token = action.payload.token; 
+            state.userId = action.payload.userToConnect.id; 
+            state.userRole = action.payload.userToConnect.role; 
+            state.userFirstname = action.payload.userToConnect.firstname; 
+            state.userLastname = action.payload.userToConnect.lastname; 
+            state.userPseudo = action.payload.userToConnect.pseudo;
+            state.userEmail = action.payload.userToConnect.email;
             state.errorMsg = null; 
-            state.userAvatar = action.payload.auth.userToConnect.avatar;
-            state.userAddressStreet = action.payload.auth.userToConnect.address_street;
-            state.userAddressNumber = action.payload.auth.userToConnect.address_number;
-            state.userAddressCity = action.payload.auth.userToConnect.address_city;
-            state.userAddressPostalCode = action.payload.auth.userToConnect.address_postalCode;
-            state.userAddressCountry = action.payload.auth.userToConnect.address_country;
+            state.userAvatar = action.payload.userToConnect.avatar;
+            state.userAddressStreet = action.payload.userToConnect.address_street;
+            state.userAddressNumber = action.payload.userToConnect.address_number;
+            state.userAddressCity = action.payload.userToConnect.address_city;
+            state.userAddressPostalCode = action.payload.userToConnect.address_postalCode;
+            state.userAddressCountry = action.payload.userToConnect.address_country;
 
-            // order
-            const orders = action.payload.order;
-            if (orders.length > 0) {
-                state.allOrders = orders.filter((order) => order.order_status !== 'En attente');
+            // // order
+            // const orders = action.payload.order;
+            // if (orders.length > 0) {
+            //     state.allOrders = orders.filter((order) => order.order_status !== 'En attente');
 
-                const currentOrder = orders.find((order) => order.order_status === 'En attente');
-                // console.log('currentOrder : ', currentOrder);
-                state.currentOrder = currentOrder;
+            //     const currentOrder = orders.find((order) => order.order_status === 'En attente');
+            //     // console.log('currentOrder : ', currentOrder);
+            //     state.currentOrder = currentOrder;
                 
-                if (currentOrder) {
-                    // console.log('currentOrder.Article_Orders.map(article => article.Article) : ', currentOrder.Article_Orders.map(article => article.Article));
-                    const allArticles = currentOrder.Article_Orders.map(article => article.Article);
-                    state.articles = allArticles;
-                }
-                else {
-                    state.articles = []
-                }
-            }
-            else {
-                state.allOrders = [],
-                state.currentOrder = null,
-                state.articles = []
-            }
+            //     if (currentOrder) {
+            //         // console.log('currentOrder.Article_Orders.map(article => article.Article) : ', currentOrder.Article_Orders.map(article => article.Article));
+            //         const allArticles = currentOrder.Article_Orders.map(article => article.Article);
+            //         state.articles = allArticles;
+            //     }
+            //     else {
+            //         state.articles = []
+            //     }
+            // }
+            // else {
+            //     state.allOrders = [],
+            //     state.currentOrder = null,
+            //     state.articles = []
+            // }
             
         }) 
         .addCase(registerUser.rejected, (state, action) => { 

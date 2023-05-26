@@ -1,27 +1,31 @@
 
 
-// import { createAsyncThunk } from '@reduxjs/toolkit';
-// import axios from 'axios';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-// export const currentOrderActionSave = createAsyncThunk(
-//   'currentOrder/save',
-//   async (userId) => {
-//     try {
-//         // console.log('currentOrder/save');
-//         // console.log('userId => ', userId);
-//       // Requête AJAX vers le serveur Backend
-//       const response = await axios.get(`http://localhost:8080/api/order/user/${userId}`);
-//       // console.log('response.data.results : ', response.data.results);
-//       return response.data.results;
-//     } catch (error) {
-//       console.error('Erreur lors de la sauvegarde de la commande : ', error);
-//       throw error;
-//     }
-//   }
-// );
+export const currentOrderActionSave = createAsyncThunk(
+  // 'currentOrder/save',
+  'ordersByUser/save',
+  async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/order/user/${userId}`);
+      // console.log('response.data.results : ', response.data.results);
+      return response.data.results;
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde de la commande : ', error);
+      throw error;
+    }
+  }
+);
+
+
+
+export const orderActionClear = createAction('ordersByUser/clear');
+
+
 
 // export const currentOrderActionAddArticle = createAsyncThunk(
-//   'currentOrder/addArticle',
+//   'ordersByUser/addArticle',
 //   async ({orderId, articleId, storeId, newQuantity}, thunkAPI) => {
 //     try {
 
