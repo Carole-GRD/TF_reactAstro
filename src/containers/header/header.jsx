@@ -18,7 +18,7 @@ import { current } from '@reduxjs/toolkit';
 const Header = () => {
 
     const isConnected = useSelector(state => state.auth.isConnected);
-    const currentOrder = useSelector(state => state.order.currentOrder);
+    const currentOrder = useSelector(state => state.auth.currentOrder);
     // console.log('currentOrder : ', currentOrder);
     // console.log('currentOrder.Article_Orders.length : ', currentOrder.Article_Orders.length);
     
@@ -26,7 +26,7 @@ const Header = () => {
     if (currentOrder) {
         // console.log('currentOrder OK');
         countArticlesInCurrentOrder = currentOrder.Article_Orders.length
-        console.log('countArticlesInCurrentOrder : ', countArticlesInCurrentOrder);
+        // console.log('countArticlesInCurrentOrder : ', countArticlesInCurrentOrder);
     } 
     else {
         console.log('PAS de currentOrder');

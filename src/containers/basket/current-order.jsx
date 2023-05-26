@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import style from './basket.module.css';
-import { currentOrderActionSave } from '../../store/actions/order.action';
+// import { currentOrderActionSave } from '../../store/actions/order.action';
 
 
 
@@ -17,11 +17,11 @@ const CurrentOrder = () => {
     // const dispatch = useDispatch();
 
     
-    useEffect(() => {
-        console.log('useEffect');
-        // dispatch(currentOrderActionSave(userId));
+    // useEffect(() => {
+    //     console.log('useEffect');
+    //     // dispatch(currentOrderActionSave(userId));
         
-    }, [])
+    // }, [])
 
     
 

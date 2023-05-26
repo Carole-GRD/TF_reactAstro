@@ -7,7 +7,7 @@ import Basket from '../../containers/basket/basket';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { currentOrderActionSave } from '../../store/actions/order.action';
+// import { currentOrderActionSave } from '../../store/actions/order.action';
 
 
 const AccountPage = () =>  {
@@ -24,8 +24,8 @@ const AccountPage = () =>  {
         if (!userFirstname || !userLastname) {
             navigate('/login');    
         }
-        console.log('account.page - useEffect (userId) : ', userId);
-        dispatch(currentOrderActionSave(userId));
+        // console.log('account.page - useEffect (userId) : ', userId);
+        // dispatch(currentOrderActionSave(userId));
 
     }, []); 
 

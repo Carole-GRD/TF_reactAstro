@@ -1,15 +1,16 @@
 import { loginUser } from '../../../store/actions/auth.action'; 
+// import { currentOrderActionSave } from '../../../store/actions/order.action';
 import { useForm } from 'react-hook-form'; 
 import { useDispatch, useSelector } from 'react-redux'; 
 import { useNavigate } from 'react-router-dom'; 
 import { NavLink } from 'react-router-dom';
 import { useEffect } from 'react'; 
+import { useState } from 'react';
 
 
 import authStyle from '../../pages/auth.page.module.css';
 // import style from './login.module.css';
 import clsx from 'clsx';
-import { useState } from 'react';
 
 
 const AuthNavlink = ({ to, text }) => (
@@ -24,25 +25,31 @@ const LoginPage = () => {
     const { handleSubmit, register, reset } = useForm(); 
     const dispatch = useDispatch(); 
     const isConnected = useSelector(state => state.auth.isConnected); 
+    const userId = useSelector(state => state.auth.userId); 
     const errorMsg = useSelector(state => state.auth.errorMsg); 
     const navigate = useNavigate(); 
 
     const [buttonText, setButtonText] = useState('Connexion');
 
-    // ↓ Pas d'intérêt ca mon bouton "Login" disparait lorsque l'utilisateur est connecté
+    
     useEffect(() => { 
-        if (isConnected) { navigate('/account'); } 
+        if (isConnected) { 
+            console.log('isConnected : ', isConnected);
+            // dispatch(currentOrderActionSave(userId));
+            navigate('/account'); 
+        } 
     }, [isConnected, navigate]) 
     
     
-    
 
-    const onLogin = (data) => { 
+    const onLogin = async (data) => {
+
         setButtonText('Chargement...');
-        dispatch(loginUser(data)); 
-        reset(); 
+        dispatch(loginUser(data));
+        reset();
+
         // navigate('/account');
-    } 
+      };
     
     
     return (

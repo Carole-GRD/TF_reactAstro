@@ -8,7 +8,7 @@ import MyPersonalData from "./my-personal-data";
 
 import style from './basket.module.css';
 import { useDispatch } from "react-redux";
-import { currentOrderActionSave } from "../../store/actions/order.action";
+// import { currentOrderActionSave } from "../../store/actions/order.action";
 // import fetchOrders from '../../api/fetchOrders.api';
 
 
@@ -33,7 +33,7 @@ const Basket = ({userId}) => {
         // //////////////////////////////////////////////////////////////////////////////
         console.log('basket - userId : ', userId);
         // currentOrderActionSave(userId);
-        dispatch(currentOrderActionSave(userId));
+        // dispatch(currentOrderActionSave(userId));
     }, [])
 
 
