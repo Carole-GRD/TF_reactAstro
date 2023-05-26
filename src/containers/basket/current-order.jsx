@@ -2,13 +2,15 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { currentOrderActionAddArticle } from '../../store/actions/order.action';
 import style from './basket.module.css';
-// import { currentOrderActionSave } from '../../store/actions/order.action';
+
 
 
 
 const CurrentOrder = () => {
 
+    const dispatch = useDispatch();
 
     const currentOrder = useSelector(state => state.order.currentOrder);
     const articles = useSelector(state => state.order.articles);
@@ -23,26 +25,34 @@ const CurrentOrder = () => {
     }
 
 
-
     let total = 0;
     for (let article of articles) {
         total += parseInt((article.Stores.find(store => store.id === (currentOrder.Article_Orders.find(a => a.ArticleId === article.id).store)).MM_Article_Store.price * currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity).toFixed(2));
     }
-    console.log('total : ', total);
+    // console.log('total : ', total);
 
 
+    let newQuantity;
+    const onIncrArticle = (articleId, quantity, storeId) => {
+        console.log('onIncrArticle : ... ↓');
+        console.log(' -> articleId : ', articleId);
+        console.log(' -> newQuantity : ', newQuantity);
+        console.log(' -> storeId : ', storeId);
 
-    
-    
-    const onIncrArticle = (articleId, quantity) => {
-        console.log('onIncrArticle', ' -> articleId : ', articleId, ' -> quantity : ', quantity);
-        // identifiant de la commande pour l'url
+        // l'identifiant de la commande pour l'url est récupérer dans l'action grâce au thunkAPI
         // Data à envoyer (voir insomnia) :
         //  {
 		// 	    "ArticleId": 1,
 		// 	    "quantity": 1,
 		// 	    "store": 5
 	    //  }
+        newQuantity = quantity + 1;
+
+        dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId}));
+        
+
+
+
     }
 
     const onDecrArticle = (articleId, quantity) => {
@@ -85,9 +95,23 @@ const CurrentOrder = () => {
                                     {/* Quantité */}
                                     <td>{currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity}</td>
                                     <td>
-                                        <button onClick={() => {onIncrArticle(article.id, currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity)}}>+</button>
+                                        <button 
+                                            onClick={() => { onIncrArticle(
+                                                article.id, 
+                                                currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity,
+                                                article.Stores.find(store => store.id === (currentOrder.Article_Orders.find(a => a.ArticleId === article.id).store)).id
+                                            )}}>
+                                                +
+                                        </button>
                                         /
-                                        <button onClick={() => {onDecrArticle(article.id, currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity)}}>-</button>
+                                        <button 
+                                            onClick={() => { onDecrArticle(
+                                                article.id, 
+                                                currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity,
+                                                article.Stores.find(store => store.id === (currentOrder.Article_Orders.find(a => a.ArticleId === article.id).store)).id
+                                                )}}>
+                                                    -
+                                        </button>
                                     </td>
                                     {/* Prix pour cet article en fonction de la quantité */}
                                     <td>{(article.Stores.find(store => store.id === (currentOrder.Article_Orders.find(a => a.ArticleId === article.id).store)).MM_Article_Store.price * currentOrder.Article_Orders.find(a => a.ArticleId === article.id).quantity).toFixed(2)} €</td>                                    

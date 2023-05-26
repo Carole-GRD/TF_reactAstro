@@ -1,7 +1,7 @@
 
 
 import { createReducer } from '@reduxjs/toolkit';
-import { currentOrderActionSave, orderActionClear } from '../actions/order.action';
+import { currentOrderActionSave, orderActionClear, currentOrderActionAddArticle } from '../actions/order.action';
 
 const initialState = {
     allOrders: [],
@@ -18,7 +18,7 @@ const currentOrderReducer = createReducer(initialState, (builder) => {
           if (orders.length > 0) {
               state.allOrders = orders.filter((order) => order.order_status !== 'En attente');
 
-              
+
               const currentOrder = orders.find((order) => order.order_status === 'En attente');
               // console.log('currentOrder : ', currentOrder);
                   
@@ -43,6 +43,10 @@ const currentOrderReducer = createReducer(initialState, (builder) => {
           state.allOrders = [],
           state.currentOrder = null,
           state.articles = []
+      })
+      .addCase(currentOrderActionAddArticle, (state, action) => {
+          console.log('addArticleReducer - action.payload : ', action.payload);
+          // state.articleToAdd = action.payload;
       })
 });
 

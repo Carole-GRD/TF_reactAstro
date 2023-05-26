@@ -25,7 +25,7 @@ const AccountPage = () =>  {
             navigate('/login');    
         }
         // console.log('account.page - useEffect (userId) : ', userId);
-        dispatch(currentOrderActionSave(userId));
+        dispatch(currentOrderActionSave());
 
     }, []); 
 
