@@ -17,7 +17,7 @@ const AccountPage = () =>  {
     const userId = useSelector(state => state.auth.userId);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     useEffect(() => {
         // console.log('account.page - userId : ', userId);
@@ -25,7 +25,7 @@ const AccountPage = () =>  {
             navigate('/login');    
         }
         // console.log('account.page - useEffect (userId) : ', userId);
-        dispatch(currentOrderActionSave());
+        // dispatch(currentOrderActionSave());
 
     }, []); 
 

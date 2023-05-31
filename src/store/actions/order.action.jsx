@@ -27,7 +27,7 @@ export const currentOrderActionSave = createAsyncThunk(
 
 
 
-export const orderActionClear = createAction('ordersByUser/clear');
+export const currentOrderActionClear = createAction('ordersByUser/clear');
 
 
 

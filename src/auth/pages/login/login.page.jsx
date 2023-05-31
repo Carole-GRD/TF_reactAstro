@@ -11,6 +11,7 @@ import { useState } from 'react';
 import authStyle from '../../pages/auth.page.module.css';
 // import style from './login.module.css';
 import clsx from 'clsx';
+import { currentOrderActionSave } from '../../../store/actions/order.action';
 
 
 const AuthNavlink = ({ to, text }) => (
@@ -34,7 +35,8 @@ const LoginPage = () => {
     
     useEffect(() => { 
         if (isConnected) { 
-            console.log('isConnected : ', isConnected);
+            // console.log('isConnected : ', isConnected);
+            dispatch(currentOrderActionSave());
             // dispatch(currentOrderActionSave(userId));
             navigate('/account'); 
         } 

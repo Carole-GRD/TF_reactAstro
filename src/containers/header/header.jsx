@@ -13,26 +13,18 @@ import clsx from 'clsx';
 import { logoutUser } from '../../store/actions/auth.action'; 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { current } from '@reduxjs/toolkit';
-import { orderActionClear } from '../../store/actions/order.action';
+
+import { currentOrderActionClear } from '../../store/actions/order.action';
+import { useEffect } from 'react';
 
 const Header = () => {
 
     const isConnected = useSelector(state => state.auth.isConnected);
-    const currentOrder = useSelector(state => state.auth.currentOrder);
-    // console.log('currentOrder : ', currentOrder);
-    // console.log('currentOrder.Article_Orders.length : ', currentOrder.Article_Orders.length);
-    
-    let countArticlesInCurrentOrder;
-    if (currentOrder) {
-        // console.log('currentOrder OK');
-        countArticlesInCurrentOrder = currentOrder.Article_Orders.length
-        // console.log('countArticlesInCurrentOrder : ', countArticlesInCurrentOrder);
-    } 
-    else {
-        console.log('PAS de currentOrder');
-    }
+    const currentOrder = useSelector(state => state.order.currentOrder);
 
+    const countArticlesInCurrentOrder = useSelector(state => state.order.currentOrder?.Article_Orders.length);
+    console.log('countArticlesInCurrentOrder : ', countArticlesInCurrentOrder);
+    
 
     const dispatch = useDispatch();
 
@@ -43,7 +35,7 @@ const Header = () => {
         // if (isConnected) { 
         //     navigate('/account');
         // } 
-        dispatch(orderActionClear());
+        dispatch(currentOrderActionClear());
     } 
 
     return (
@@ -62,15 +54,16 @@ const Header = () => {
                         <li>
                             <CustomNavlink to='/articles' text='Articles' />
                         </li>
-                        {isConnected && (
-                            <li>
-                                <CustomNavlink to='/account' text='Mon compte' />
-                                {
-                                    countArticlesInCurrentOrder && (
-                                        <div className={style['count-display']}><p>{countArticlesInCurrentOrder}</p></div>
-                                    )
-                                }
-                            </li>
+                        {
+                            isConnected && (
+                                <li>
+                                    <CustomNavlink to='/account' text='Mon compte' />
+                                    {
+                                        (currentOrder) && (
+                                            <div className={style['count-display']}><p>{countArticlesInCurrentOrder}</p></div>
+                                        )
+                                    }
+                                </li>
                         )}
                     </ul>
                 </nav>
