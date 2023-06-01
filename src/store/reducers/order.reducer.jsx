@@ -1,7 +1,7 @@
 
 
 import { createReducer } from '@reduxjs/toolkit';
-import { currentOrderActionSave, currentOrderActionClear, currentOrderActionAddArticle } from '../actions/order.action';
+import { currentOrderActionSave, currentOrderActionClear, currentOrderActionAddArticle, currentOrderActionRemoveArticle } from '../actions/order.action';
 
 const initialState = {
     allOrders: [],
@@ -44,10 +44,14 @@ const currentOrderReducer = createReducer(initialState, (builder) => {
           state.currentOrder = null,
           state.articles = []
       })
-      .addCase(currentOrderActionAddArticle, (state, action) => {
-          console.log('addArticleReducer - action.payload : ', action.payload);
-          // state.articleToAdd = action.payload;
+      .addCase(currentOrderActionAddArticle.fulfilled, (state, action) => {
+        const articleToAdd = action.payload;
+        state.articles.push(articleToAdd);
       })
+      .addCase(currentOrderActionRemoveArticle.fulfilled, (state, action) => {
+        const link = action.payload;
+        state.articles = state.articles.filter((article) => article.id !== link);
+      });
 });
 
 

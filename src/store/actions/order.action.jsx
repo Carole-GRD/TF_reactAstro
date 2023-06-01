@@ -3,6 +3,9 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+
+// Récupérer la commande en cours pour l'affichage
+// -----------------------------------------------
 export const currentOrderActionSave = createAsyncThunk(
   // 'currentOrder/save',
   'ordersByUser/save',
@@ -26,11 +29,14 @@ export const currentOrderActionSave = createAsyncThunk(
 );
 
 
-
+// Supprimer la commande en cours lorsque l'utilisateur se déconnecte (logout -> voir header.jsx)
+// ----------------------------------------------------------------------------------------------
 export const currentOrderActionClear = createAction('ordersByUser/clear');
 
 
 
+// Ajouter ou mettre à jour un article dans la commande en cours
+// -------------------------------------------------------------
 export const currentOrderActionAddArticle = createAsyncThunk(
   'ordersByUser/addArticle',
   async ({articleId, newQuantity, storeId}, thunkAPI) => {
@@ -42,16 +48,17 @@ export const currentOrderActionAddArticle = createAsyncThunk(
       const orderId = orderState.currentOrder.id;
       // console.log('Order ID:', orderId);
 
+
       const articleData = {
         ArticleId: articleId,
         quantity: newQuantity,
         store: storeId
       };
-      console.log('articleData : ', articleData);
+      // console.log('articleData : ', articleData);
 
 
       const response = await axios.post(`http://localhost:8080/api/order/${orderId}/createArticle`, articleData);
-      console.log('createArticle.api (response.data) : ', response.data);
+      // console.log('createArticle.api (response.data) : ', response.data);
 
 
       // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
@@ -61,11 +68,6 @@ export const currentOrderActionAddArticle = createAsyncThunk(
 
       return response.data;
 
-
-
-      // const response = await axios.get(`http://localhost:8080/api/order/user/${userId}`);
-      // // console.log('response.data.results : ', response.data.results);
-      // return response.data.results;
     } 
     catch (error) {
       console.error('Erreur lors de la création du lien vers l\'article : ', error);
@@ -77,41 +79,30 @@ export const currentOrderActionAddArticle = createAsyncThunk(
 
 
 
+// Supprimer un article dans la commande en cours
+// ----------------------------------------------
+export const currentOrderActionRemoveArticle = createAsyncThunk(
+  'ordersByUser/removeArticle',
+  async (link, thunkAPI) => {
+    try {
+      console.log('order.action - link:', link);
 
+      // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
+      const orderState = thunkAPI.getState().order;
+      // console.log('orderState:', orderState);
+      const orderId = orderState.currentOrder.id;
+      console.log('Order ID:', orderId);
 
+      await axios.delete(`http://localhost:8080/api/order/${orderId}/deleteArticle`, { data : {link: link} });
 
-// export const currentOrderActionAddArticle = createAsyncThunk(
-//   'ordersByUser/addArticle',
-//   async ({orderId, articleId, storeId, newQuantity}, thunkAPI) => {
-//     try {
+      // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
+      thunkAPI.dispatch(currentOrderActionSave());
+      // console.log('orderState:', orderState);
 
-//       // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
-
-//       // console.log("action:articleId ", articleId)
-//       // console.log("action:storeId ", storeId)
-   
-//       // Requête AJAX vers le serveur Backend
-//       const response1 = await axios.get(`http://localhost:8080/api/article/${articleId}/store/${storeId}`);
-//       const articleToAdd = response1.data.result;
-//       // console.log("articleToAdd = response1.data.result ", articleToAdd);
-
-//       const articleData = {
-//         ArticleId: articleToAdd.ArticleId,
-//         quantity: newQuantity,
-//         store: storeId
-//       };
-
-//       // console.log('articleData : ', articleData);
-//       // console.log('commande n° : ', orderId);
-
-//       const response3 = await axios.post(`http://localhost:8080/api/order/${orderId}/createArticle`, articleData);
-//       console.log('createArticle.api (response3.data) : ', response3.data);
-
-//       return response3.data;
-//     } 
-//     catch (error) {
-//       console.error('Erreur lors de la création du lien vers l\'article : ', error);
-//     }
-//   }
-// );
+    } 
+    catch (error) {
+      console.error('Erreur lors de la suppression du lien vers l\'article : ', error);
+    }
+  }
+);
 

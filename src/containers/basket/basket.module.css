@@ -77,12 +77,12 @@
 }
 
 
-.data th:nth-child(4),
-.data td:nth-child(4) {
+.data th:nth-child(6),
+.data td:nth-child(6) {
     border-right: none;
 }
-.data th:nth-child(5),
-.data td:nth-child(5) {
+.data th:nth-child(7),
+.data td:nth-child(7) {
     border-left: none;
     width: 10vw;
 }
