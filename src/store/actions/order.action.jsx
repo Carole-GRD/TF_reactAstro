@@ -83,9 +83,9 @@ export const currentOrderActionAddArticle = createAsyncThunk(
 // ----------------------------------------------
 export const currentOrderActionRemoveArticle = createAsyncThunk(
   'ordersByUser/removeArticle',
-  async (link, thunkAPI) => {
+  async (article_order_Id, thunkAPI) => {
     try {
-      console.log('order.action - link:', link);
+      console.log('order.action - article_order_Id:', article_order_Id);
 
       // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
       const orderState = thunkAPI.getState().order;
@@ -93,7 +93,7 @@ export const currentOrderActionRemoveArticle = createAsyncThunk(
       const orderId = orderState.currentOrder.id;
       console.log('Order ID:', orderId);
 
-      await axios.delete(`http://localhost:8080/api/order/${orderId}/deleteArticle`, { data : {link: link} });
+      await axios.delete(`http://localhost:8080/api/order/${orderId}/deleteArticle`, { data : {link: article_order_Id} });
 
       // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
       thunkAPI.dispatch(currentOrderActionSave());

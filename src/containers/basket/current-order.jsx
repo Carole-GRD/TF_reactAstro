@@ -50,23 +50,7 @@ const CurrentOrder = () => {
     // Fonction qui permet d'ajouter ou retirer un article de la commande en cours  (lancée au clique sur les boutons + et -)
     // ===============================================================================================================================
     let newQuantity;
-    const onIncrArticle = (articleId, quantity, storeId, increment, link) => {
-        console.log('onIncrArticle : ... ↓');
-        console.log(' -> articleId : ', articleId);
-        console.log(' -> quantity : ', quantity);
-        // console.log(' -> newQuantity : ', newQuantity);
-        console.log(' -> storeId : ', storeId);
-        console.log(' -> link : ', link);
-
-
-        // l'identifiant de la commande pour l'url est récupérer dans l'action grâce au thunkAPI
-        // Data à envoyer (voir insomnia) :
-        //  {
-		// 	    "ArticleId": 1,
-		// 	    "quantity": 1,
-		// 	    "store": 5
-	    //  }
-
+    const onIncrArticle = (articleId, quantity, storeId, increment, article_order_Id) => {
 
         if (increment === 'plus') {
             // On ajoute un article
@@ -81,7 +65,7 @@ const CurrentOrder = () => {
         else {
             // On supprime un article (cas où l'article a une quantité égale à 1)
             // console.log(' -> supprimer l\'article !!!! ', ' -> LINK : ', link);
-            dispatch(currentOrderActionRemoveArticle(link));
+            dispatch(currentOrderActionRemoveArticle(article_order_Id));
         }    
 
     }

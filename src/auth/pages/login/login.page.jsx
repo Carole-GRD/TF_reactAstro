@@ -1,5 +1,4 @@
 import { loginUser } from '../../../store/actions/auth.action'; 
-// import { currentOrderActionSave } from '../../../store/actions/order.action';
 import { useForm } from 'react-hook-form'; 
 import { useDispatch, useSelector } from 'react-redux'; 
 import { useNavigate } from 'react-router-dom'; 
@@ -23,23 +22,27 @@ const AuthNavlink = ({ to, text }) => (
 
 
 const LoginPage = () => { 
+
     const { handleSubmit, register, reset } = useForm(); 
-    const dispatch = useDispatch(); 
+
     const isConnected = useSelector(state => state.auth.isConnected); 
-    const userId = useSelector(state => state.auth.userId); 
     const errorMsg = useSelector(state => state.auth.errorMsg); 
+    
+    const [buttonText, setButtonText] = useState('Connexion');
+    
+
+    const dispatch = useDispatch(); 
     const navigate = useNavigate(); 
 
-    const [buttonText, setButtonText] = useState('Connexion');
-
-    
     useEffect(() => { 
+
         if (isConnected) { 
             // console.log('isConnected : ', isConnected);
             dispatch(currentOrderActionSave());
             // dispatch(currentOrderActionSave(userId));
             navigate('/account'); 
         } 
+
     }, [isConnected, navigate]) 
     
     
@@ -50,7 +53,6 @@ const LoginPage = () => {
         dispatch(loginUser(data));
         reset();
 
-        // navigate('/account');
       };
     
     
@@ -71,23 +73,29 @@ const LoginPage = () => {
                     </ul>
                     
                     <form onSubmit={handleSubmit(onLogin)}> 
+
                         <div className={authStyle['form-group']}> 
                             <label htmlFor="credential">Pseudo ou email</label> 
                             <input id='credential' type='text' placeholder='Pseudo ou email' {...register('credential')} /> 
                         </div> 
+
                         <div className={authStyle['form-group']}> 
                             <label htmlFor="password">Mot de passe</label> 
                             <input id='password' type='password' placeholder='Mot de passe' {...register('password')} /> 
                         </div> 
+
                         <div className={authStyle.btn}> 
                             <button type='submit'>{buttonText}</button> 
                         </div> 
+
                         {/* <div>
                             {loading && (<p>Chargement...</p>)}
                         </div> */}
+
                         <div>
                             {errorMsg && (<p>{errorMsg}</p>)} 
                         </div>
+                        
                     </form> 
                 
                 </div>

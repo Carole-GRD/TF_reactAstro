@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 // import fetchOrders from '../../api/fetchOrders.api';
 
 
-const Basket = ({userId}) => {
+const Basket = () => {
 
     // console.log('basket.jsx - userId : ', userId);
 
@@ -22,7 +22,7 @@ const Basket = ({userId}) => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    // useEffect(() => {
         // async function fetchOrders() {
         //     const response = await axios.get(`http://localhost:8080/api/order/user/${userId}`);
         //     // console.log('response - order : ', response.data.results.find(order => order.order_status === 'En attente'));
@@ -31,10 +31,8 @@ const Basket = ({userId}) => {
         // };
         // fetchOrders();
         // //////////////////////////////////////////////////////////////////////////////
-        console.log('basket - userId : ', userId);
-        // currentOrderActionSave(userId);
-        // dispatch(currentOrderActionSave(userId));
-    }, [])
+        // console.log('basket - userId : ', userId);
+    // }, [])
 
 
 

@@ -23,13 +23,13 @@ const Header = () => {
     const currentOrder = useSelector(state => state.order.currentOrder);
 
     const countArticlesInCurrentOrder = useSelector(state => state.order.currentOrder?.Article_Orders.length);
-    console.log('countArticlesInCurrentOrder : ', countArticlesInCurrentOrder);
+    // console.log('countArticlesInCurrentOrder : ', countArticlesInCurrentOrder);
     
 
     const dispatch = useDispatch();
 
     const onLogout = () => { 
-        console.log('isConnected - onLogout : ', isConnected);
+        // console.log('isConnected - onLogout : ', isConnected);
         dispatch(logoutUser()); 
         // reset(); 
         // if (isConnected) { 

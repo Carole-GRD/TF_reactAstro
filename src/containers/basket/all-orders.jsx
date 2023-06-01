@@ -3,9 +3,12 @@ import { useSelector } from 'react-redux';
 import style from './basket.module.css';
 
 
+
 const AllOrders = () => {
     const orders = useSelector(state => state.order.allOrders);
 
+    // Si l'utilisateur n'a pas encore passé de commande, on affiche un message
+    // ------------------------------------------------------------------------
     if (orders.length === 0) {
         return (
             <article className={style['data']}>
@@ -15,40 +18,42 @@ const AllOrders = () => {
         )
     }
 
+     // Si l'utilisateur a déjà passé au moins une commande, on affiche la/les commande(s)
+    //  ----------------------------------------------------------------------------------
     return (orders.map(order => <OrderRow key={order.id} {...order} />))
 }
 
+
+
 const OrderRow = (
-    {
-        id,
-        order_status,
-        sending_status,
-        payment_method,
-        payment_status,
-        Articles
-    }
+        {
+            id,
+            order_status,
+            sending_status,
+            payment_method,
+            payment_status,
+            Article_Orders
+        }
 
-) => {
+    ) => {
 
-    console.log('all articles : ', Articles);
+        return (
 
-    return (
+            <article className={style['data']}>
+                <p>Commande n°{id}</p>
+                <p>Statut de la commande : {order_status}</p>
+                <p>Statut de l'envoi : {sending_status}</p>
+                <p>Mode de paiement : {payment_method}</p>
+                <p>Status de paiement : {payment_status}</p>
 
-        <article className={style['data']}>
-            <p>Commande n°{id}</p>
-            <p>Statut de la commande : {order_status}</p>
-            <p>Statut de l'envoi : {sending_status}</p>
-            <p>Mode de paiement : {payment_method}</p>
-            <p>Status de paiement : {payment_status}</p>
+                {
+                    Article_Orders.map(article_order => <p key={article_order.id} className={style['article-already-bought']}>- {article_order.Article.name}</p>)
 
+                }
 
-            {
-                Articles && Articles.map(article => <p key={article.id} className={style.article}>- {article.name}</p>)
-
-            }
-
-        </article>
-    )
+            </article>
+        )
 }
+
 
 export default AllOrders;

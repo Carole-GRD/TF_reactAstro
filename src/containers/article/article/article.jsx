@@ -9,9 +9,15 @@ import { useDispatch } from 'react-redux';
 // import { createArticle } from '../../../api/createArticle.api';
 // import { currentOrderActionAddArticle } from '../../../store/actions/order.action';
 import { useEffect } from 'react';
+import { useState } from 'react';
 
 const Article = ({id, name, Stores}) => {
 
+
+    
+
+    // console.log('id => ', id);
+    // console.log('name => ', name);
     // console.log('store => ', Stores);
 
     // const dispatch = useDispatch();
@@ -39,10 +45,10 @@ const Article = ({id, name, Stores}) => {
     // on reçoit l'identifiant de l'article à ajouter 
     // et l'identifiant du magasin dans lequel l'article se trouve
     
-    // const onAddToCurrentOrder = (articleId, storeId) => {
+    const onAddToCurrentOrder = (articleId, storeId) => {
 
-    //     // console.log(articleId)
-    //     // console.log(storeId)
+        console.log('articleId : ', articleId)
+        console.log('storeId : ', storeId)
     //     // Vérifier si l'article est déjà présent dans la commande en cours
     //     // attention, il faut vérifier aussi si c'est bien l'article de ce magasin (car l'article peut se trouver dans plusieurs magasins)
     //     const isAlreadyInOrder = articlesAlreadyInOrder.find(article => 
@@ -74,7 +80,7 @@ const Article = ({id, name, Stores}) => {
     //         dispatch(currentOrderActionAddArticle({orderId, articleId, storeId, newQuantity: incrQuantity}));
     //     }
 
-    // }
+    }
 
 
 
@@ -93,7 +99,9 @@ const Article = ({id, name, Stores}) => {
                                 <p>{store.store_name}</p>
                             
                             </Link>
-                            {/* <button onClick={() => { onAddToCurrentOrder(id, store.store_id) }}>Ajouter au panier</button> */}
+                            
+                            <button onClick={() => { onAddToCurrentOrder(id, store.store_id) }}>Ajouter au panier</button>
+                            
                         </section>
                     </div>
                 )
