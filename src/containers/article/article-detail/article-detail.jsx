@@ -3,24 +3,25 @@
 import style from './article-detail.module.css';
 
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import article from '../../../assets/article.png';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 
 const ArticleDetail = () => {
 
     const { articleId, storeId } = useParams();
-    console.warn('articleId', articleId);
-    console.warn('storeId', storeId);
+    // console.warn('articleId : ', articleId);
+    // console.warn('storeId : ', storeId);
 
     const [details, setDetails] = useState([]);
     const [mark, setMark] = useState();
     const [storeInfos, setStoreInfos] = useState();
+    const [popup, setPopup] = useState(false); // Utilisez un état pour gérer la valeur de popup
 
-    // console.log('articleId : ', articleId);
+    const isConnected = useSelector(state => state.auth.isConnected);
 
 
     useEffect(() => {
@@ -28,24 +29,25 @@ const ArticleDetail = () => {
             .then((article) => {
                 setDetails(article.data.result);
                 const markId = article.data.result.MarkId;    
-                console.log('markId : ', markId);
+                // console.log('markId : ', markId);
                 return markId;  
                 // return article.data.result.MarkId;      
             })
             .then((markId) => {
-                console.log('markId : ', markId);
+                // console.log('markId : ', markId);
                 
-                // TODO : Vérifier si l'article est un livre (car dans ce cas, il n'y a pas de mark !)  => on récupère la mark uniquement si ce n'est pas un livre 
-
-
-                // le "markId" fourni dans les parenthèses est envoyé par le "return" de la requête (voir le "then" ci-desssus)
-                axios.get(`http://localhost:8080/api/mark/${markId}`)
-                    .then((mark) => {
-                        setMark(mark.data.result.name)
-                    }) 
-                    .catch((error) => {
-                        console.error('Error fetching mark:', error);
-                    });   
+                // Attention, si l'article sur lequel l'utilisateur a cliqué est un livre, il n'y a pas de "mark"
+                // Donc, on vérifie si on a récupéré un "markId" pour lancer la requête
+                if (markId) {
+                    // le "markId" fourni dans les parenthèses est envoyé par le "return" de la requête (voir le "then" ci-desssus)
+                    axios.get(`http://localhost:8080/api/mark/${markId}`)
+                        .then((mark) => {
+                            setMark(mark.data.result.name)
+                        }) 
+                        .catch((error) => {
+                            console.error('Error fetching mark:', error);
+                        });   
+                }   
             })
             .catch((error) => {
                 console.error('Error fetching article:', error);
@@ -59,16 +61,22 @@ const ArticleDetail = () => {
             
     }, []);
 
-    console.log('details : ', details);
-    console.log('mark : ', mark);
-    console.log('storeInfos : ', storeInfos);
+    // console.log('details : ', details);
+    // console.log('mark : ', mark);
+    // console.log('storeInfos : ', storeInfos);
 
-
-
+    
     const onAddToCurrentOrder = (articleId, storeId) => {
-        console.warn('ajouter l\'article');
-        console.log('articleId : ', articleId);
-        console.log('storeId : ', storeId);
+        if (!isConnected) {
+            console.warn('créer un compte ou se connecter');
+            setPopup(!popup); // Mettez à jour l'état de popup en utilisant setPopup
+        }
+        else {
+            console.warn('ajouter l\'article');
+            console.log('articleId : ', articleId);
+            console.log('storeId : ', storeId);
+
+        }
     }
 
     
@@ -81,38 +89,60 @@ const ArticleDetail = () => {
             
 
             <div className={style['articleDetail-content']}>
-            
-                <section className={style['article']}>
+
                 
-                    <p>{details.name}</p>
+                {   
+                    popup && (
+                        <section className={style['article']}>
+                            {console.log('popup (true) : ', popup)}
+                            <p>Connectez-vous ou créez un compte</p>
+                            <Link to="/login">Se connecter</Link>
+                            <Link to="/register">Créer un compte</Link>
+                            <button onClick={() => { setPopup(!popup) }}>Annuler</button>
 
-                    {mark && <p>{mark}</p>}
+                        </section>
+                    )
+                }
 
-                    {details.author && <p>Auteur(s) : {details.author}</p>}
+                
+                {   
+                    !popup && (
+                        <section className={style['article']}>
+                            {console.log('popup (false) : ', popup)}
+                
+                            <p>{details.name}</p>
 
-                    <p>Référence : {details.reference}</p>
-                   
-                    <img src={article} alt={`Image de ${details.name}`} />
+                            {mark && <p>{mark}</p>}
 
-                    <p className={style.description}>{details.description}</p>
+                            {details.author && <p>Auteur(s) : {details.author}</p>}
 
-                    {   
-                        storeInfos && (
-                            <p>Prix : {storeInfos.price.toFixed(2)} €</p>
-                    )}
+                            <p>Référence : {details.reference}</p>
+                        
+                            <img src={article} alt={`Image de ${details.name}`} />
 
-                    {
-                        (storeInfos && (storeInfos.discount !== 0)) && (
-                            <>
-                                <p>Réduction : {storeInfos.discount * 100}%</p>
-                                <p>Nouveau prix : {(storeInfos.price * (1 - storeInfos.discount)).toFixed(2)} €</p>
-                            </>
-                    )}
+                            <p className={style.description}>{details.description}</p>
+
+                            {   
+                                storeInfos && (
+                                    <p>Prix : {storeInfos.price.toFixed(2)} €</p>
+                            )}
+
+                            {
+                                (storeInfos && (storeInfos.discount !== 0)) && (
+                                    <>
+                                        <p>Réduction : {storeInfos.discount * 100}%</p>
+                                        <p>Nouveau prix : {(storeInfos.price * (1 - storeInfos.discount)).toFixed(2)} €</p>
+                                    </>
+                            )}
 
 
-                    <button onClick={() => { onAddToCurrentOrder(storeInfos.ArticleId, storeInfos.StoreId) }}>Ajouter au panier</button>
+                            <button onClick={() => { onAddToCurrentOrder(storeInfos.ArticleId, storeInfos.StoreId) }}>Ajouter au panier</button>
 
-                </section>
+                        </section>
+                    )
+                }
+            
+                
             </div>
         </div>
 
