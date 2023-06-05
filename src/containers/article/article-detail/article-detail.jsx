@@ -1,10 +1,10 @@
 
-import style from './article-detail.module.css';
-
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+
+import style from './article-detail.module.css';
 import article from '../../../assets/article.png';
 import { currentOrderActionAddArticle, currentOrderActionSave } from '../../../store/actions/order.action';
 
@@ -26,6 +26,7 @@ const ArticleDetail = () => {
     const dispatch = useDispatch();
 
     const isConnected = useSelector(state => state.auth.isConnected);
+    const userId = useSelector(state => state.auth.userId);
     const currentOrder = useSelector(state => state.order.currentOrder);
     let orderId = null;
     if (currentOrder) {
@@ -34,7 +35,11 @@ const ArticleDetail = () => {
     // console.log('orderId : ', orderId); 
     
     
-
+    // TODO : Vérifier l'utilité du code suivant...
+    useEffect(() => {
+        dispatch(currentOrderActionSave());
+        orderId = currentOrder.id;
+    }, [currentOrder])
 
 
     useEffect(() => {
@@ -80,7 +85,7 @@ const ArticleDetail = () => {
 
 
 
-    const onAddToCurrentOrder = async (articleId, storeId, orderId) => {
+    const onAddToCurrentOrder = async (articleId, storeId, userId) => {
         if (!isConnected) {
             // console.warn('créer un compte ou se connecter');
             setPopup(!popup); // Mettez à jour l'état de popup en utilisant setPopup
@@ -91,48 +96,48 @@ const ArticleDetail = () => {
             // console.log('storeId : ', storeId);
 
 
-            // Si l'utilisateur est connecté et qu'il a une commande en cours
-            // on crée un tableau contenant les identifiants des articles dans la commande
-            // et un tableau contenant les identifiants des magasins dans lesquels se trouvent les articles
-            // pour vérifier si l'article est déjà dans la commande
-            let isArticleAlreadyInOrder = false;
-
-            if (currentOrder) {
-                const articleIds = currentOrder.Article_Orders.map(article_order => article_order.ArticleId);
-                const storeIds = currentOrder.Article_Orders.map(article_order => article_order.store);
-
-                for (let i = 0; i < articleIds.length; i++) {
-                    if (articleIds[i] === articleId && storeIds[i] === storeId) {
-                    isArticleAlreadyInOrder = true;
-                    break;
-                    }
-                }
-            }
-            
-            console.log('isArticleAlreadyInOrder : ', isArticleAlreadyInOrder);
-
-
-
-            // Si l'article est déjà dansla commande, il faut rechercher le lien Article_Order pour connaitre la quantité et l'incrémenter de 1
-            // Si l'article n'est pas encore dans la commande, on passe une quantité initale de 1
             let newQuantity = 1;
 
-            if (isArticleAlreadyInOrder) {
-
-                // console.log('récupérer l\'article_order pour modifier sa quantité');
-                // console.log('newQuantity = quantity + 1');
-                const response = await axios.get(`http://localhost:8080/api/article_order/article/${articleId}/store/${storeId}/order/${orderId}`)  
-                console.log('response : ', response);
-                
-                newQuantity = response.data.result.quantity + 1;
-                console.log('newQuantity : ', newQuantity);  
+            // Vérifier si l'utilisateur a déjà une commande en cours pour pouvoir ajouter l'article
+            // S'il n'a pas de commande en cours, il faut commencer par créer une commande, avant d'ajouter l'article !!!
+            if (!currentOrder) {
+                const orderData = {
+                    order_status: 'En attente',
+                    sending_status: 'en attente',
+                    payment_method: null,
+                    payment_status: 'En attente',
+                    UserId: userId
+                }
+                console.log('orderData : ', orderData);
+                await axios.post('http://localhost:8080/api/order', orderData)
+                            .then((newOrder) => {
+                                console.log('newOrder : ', newOrder);
+                                // Lancer l'action currentOrderActionAddArtticle
+                                dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId}));
+                            })                        
             }
             else {
-                console.log('newQuantity : ', newQuantity);
+                // Si l'utilisateur est connecté et qu'il a une commande en cours
+                // on vérifie si l'article est déjà dans la commande
+                const isArticleAlreadyInOrder = currentOrder && currentOrder.Article_Orders.some(
+                    (articleOrder) => articleOrder.ArticleId === articleId && articleOrder.store === storeId
+                );
+                
+                // Ensuite, si l'article est déjà dans la commande, on augmente sa quantité de 1
+                if (isArticleAlreadyInOrder) {
+                    const articleOrder = currentOrder.Article_Orders.find(
+                        (articleOrder) => articleOrder.ArticleId === articleId && articleOrder.store === storeId
+                    );
+                    newQuantity = articleOrder.quantity + 1;
+                }
+
+                // Lancer l'action currentOrderActionAddArtticle
+                 dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId}));
+
             }
- 
-            // Lancer l'action currentOrderActionAddArtticle
-            dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId}));
+
+            
+            
   
         }
     }
@@ -151,7 +156,7 @@ const ArticleDetail = () => {
             <div className={style['articleDetail-content']}>
 
                 {   
-                    popup && (
+                    popup ? (
                         <section className={style['article']}>
 
                             <p>Connectez-vous ou créez un compte</p>
@@ -164,11 +169,7 @@ const ArticleDetail = () => {
 
                         </section>
                     )
-                }
-
-                
-                {   
-                    !popup && (
+                    : (
                         <section className={style['article']}>
                 
                             <p>{details.name}</p>
@@ -197,14 +198,16 @@ const ArticleDetail = () => {
                             )}
 
 
-                            <button onClick={() => { onAddToCurrentOrder(storeInfos.ArticleId, storeInfos.StoreId, orderId) }}>
+                            <button onClick={() => { onAddToCurrentOrder(storeInfos.ArticleId, storeInfos.StoreId, userId) }}>
                                 Ajouter au panier
                             </button>
 
-                        </section>
+                        </section> 
                     )
                 }
-             
+
+                
+               
             </div>
         </div>
 

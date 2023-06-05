@@ -71,6 +71,7 @@ export const currentOrderActionAddArticle = createAsyncThunk(
     } 
     catch (error) {
       console.error('Erreur lors de la création du lien vers l\'article : ', error);
+      throw error;
     }
   }
 );
@@ -89,15 +90,30 @@ export const currentOrderActionRemoveArticle = createAsyncThunk(
 
       // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
       const orderState = thunkAPI.getState().order;
-      // console.log('orderState:', orderState);
+      console.log('orderState:', orderState);
       const orderId = orderState.currentOrder.id;
       console.log('Order ID:', orderId);
 
       await axios.delete(`http://localhost:8080/api/order/${orderId}/deleteArticle`, { data : {link: article_order_Id} });
 
-      // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
-      thunkAPI.dispatch(currentOrderActionSave());
+
+      // Appeler l'action qui permet de récupérer les commandes (après avoir supprimer l'article)
+      await thunkAPI.dispatch(currentOrderActionSave());
       // console.log('orderState:', orderState);
+
+
+
+      // Vérifier s'il y a encore des articles dans la commande en cours
+      // ↓ retourne le nombre d'articles dans la commande en cours
+      const isArticle = thunkAPI.getState().order.articles.length;
+      console.log('isArticle:', isArticle);  
+
+      // S'il n'y a plus d'article dans la commande en cours, on supprime la commande en cours
+      if (isArticle === 0) {
+        await axios.delete(`http://localhost:8080/api/order/${orderId}`);
+      }
+      
+      thunkAPI.dispatch(currentOrderActionSave());
 
     } 
     catch (error) {

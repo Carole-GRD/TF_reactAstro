@@ -12,12 +12,18 @@ const CurrentOrder = () => {
 
     const currentOrder = useSelector(state => state.order.currentOrder);
     const articles = useSelector(state => state.order.articles);
+    // console.log('articles : ', articles);
+    // console.log('articles.length : ', articles.length);
+
+    // articles ? console.log('article') : console.log('vide');
+    // articles.length !== 0 ? console.log('article') : console.log('vide');
+   
 
 
     // ===============================================================================================================================
     // Si l'utilisateur n'a pas de commande en cours, on retourne un message ...
     // ===============================================================================================================================
-    if (!currentOrder) {
+    if (!currentOrder || articles.length === 0) {
         return (
             <article className={style['data']}>
                 <p>Vous n'avez pas de commande en cours pour le moment.</p>
