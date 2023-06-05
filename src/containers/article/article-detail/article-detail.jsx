@@ -13,8 +13,8 @@ import { currentOrderActionAddArticle, currentOrderActionSave } from '../../../s
 const ArticleDetail = () => {
 
     const { articleId, storeId } = useParams();
-    console.warn('articleId : ', articleId);
-    console.warn('storeId : ', storeId);
+    // console.warn('articleId : ', articleId);
+    // console.warn('storeId : ', storeId);
 
     const [details, setDetails] = useState([]);
     const [mark, setMark] = useState();
@@ -27,7 +27,13 @@ const ArticleDetail = () => {
 
     const isConnected = useSelector(state => state.auth.isConnected);
     const currentOrder = useSelector(state => state.order.currentOrder);
-    const orderId = useSelector(state => state.order.currentOrder.id);
+    let orderId = null;
+    if (currentOrder) {
+        orderId = currentOrder.id;
+    }
+    // console.log('orderId : ', orderId); 
+    
+    
 
 
 
@@ -37,7 +43,7 @@ const ArticleDetail = () => {
             .then((article) => {
                 setDetails(article.data.result);
                 const markId = article.data.result.MarkId;    
-                console.log('markId : ', markId);
+                // console.log('markId : ', markId);
 
                 // Attention, si l'article sur lequel l'utilisateur a cliqué est un livre, il n'y a pas de "mark"
                 // Donc, on vérifie si on a récupéré un "markId" pour lancer la requête
@@ -62,6 +68,9 @@ const ArticleDetail = () => {
             .then((response) => {
                 setStoreInfos(response.data.result)
             })
+            .catch((error) => {
+                console.error('Error fetching Article By Id And By Store :', error);
+            });
             
     }, []);
 
@@ -71,7 +80,7 @@ const ArticleDetail = () => {
 
 
 
-    const onAddToCurrentOrder = (articleId, storeId, orderId) => {
+    const onAddToCurrentOrder = async (articleId, storeId, orderId) => {
         if (!isConnected) {
             // console.warn('créer un compte ou se connecter');
             setPopup(!popup); // Mettez à jour l'état de popup en utilisant setPopup
@@ -82,15 +91,16 @@ const ArticleDetail = () => {
             // console.log('storeId : ', storeId);
 
 
+            // Si l'utilisateur est connecté et qu'il a une commande en cours
+            // on crée un tableau contenant les identifiants des articles dans la commande
+            // et un tableau contenant les identifiants des magasins dans lesquels se trouvent les articles
+            // pour vérifier si l'article est déjà dans la commande
             let isArticleAlreadyInOrder = false;
 
-            // Si l'utilisateur est connecter et qu'il a une commande en cours
-            // on crée un tableau contenant les identifiants des articles dans la commande
-            // ainsi qu'un tableau contenant les identifiants des magasins dans lesquels se trouvent les articles
             if (currentOrder) {
                 const articleIds = currentOrder.Article_Orders.map(article_order => article_order.ArticleId);
                 const storeIds = currentOrder.Article_Orders.map(article_order => article_order.store);
-                
+
                 for (let i = 0; i < articleIds.length; i++) {
                     if (articleIds[i] === articleId && storeIds[i] === storeId) {
                     isArticleAlreadyInOrder = true;
@@ -99,38 +109,31 @@ const ArticleDetail = () => {
                 }
             }
             
-            
             console.log('isArticleAlreadyInOrder : ', isArticleAlreadyInOrder);
 
-            const newQuantity = 1;
+
+
+            // Si l'article est déjà dansla commande, il faut rechercher le lien Article_Order pour connaitre la quantité et l'incrémenter de 1
+            // Si l'article n'est pas encore dans la commande, on passe une quantité initale de 1
+            let newQuantity = 1;
 
             if (isArticleAlreadyInOrder) {
 
-                console.log('récupérer l\'article_order pour modifier sa quantité');
-                console.log('newQuantity = quantity + 1');
-
-                // ///////////////////////////////////////////////////////////////////
-                // TODO : récupérer l'article_order pour incrémenter sa quantité
-                // ///////////////////////////////////////////////////////////////////
+                // console.log('récupérer l\'article_order pour modifier sa quantité');
+                // console.log('newQuantity = quantity + 1');
+                const response = await axios.get(`http://localhost:8080/api/article_order/article/${articleId}/store/${storeId}/order/${orderId}`)  
+                console.log('response : ', response);
                 
-                // axios
-                //     .get(`http://localhost:8080/api/article/${articleId}/store/${storeId}/order/${orderId}`)
-                //     .then((response) => {
-                //         console.log('response : ', response);
-
-                //         // const quantity = response.data....
-
-                //         // newQuantity = quantity + 1;
-                //     })
-
+                newQuantity = response.data.result.quantity + 1;
+                console.log('newQuantity : ', newQuantity);  
             }
-            console.log('newQuantity : ', newQuantity);
-            
-            // ///////////////////////////////////////////////////////////////////
-            // TODO : lancer l'action currentOrderActionAddArtticle
-            // ///////////////////////////////////////////////////////////////////
-
-            dispatch(currentOrderActionSave());
+            else {
+                console.log('newQuantity : ', newQuantity);
+            }
+ 
+            // Lancer l'action currentOrderActionAddArtticle
+            dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId}));
+  
         }
     }
 
