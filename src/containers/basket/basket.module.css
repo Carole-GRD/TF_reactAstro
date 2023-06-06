@@ -26,6 +26,7 @@
 
 
 
+
 /* ==================== */
 /* MY-PERSONAL-DATA.JSX */
 /* ==================== */
@@ -42,10 +43,38 @@
 /* CURRENT-ORDER.JSX */
 /* ================= */
 
+
+.data form button {
+    margin: 0 0 0 1rem;
+}
+
+/* input type radio (choix du mode de paiement) */
+.data fieldset {
+    margin: 1rem 0 1rem 1rem;
+    padding: 1rem;
+}
+.data fieldset legend {
+    margin: 0 0 0 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.data fieldset label {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+.data fieldset input {
+    margin: 0.4rem;
+}
+.data fieldset button {
+    margin-top: 0.5rem;
+}
+
+
+
+
 /* Table affichée dans "Mon panier" */
 /* Table comprenant tous les articles de la commande */
 .data table {
-    margin: 0 0 0 1rem;
+    margin: 1rem 0 1rem 1rem;
     width: 70vw;
     border-collapse: collapse;
 }

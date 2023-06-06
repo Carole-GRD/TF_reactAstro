@@ -1,6 +1,9 @@
 
+import axios from 'axios';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { currentOrderActionAddArticle, currentOrderActionRemoveArticle } from '../../store/actions/order.action';
+import { currentOrderActionAddArticle, currentOrderActionRemoveArticle, currentOrderActionSave } from '../../store/actions/order.action';
 import style from './basket.module.css';
 
 
@@ -12,12 +15,15 @@ const CurrentOrder = () => {
 
     const currentOrder = useSelector(state => state.order.currentOrder);
     const articles = useSelector(state => state.order.articles);
+    const orderId = currentOrder.id;
     // console.log('articles : ', articles);
     // console.log('articles.length : ', articles.length);
 
     // articles ? console.log('article') : console.log('vide');
     // articles.length !== 0 ? console.log('article') : console.log('vide');
    
+
+    const { register, handleSubmit, reset } = useForm();
 
 
     // ===============================================================================================================================
@@ -56,7 +62,6 @@ const CurrentOrder = () => {
     // Fonction qui permet d'ajouter ou retirer un article de la commande en cours  (lancée au clique sur les boutons + et -)
     // ===============================================================================================================================
     let newQuantity;
-    const orderId = currentOrder.id;
     const onIncrArticle = (articleId, quantity, storeId, increment, article_order_Id) => {
 
         if (increment === 'plus') {
@@ -79,6 +84,34 @@ const CurrentOrder = () => {
 
 
 
+
+
+
+    // ===============================================================================================================================
+    // Choix du mode de paiement
+    // ===============================================================================================================================
+    const handlePaymentMethod = (data) => {
+        // console.log('data : (mode de paiement) : ', data);
+
+        axios.put(`http://localhost:8080/api/order/${orderId}`, data);
+
+        dispatch(currentOrderActionSave());
+        
+        reset();
+    }
+
+
+    const handleChangePaymentMethod = () => {
+
+        axios.put( `http://localhost:8080/api/order/${orderId}`, {payment_method: null} );
+
+        dispatch(currentOrderActionSave());
+    }
+
+
+
+
+
     // ===============================================================================================================================
     // Rendu de la commande en cours
     // ===============================================================================================================================
@@ -90,7 +123,77 @@ const CurrentOrder = () => {
                 {/* Infos sur la commande en cours */}
                 <p>Statut de la commande : {currentOrder.order_status}</p>
                 <p>Statut de l'envoi : {currentOrder.sending_status}</p>
-                <p>Mode de paiement : {currentOrder.payment_method}</p>
+
+                {/* TODO : créer une route patch pour modifier "payment_method" */}
+                { 
+
+                    currentOrder.payment_method ? 
+
+                        ( 
+                            <form onSubmit={handleSubmit(handleChangePaymentMethod)}>
+                                <p>Mode de paiement : {currentOrder.payment_method}</p>
+                                <button type="submit">Changer le mode de paiement</button> 
+                            </form>
+
+                        ) : (
+                        
+                            <form onSubmit={handleSubmit(handlePaymentMethod)}>
+
+                                <fieldset>
+                                    <legend>Choisissez un mode de paiement :</legend>
+
+                                    <div>
+                                        <input
+                                            type="radio"
+                                            id="Visa"
+                                            name="payment_method"
+                                            value="Visa"
+                                            {...register('payment_method')}
+                                        />
+                                        <label htmlFor="Visa">Visa</label>
+                                    </div>
+                                    <div>
+                                        <input
+                                            type="radio"
+                                            id="Maestro"
+                                            name="payment_method"
+                                            value="Maestro"
+                                            {...register('payment_method')}
+                                        />
+                                        <label htmlFor="Maestro">Maestro</label>
+                                    </div>
+                                    <div>
+                                        <input
+                                            type="radio"
+                                            id="Payconiq"
+                                            name="payment_method"
+                                            value="Payconiq"
+                                            {...register('payment_method')}
+                                        />
+                                        <label htmlFor="Payconiq">Payconiq</label>
+                                    </div>
+                                    <div>
+                                        <input
+                                            type="radio"
+                                            id="PayPal"
+                                            name="payment_method"
+                                            value="PayPal"
+                                            {...register('payment_method')}
+                                        />
+                                        <label htmlFor="PayPal">PayPal</label>
+                                    </div>
+
+                                    <button type='submit'>Confirmer</button>
+
+                                </fieldset>
+
+                            </form>
+                        )
+                                
+                }
+                   
+                
+            
                 <p>Status de paiement : {currentOrder.payment_status}</p>
 
                 {/* ============================================================================================================================================= */}

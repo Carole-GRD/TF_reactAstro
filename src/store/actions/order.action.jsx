@@ -85,7 +85,7 @@ export const currentOrderActionRemoveArticle = createAsyncThunk(
   'ordersByUser/removeArticle',
   async (article_order_Id, thunkAPI) => {
     try {
-      console.log('order.action - article_order_Id:', article_order_Id);
+      // console.log('order.action - article_order_Id:', article_order_Id);
 
       // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
       const orderState = thunkAPI.getState().order;
