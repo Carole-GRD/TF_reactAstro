@@ -15,7 +15,7 @@ const CurrentOrder = () => {
 
     const currentOrder = useSelector(state => state.order.currentOrder);
     const articles = useSelector(state => state.order.articles);
-    const orderId = currentOrder.id;
+    
     // console.log('articles : ', articles);
     // console.log('articles.length : ', articles.length);
 
@@ -62,6 +62,8 @@ const CurrentOrder = () => {
     // Fonction qui permet d'ajouter ou retirer un article de la commande en cours  (lancée au clique sur les boutons + et -)
     // ===============================================================================================================================
     let newQuantity;
+    // ↓ IMPORTANT : initialisation de "orderId" après avoir vérifier s'il y a une commande en cours (au sinon, il n'y a pas de "currentOrder.id")
+    const orderId = currentOrder.id;     
     const onIncrArticle = (articleId, quantity, storeId, increment, article_order_Id) => {
 
         if (increment === 'plus') {
