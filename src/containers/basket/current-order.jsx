@@ -56,17 +56,18 @@ const CurrentOrder = () => {
     // Fonction qui permet d'ajouter ou retirer un article de la commande en cours  (lancée au clique sur les boutons + et -)
     // ===============================================================================================================================
     let newQuantity;
+    const orderId = currentOrder.id;
     const onIncrArticle = (articleId, quantity, storeId, increment, article_order_Id) => {
 
         if (increment === 'plus') {
             // On ajoute un article
             newQuantity = quantity + 1;
-            dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId}));
+            dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));
         }
         else if (increment === 'min' && quantity > 1) {
             // On retire un article (cas où l'article a une quantité supérieure à 1)
             newQuantity = quantity - 1;
-            dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId}));          
+            dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));          
         }
         else {
             // On supprime un article (cas où l'article a une quantité égale à 1)

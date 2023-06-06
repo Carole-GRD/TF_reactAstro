@@ -39,15 +39,14 @@ export const currentOrderActionClear = createAction('ordersByUser/clear');
 // -------------------------------------------------------------
 export const currentOrderActionAddArticle = createAsyncThunk(
   'ordersByUser/addArticle',
-  async ({articleId, newQuantity, storeId}, thunkAPI) => {
+  async ({articleId, newQuantity, storeId, orderId}, thunkAPI) => {
     try {
 
-      // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
-      const orderState = thunkAPI.getState().order;
-      // console.log('orderState:', orderState);
-      const orderId = orderState.currentOrder.id;
-      // console.log('Order ID:', orderId);
-
+      // // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
+      // const orderState = thunkAPI.getState().order;
+      // // console.log('orderState:', orderState);
+      // const orderId = orderState.currentOrder.id;
+      // // console.log('Order ID:', orderId);
 
       const articleData = {
         ArticleId: articleId,
@@ -90,9 +89,9 @@ export const currentOrderActionRemoveArticle = createAsyncThunk(
 
       // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
       const orderState = thunkAPI.getState().order;
-      console.log('orderState:', orderState);
+      // console.log('orderState:', orderState);
       const orderId = orderState.currentOrder.id;
-      console.log('Order ID:', orderId);
+      // console.log('Order ID:', orderId);
 
       await axios.delete(`http://localhost:8080/api/order/${orderId}/deleteArticle`, { data : {link: article_order_Id} });
 
@@ -104,16 +103,17 @@ export const currentOrderActionRemoveArticle = createAsyncThunk(
 
 
       // Vérifier s'il y a encore des articles dans la commande en cours
-      // ↓ retourne le nombre d'articles dans la commande en cours
+      // ↓ "isArticle" retourne le nombre d'articles dans la commande en cours
       const isArticle = thunkAPI.getState().order.articles.length;
-      console.log('isArticle:', isArticle);  
+      // console.log('isArticle:', isArticle);  
 
       // S'il n'y a plus d'article dans la commande en cours, on supprime la commande en cours
       if (isArticle === 0) {
         await axios.delete(`http://localhost:8080/api/order/${orderId}`);
+        // Actualiser les commandes après suppression du lien
+        thunkAPI.dispatch(currentOrderActionSave());
       }
-      
-      thunkAPI.dispatch(currentOrderActionSave());
+
 
     } 
     catch (error) {

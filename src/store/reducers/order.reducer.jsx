@@ -30,18 +30,18 @@ const currentOrderReducer = createReducer(initialState, (builder) => {
               }
               else {
                   state.currentOrder = null;
-                  state.articles = []
+                  state.articles = [];
               }
           }
           else {
-              state.allOrders = [],
-              state.currentOrder = null,
-              state.articles = []
+              state.allOrders = [];
+              state.currentOrder = null;
+              state.articles = [];
           }
         })
       .addCase(currentOrderActionClear, (state) => {
-          state.allOrders = [],
-          state.currentOrder = null,
+          state.allOrders = [];
+          state.currentOrder = null;
           state.articles = []
       })
       .addCase(currentOrderActionAddArticle.fulfilled, (state, action) => {

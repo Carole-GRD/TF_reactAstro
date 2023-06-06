@@ -19,7 +19,7 @@ const ArticleDetail = () => {
     const [details, setDetails] = useState([]);
     const [mark, setMark] = useState();
     const [storeInfos, setStoreInfos] = useState();
-    const [popup, setPopup] = useState(false); // Utilisez un état pour gérer la valeur de popup
+    const [popup, setPopup] = useState(false); // Utiliser un état pour gérer la valeur de popup
 
 
     const navigate = useNavigate();
@@ -28,21 +28,28 @@ const ArticleDetail = () => {
     const isConnected = useSelector(state => state.auth.isConnected);
     const userId = useSelector(state => state.auth.userId);
     const currentOrder = useSelector(state => state.order.currentOrder);
-    let orderId = null;
-    if (currentOrder) {
-        orderId = currentOrder.id;
-    }
-    // console.log('orderId : ', orderId); 
     
     
-    // TODO : Vérifier l'utilité du code suivant...
-    useEffect(() => {
-        dispatch(currentOrderActionSave());
-        orderId = currentOrder.id;
-    }, [currentOrder])
+
+    // // TODO : Vérifier l'utilité du code suivant...
+    // let orderId = null;
+    // useEffect(() => {
+        
+    //     // console.log('orderId : ', orderId); 
+    //     if (currentOrder) {
+    //         dispatch(currentOrderActionSave());
+    //         orderId = currentOrder.id;
+    //     }
+    // }, [isConnected, currentOrder])
 
 
+
+
+
     useEffect(() => {
+
+        // On récuprère l'article afin d'accéder à ses détails (nom, description, référence, auteur, MarkId)
+        // et grâce au "MarkId", on peut récupérer le nom de la marque
         axios
             .get(`http://localhost:8080/api/article/${articleId}`)
             .then((article) => {
@@ -68,6 +75,7 @@ const ArticleDetail = () => {
                 console.error('Error fetching article:', error);
             });
         
+        // On récupère les informations sur l'article (prix, réduction, stock) en fonction du magasin dans lequel il se trouve
         axios
             .get(`http://localhost:8080/api/article/${articleId}/store/${storeId}`)
             .then((response) => {
@@ -111,10 +119,15 @@ const ArticleDetail = () => {
                 console.log('orderData : ', orderData);
                 await axios.post('http://localhost:8080/api/order', orderData)
                             .then((newOrder) => {
-                                console.log('newOrder : ', newOrder);
+                                console.log('newOrder (id) : ', newOrder.data.result.id);
+                                const orderId =  newOrder.data.result.id;
+                                dispatch(currentOrderActionSave());
                                 // Lancer l'action currentOrderActionAddArtticle
-                                dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId}));
-                            })                        
+                                dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));
+                            }) 
+                            .catch((error) => {
+                                console.error('Error creating order:', error);
+                            });                       
             }
             else {
                 // Si l'utilisateur est connecté et qu'il a une commande en cours
@@ -131,8 +144,10 @@ const ArticleDetail = () => {
                     newQuantity = articleOrder.quantity + 1;
                 }
 
+                const orderId = currentOrder.id;
+
                 // Lancer l'action currentOrderActionAddArtticle
-                 dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId}));
+                 dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));
 
             }
 
