@@ -116,10 +116,10 @@ const ArticleDetail = () => {
                     payment_status: 'En attente',
                     UserId: userId
                 }
-                console.log('orderData : ', orderData);
+                // console.log('orderData : ', orderData);
                 await axios.post('http://localhost:8080/api/order', orderData)
                             .then((newOrder) => {
-                                console.log('newOrder (id) : ', newOrder.data.result.id);
+                                // console.log('newOrder (id) : ', newOrder.data.result.id);
                                 const orderId =  newOrder.data.result.id;
                                 dispatch(currentOrderActionSave());
                                 // Lancer l'action currentOrderActionAddArtticle

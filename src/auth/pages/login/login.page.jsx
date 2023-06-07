@@ -28,7 +28,8 @@ const LoginPage = () => {
     const isConnected = useSelector(state => state.auth.isConnected); 
     const errorMsg = useSelector(state => state.auth.errorMsg); 
     
-    const [buttonText, setButtonText] = useState('Connexion');
+    // const [buttonText, setButtonText] = useState('Connexion');
+    const [loading, setLoading] = useState('');
     
 
     const dispatch = useDispatch(); 
@@ -43,14 +44,17 @@ const LoginPage = () => {
             navigate('/account'); 
         } 
 
-    }, [isConnected, navigate]) 
+    }, [isConnected, navigate]);
     
+ 
     
-
     const onLogin = async (data) => {
 
-        setButtonText('Chargement...');
+        setLoading('Chargement...');
         dispatch(loginUser(data));
+        if (errorMsg) {
+            setLoading('');
+        }
         reset();
 
       };
@@ -85,15 +89,12 @@ const LoginPage = () => {
                         </div> 
 
                         <div className={authStyle.btn}> 
-                            <button type='submit'>{buttonText}</button> 
+                            <button type='submit'>Connexion</button> 
                         </div> 
 
-                        {/* <div>
-                            {loading && (<p>Chargement...</p>)}
-                        </div> */}
 
                         <div>
-                            {errorMsg && (<p>{errorMsg}</p>)} 
+                            { errorMsg ? (<p>{errorMsg}</p>) : (<p>{loading}</p>) } 
                         </div>
                         
                     </form> 

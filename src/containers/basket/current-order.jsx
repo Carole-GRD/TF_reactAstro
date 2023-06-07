@@ -119,139 +119,71 @@ const CurrentOrder = () => {
     // ===============================================================================================================================
     return (
 
-        <>
-                <article className={style['data']}>
+        <article className={style['data']}>
 
-                {/* Infos sur la commande en cours */}
-                <p>Statut de la commande : {currentOrder.order_status}</p>
-                <p>Statut de l'envoi : {currentOrder.sending_status}</p>
+            {/* INFOS SUR LA COMMANDE EN COURS */}
+            <p>Statut de la commande : {currentOrder.order_status}</p>
+            <p>Statut de l'envoi : {currentOrder.sending_status}</p>
+            <p>Status de paiement : {currentOrder.payment_status}</p>
 
-                {/* TODO : créer une route patch pour modifier "payment_method" */}
-                { 
 
-                    currentOrder.payment_method ? 
 
-                        ( 
-                            <form onSubmit={handleSubmit(handleChangePaymentMethod)}>
-                                <p>Mode de paiement : {currentOrder.payment_method}</p>
-                                <button type="submit">Changer le mode de paiement</button> 
-                            </form>
+            {/* ============================================================================================================================================= */}
 
-                        ) : (
+            {/* Tableau reprenant tous les articles dans la commande en cours, ainsi que le total de l'ensemble de la commande  */}
+            {/* <p>Articles : </p> */}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Articles</th>
+                        <th>Magasin</th>
+                        <th>Prix unitaire</th>
+                        <th>Réduction</th>
+                        <th>Nouveau prix</th>
+                        <th>Quantité</th>
+                        <th></th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {   
                         
-                            <form onSubmit={handleSubmit(handlePaymentMethod)}>
-
-                                <fieldset>
-                                    <legend>Choisissez un mode de paiement :</legend>
-
-                                    <div>
-                                        <input
-                                            type="radio"
-                                            id="Visa"
-                                            name="payment_method"
-                                            value="Visa"
-                                            {...register('payment_method')}
-                                        />
-                                        <label htmlFor="Visa">Visa</label>
-                                    </div>
-                                    <div>
-                                        <input
-                                            type="radio"
-                                            id="Maestro"
-                                            name="payment_method"
-                                            value="Maestro"
-                                            {...register('payment_method')}
-                                        />
-                                        <label htmlFor="Maestro">Maestro</label>
-                                    </div>
-                                    <div>
-                                        <input
-                                            type="radio"
-                                            id="Payconiq"
-                                            name="payment_method"
-                                            value="Payconiq"
-                                            {...register('payment_method')}
-                                        />
-                                        <label htmlFor="Payconiq">Payconiq</label>
-                                    </div>
-                                    <div>
-                                        <input
-                                            type="radio"
-                                            id="PayPal"
-                                            name="payment_method"
-                                            value="PayPal"
-                                            {...register('payment_method')}
-                                        />
-                                        <label htmlFor="PayPal">PayPal</label>
-                                    </div>
-
-                                    <button type='submit'>Confirmer</button>
-
-                                </fieldset>
-
-                            </form>
-                        )
-                                
-                }
-                   
-                
-            
-                <p>Status de paiement : {currentOrder.payment_status}</p>
-
-                {/* ============================================================================================================================================= */}
-
-                {/* Tableau reprenant tous les articles dans la commande en cours, ainsi que le total de l'ensemble de la commande  */}
-                <p>Articles : </p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Articles</th>
-                            <th>Magasin</th>
-                            <th>Prix unitaire</th>
-                            <th>Réduction</th>
-                            <th>Nouveau prix</th>
-                            <th>Quantité</th>
-                            <th></th>
-                            <th>Prix</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {   
+                        currentOrder.Article_Orders.map( (article_order) => (
                             
-                            currentOrder.Article_Orders.map( (article_order) => (
-                                
-                                <tr key={article_order.id}>
+                            <tr key={article_order.id}>
 
-                                    {/* Nom de l'article */}
-                                    <td>{article_order.Article.name}</td>
+                                {/* Nom de l'article */}
+                                <td>{article_order.Article.name}</td>
 
-                                    {/* Nom du magasin */}
-                                    <td>{article_order.Article.Stores.find(store => store.id === article_order.store).name}</td> 
+                                {/* Nom du magasin */}
+                                <td>{article_order.Article.Stores.find(store => store.id === article_order.store).name}</td> 
 
-                                    {/* Prix unitaire */}
-                                    <td>{article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.price.toFixed(2)} €</td> 
+                                {/* Prix unitaire */}
+                                <td>{article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.price.toFixed(2)} €</td> 
 
-                                    {/* Réduction */}
-                                    <td>{article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.discount * 100} %</td> 
+                                {/* Réduction */}
+                                <td>{article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.discount * 100} %</td> 
 
-                                     {/* Prix après réduction (nouveau prix -> prix * réduction) */}
-                                     <td>
-                                        {
-                                            (
-                                                article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.price
-                                                * 
-                                                (1 - article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.discount)
-                                            ).toFixed(2) 
-                                        } €
-                                    </td> 
-                                    
-                                    {/* Quantité */}
-                                    <td>{article_order.quantity}</td>
-
-                                    
-                                    {/* Bouton + et - permettant d'ajouter ou retirer un article de la commande */}
+                                    {/* Prix après réduction (nouveau prix -> prix * réduction) */}
                                     <td>
-                                        <button 
+                                    {
+                                        (
+                                            article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.price
+                                            * 
+                                            (1 - article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.discount)
+                                        ).toFixed(2) 
+                                    } €
+                                </td> 
+                                
+                                {/* Quantité */}
+                                <td>{article_order.quantity}</td>
+
+                                
+                                {/* Bouton + et - permettant d'ajouter ou retirer un article de la commande */}
+                                <td>
+                                    <div className={style['btn-incr-group']}>
+                                        <button
+                                            className={style['btn-incr']}
                                             onClick={() => { onIncrArticle(
                                                 article_order.Article.id, 
                                                 article_order.quantity,
@@ -260,8 +192,9 @@ const CurrentOrder = () => {
                                             )}}>
                                                 +
                                         </button>
-                                        /
+                                        
                                         <button 
+                                            className={style['btn-incr']}
                                             onClick={() => { onIncrArticle(
                                                 article_order.Article.id, 
                                                 article_order.quantity,
@@ -271,49 +204,128 @@ const CurrentOrder = () => {
                                                 )}}>
                                                     -
                                         </button>
-                                    </td>
+                                    </div>
+                                </td>
 
-                                    {/* Prix (prix * réduction * quantité) */}
-                                    <td>{
-                                            (
-                                                article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.price
-                                                * 
-                                                (1 - article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.discount) 
-                                                * 
-                                                article_order.quantity
-                                            ).toFixed(2) 
-                                        } €
-                                    </td>
-                                    
-                                </tr>
-                            )) 
-                               
-                        }
+                                {/* Prix (prix * réduction * quantité) */}
+                                <td>{
+                                        (
+                                            article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.price
+                                            * 
+                                            (1 - article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.discount) 
+                                            * 
+                                            article_order.quantity
+                                        ).toFixed(2) 
+                                    } €
+                                </td>
+                                
+                            </tr>
+                        )) 
+                            
+                    }
 
-                        {/* Total de l'ensemble de la commande */}
-                        <tr>
-                            <td>TOTAL</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{total.toFixed(2)} €</td>
-                        </tr>
-                    </tbody>
-                </table>  
+                    {/* Total de l'ensemble de la commande */}
+                    <tr>
+                        <td>TOTAL</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{total.toFixed(2)} €</td>
+                    </tr>
+                </tbody>
+            </table>  
 
 
-                {/* ============================================================================================================================================= */}
+            {/* ============================================================================================================================================= */}
+            
 
-                <button className={style['btn-current-order']}>{'<< Continuer vos achats'}</button>
+            {/* MODE DE PAIEMENT */}
+            { 
+
+                currentOrder.payment_method ? 
+                    
+                    ( 
+                        // Affichage du mode de paiement lorsque l'utilisateur a fait son choix
+                        <form onSubmit={handleSubmit(handleChangePaymentMethod)}>
+                            <p>Mode de paiement : {currentOrder.payment_method}</p>
+                            <button type="submit">Changer le mode de paiement</button> 
+                        </form>
+
+                    ) : (
+                        
+                        // Affichage du formulaire contenant les différents modes de paiement proposés à l'utilisateur. 
+                        // L'utilisateur doit cocher le mode de paiement qu'il souhaite utiliser (Visa, Maestro, Payconiq, Paypal).
+                        <form onSubmit={handleSubmit(handlePaymentMethod)}>
+
+                            <fieldset>
+                                <legend>Choisissez un mode de paiement :</legend>
+
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="Visa"
+                                        name="payment_method"
+                                        value="Visa"
+                                        {...register('payment_method')}
+                                    />
+                                    <label htmlFor="Visa">Visa</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="Maestro"
+                                        name="payment_method"
+                                        value="Maestro"
+                                        {...register('payment_method')}
+                                    />
+                                    <label htmlFor="Maestro">Maestro</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="Payconiq"
+                                        name="payment_method"
+                                        value="Payconiq"
+                                        {...register('payment_method')}
+                                    />
+                                    <label htmlFor="Payconiq">Payconiq</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="PayPal"
+                                        name="payment_method"
+                                        value="PayPal"
+                                        {...register('payment_method')}
+                                    />
+                                    <label htmlFor="PayPal">PayPal</label>
+                                </div>
+
+                                <button type='submit'>Confirmer</button>
+
+                            </fieldset>
+
+                        </form>
+                    )
+                            
+                }
+
+
+
+            {/* ============================================================================================================================================= */}
+
+            <div className={style['btn-current-order']}>
+                <button>{'<< Continuer vos achats'}</button>
         
-                <button className={style['btn-current-order']}>Commander</button>
+                <button>Commander</button>
+            </div>
 
-            </article>
+        </article>
 
-        </>
+
     )
 }
 

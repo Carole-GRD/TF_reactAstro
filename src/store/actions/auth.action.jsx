@@ -5,6 +5,7 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios'; 
 
 
+
 export const registerUser = createAsyncThunk('user/register', 
 
     async (data, thunkAPI) => { 
@@ -25,24 +26,6 @@ export const loginUser = createAsyncThunk('user/login',
         return response.data.result; 
         
     } 
-
-
-    // async (data, thunkAPI) => { 
-
-    //     const user = await axios.post('http://localhost:8080/api/auth/login', data);
-                                
-    //     console.log('user : ', user.data.result);
-    //     console.log('userId : ', user.data.result.userToConnect.id);
-        
-    //     const order = await axios.get(`http://localhost:8080/api/order/user/${user.data.result.userToConnect.id}`);
-    //     console.log('order.data.results : ', order.data.results);
-
-    //     return {
-    //         auth : user.data.result,
-    //         order : order.data.results
-    //     }   
-    // } 
-
 ); 
 
 
@@ -50,6 +33,7 @@ export const loginUser = createAsyncThunk('user/login',
 export const logoutUser = createAction('user/logout');
 
 
+export const updateUser = createAction('user/update');
 
 
 

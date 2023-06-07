@@ -8,11 +8,16 @@ import MyPersonalData from "./my-personal-data";
 
 import style from './basket.module.css';
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../../store/actions/auth.action";
 // import { currentOrderActionSave } from "../../store/actions/order.action";
 // import fetchOrders from '../../api/fetchOrders.api';
 
 
 const Basket = () => {
+
+    const popupUpdateProfile = useSelector(state => state.auth.popupUpdateProfile);
+    console.log('popupUpdateProfile : ', popupUpdateProfile);
 
     // console.log('basket.jsx - userId : ', userId);
 
@@ -21,6 +26,7 @@ const Basket = () => {
     const [displayCurrentOrder, setDisplayCurrentOrder] = useState(false);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // useEffect(() => {
         // async function fetchOrders() {
@@ -48,36 +54,59 @@ const Basket = () => {
     };
 
 
+    const onReconnect = () => {
+        dispatch(logoutUser());
+        navigate('/login');
+    }
 
+
+    
+    
     return (
-        <div className={style.basket}>
-            <h3 onClick={onDisplayMyPersonalData}>Mes données</h3>
+        <>
             {
-                displayMyPersonalData && (
-                    <MyPersonalData />
-                )
-            }
+                popupUpdateProfile ? (
+
+                        <div className={style.basket}>
+                            <button onClick={onReconnect}>Reconnectez-vous</button>
+                        </div>
+
+                ) : (
+
+                    <div className={style.basket}>
+                        <h3 onClick={onDisplayMyPersonalData}>Mon profil</h3>
+                        {
+                            displayMyPersonalData && (
+                                <MyPersonalData />
+                            )
+                        }
 
 
-            <h3 onClick={onDisplayCurrentOrder}>Mon panier</h3>
-            {
-                (displayCurrentOrder) && (
-                    <CurrentOrder />
+                        <h3 onClick={onDisplayCurrentOrder}>Mon panier</h3>
+                        {
+                            (displayCurrentOrder) && (
+                                <CurrentOrder />
+                            )
+                        }
+                        
+
+
+                        <h3 onClick={onDisplayAllOrders}>Voir mes commandes</h3>
+                        {
+                            ( displayAllOrders) && (
+                                <AllOrders />
+                            )
+                        }
+                        
+                        
+                    </div>
                 )
             }
             
-
-
-            <h3 onClick={onDisplayAllOrders}>Voir mes commandes</h3>
-            {
-                ( displayAllOrders) && (
-                    <AllOrders />
-                )
-            }
-           
-            
-        </div>
+        </>
     )
+
+    
 }
 
 export default Basket;

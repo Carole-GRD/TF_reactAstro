@@ -32,7 +32,7 @@ const AccountPage = () =>  {
                 (userFirstname && userLastname) && (
                     <div className={style['home-container']}>
             
-                        <h2>Heureux de vous revoir {userFirstname} {userLastname} !</h2>
+                        <h2>{userFirstname} {userLastname}</h2>
 
                         <Basket />
                         

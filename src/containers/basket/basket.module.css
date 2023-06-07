@@ -2,27 +2,36 @@
 
 
 .basket {
+    margin-top: 2rem;
     width: 100%;
-    /* display: flex;
-    flex-direction: column; */
+    display: flex;
+    flex-direction: column; 
 }
 
 .basket h3 {
-    margin: 2rem 0;
+    margin: 1rem 0;
     cursor: pointer;
 }
 
-.data {
+.basket button {
+    width: fit-content;
+    margin: 0.5rem 0 0.5rem 1rem;
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+}
+
+article.data {
     width: 100%;
     border-left: 1px solid #060c37;
-    margin: 2rem 0;
+    margin: 1rem 0;
 }
 
 .data p {
-    width: 70vw;
     padding: 0 0 0 1rem;
     line-height: 1.5rem;
 }
+
+
 
 
 
@@ -37,6 +46,38 @@
     width: 5rem;
 }
 
+/* Formulaire */
+form {
+    width: fit-content;
+    margin: 0 0 0 1rem;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+.form-group label {
+    color: #060c37;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input {
+    background-color: rgba(255, 255, 255, 0);
+    padding: 0.5rem;
+    letter-spacing: .1rem;
+    border: none;
+    border-bottom: 1px solid #777;
+    margin-bottom: 1rem;
+}
+.form-group input::placeholder {
+    color: #777;
+}
+.form-group input:focus {
+    color: #060c37;
+    outline: none;
+}
+
 
 
 /* ================= */
@@ -44,51 +85,25 @@
 /* ================= */
 
 
-.data form button {
-    margin: 0 0 0 1rem;
-}
-
-/* input type radio (choix du mode de paiement) */
-.data fieldset {
-    margin: 1rem 0 1rem 1rem;
-    padding: 1rem;
-}
-.data fieldset legend {
-    margin: 0 0 0 1rem;
-    font-size: 1rem;
-    font-weight: 600;
-}
-.data fieldset label {
-    font: 1rem 'Fira Sans', sans-serif;
-}
-.data fieldset input {
-    margin: 0.4rem;
-}
-.data fieldset button {
-    margin-top: 0.5rem;
-}
-
-
-
-
 /* Table affichée dans "Mon panier" */
 /* Table comprenant tous les articles de la commande */
 .data table {
     margin: 1rem 0 1rem 1rem;
-    width: 70vw;
+    width: calc(100% - 1rem);
     border-collapse: collapse;
 }
 
 .data th,
 .data td {
-    width: 10vw;
+    width: fit-content;
+    min-width: 100px;
     text-align: center;
     border: 1px solid #060c37;
     padding: 0.5rem;
 }
 .data th:first-child,
 .data td:first-child {
-    width: 45vw;
+    min-width: 300px;
     padding: 0.5rem 0.5rem 0.5rem 1rem;
 }
 .data th {
@@ -113,22 +128,59 @@
 .data th:nth-child(7),
 .data td:nth-child(7) {
     border-left: none;
-    width: 10vw;
+    padding: 0;
+    min-width: 70px;
 }
-.data button {
-    cursor: pointer;
-    /* border: none; */
-    margin: 0 0.3rem;
-    padding: 0.2rem 0.5rem;
+.data .btn-incr-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.data .btn-incr{
+    margin: 0 0.2rem;
 }
 
-/* Bouton "Commander */
-.btn-current-order {
-    /* border: 1px solid red; */
-    margin: 0.5rem 0.5rem 0.5rem 1rem !important;
-    padding: 0.5rem 1rem !important;
-    cursor: pointer;
+
+
+/* input type radio (choix du mode de paiement) */
+.data fieldset {
+    width: fit-content;
+    margin: 1rem 0 1rem 1rem;
+    padding: 1rem;
 }
+.data fieldset legend {
+    margin: 0 0 0 1rem;
+    padding: 0 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.data fieldset label {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+.data fieldset input {
+    margin: 0.4rem;
+}
+.data fieldset button {
+    margin-top: 0.5rem;
+}
+
+
+
+/* Boutons "<< Continuer vos achats" et "Commander" */
+.btn-current-order {
+    /* border: 2px solid green; */
+    /* margin: 0.5rem 0.5rem 0.5rem 0; */
+    margin-left: 1rem;
+    width: calc(100% - 1rem);
+    display: flex;
+    justify-content: center;
+
+}
+.btn-current-order button {
+    padding: 0.5rem 1rem;
+    margin: 0 1rem;
+}
+
 
 
 

@@ -2,7 +2,7 @@
 // auth.reducer.jsx
 
 import { createReducer } from '@reduxjs/toolkit'; 
-import { loginUser, registerUser, logoutUser } from '../actions/auth.action'; 
+import { loginUser, registerUser, logoutUser, updateUser } from '../actions/auth.action'; 
 
 const initialState = { 
     // auth
@@ -21,10 +21,8 @@ const initialState = {
     userAddressCity: '',
     userAddressPostalCode: null,
     userAddressCountry: '',
-    // order
-    // allOrders: [],
-    // currentOrder: null,
-    // articles: []
+    // popup (Reconnexion après mise à jour du profil)
+    popupUpdateProfile : false
 }; 
 
 const authReducer = createReducer(initialState, (builder) => { 
@@ -45,6 +43,7 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressCity = action.payload.result.user.address_city;
             state.userAddressPostalCode = action.payload.result.user.address_postalCode;
             state.userAddressCountry = action.payload.result.user.address_country;
+            state.popupUpdateProfile = false;
         }) 
         .addCase(loginUser.fulfilled, (state, action) => { 
             // console.log('loginUser - action.payload : ', action.payload);
@@ -63,32 +62,8 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressNumber = action.payload.userToConnect.address_number;
             state.userAddressCity = action.payload.userToConnect.address_city;
             state.userAddressPostalCode = action.payload.userToConnect.address_postalCode;
-            state.userAddressCountry = action.payload.userToConnect.address_country;
-
-            // // order
-            // const orders = action.payload.order;
-            // if (orders.length > 0) {
-            //     state.allOrders = orders.filter((order) => order.order_status !== 'En attente');
-
-            //     const currentOrder = orders.find((order) => order.order_status === 'En attente');
-            //     // console.log('currentOrder : ', currentOrder);
-            //     state.currentOrder = currentOrder;
-                
-            //     if (currentOrder) {
-            //         // console.log('currentOrder.Article_Orders.map(article => article.Article) : ', currentOrder.Article_Orders.map(article => article.Article));
-            //         const allArticles = currentOrder.Article_Orders.map(article => article.Article);
-            //         state.articles = allArticles;
-            //     }
-            //     else {
-            //         state.articles = []
-            //     }
-            // }
-            // else {
-            //     state.allOrders = [],
-            //     state.currentOrder = null,
-            //     state.articles = []
-            // }
-            
+            state.userAddressCountry = action.payload.userToConnect.address_country; 
+            state.popupUpdateProfile = false;
         }) 
         .addCase(registerUser.rejected, (state, action) => { 
             state.errorMsg = 'Veuillez remplir toutes les données necessaires'; 
@@ -106,20 +81,19 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userRole = ''; 
             state.userFirstname = ''; 
             state.userLastname = ''; 
-            state.userPseudo = '',
-            state.userEmail = '',
+            state.userPseudo = '';
+            state.userEmail = '';
             state.errorMsg = null; 
             state.userAvatar = null; 
-            state.userAddressStreet = '',
-            state.userAddressNumber = null,
-            state.userAddressCity = '',
-            state.userAddressPostalCode = null,
-            state.userAddressCountry = '',
-            // order
-            state.allOrders = [],
-            state.currentOrder = null,
-            state.articles = [] 
-        }); 
+            state.userAddressStreet = '';
+            state.userAddressNumber = null;
+            state.userAddressCity = '';
+            state.userAddressPostalCode = null;
+            state.userAddressCountry = '';
+        }) 
+        .addCase(updateUser, (state) => {
+            state.popupUpdateProfile = true;
+        })
 }); 
 
 export default authReducer;
