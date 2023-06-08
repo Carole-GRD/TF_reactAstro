@@ -9,7 +9,7 @@ import style from './basket.module.css';
 
 import defaultAvatar from '../../assets/avatar.jpg'; 
 import { useNavigate } from "react-router-dom";
-import { logoutUser, updateUser } from "../../store/actions/auth.action";
+import { logoutUser, popupUpdateUser } from "../../store/actions/auth.action";
 import { useDispatch } from "react-redux";
 
 
@@ -89,7 +89,7 @@ const MyPersonalData = () => {
         
         reset();
         
-        dispatch(updateUser());
+        dispatch(popupUpdateUser());
 
         navigate('/account');
     }
@@ -110,7 +110,8 @@ const MyPersonalData = () => {
     // }
 
 
-
+    // TODO : créer des composants pour my-personal-data (formulaire (+ données ?) )
+    // TODO : créer des composants pour article-detail (popup (+ détails ?) )
 
 
     if (isConnected && !openForm) {

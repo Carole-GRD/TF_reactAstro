@@ -17,9 +17,8 @@ import { logoutUser } from "../../store/actions/auth.action";
 const Basket = () => {
 
     const popupUpdateProfile = useSelector(state => state.auth.popupUpdateProfile);
-    console.log('popupUpdateProfile : ', popupUpdateProfile);
+    // console.log('popupUpdateProfile : ', popupUpdateProfile);
 
-    // console.log('basket.jsx - userId : ', userId);
 
     const [displayAllOrders, setDisplayAllOrders] = useState(false);
     const [displayMyPersonalData, setDisplayMyPersonalData] = useState(false);
@@ -42,18 +41,13 @@ const Basket = () => {
 
 
 
-    // TODO : généraliser la fonction
-    const onDisplayAllOrders = () => {
-        setDisplayAllOrders(!displayAllOrders);
-    };
-    const onDisplayMyPersonalData = () => {
-        setDisplayMyPersonalData(!displayMyPersonalData);
-    };
-    const onDisplayCurrentOrder = () => {
-        setDisplayCurrentOrder(!displayCurrentOrder);
-    };
+
+    const onDisplay = (setDisplay, display) => {
+        setDisplay(!display);
+    }
 
 
+    
     const onReconnect = () => {
         dispatch(logoutUser());
         navigate('/login');
@@ -74,7 +68,8 @@ const Basket = () => {
                 ) : (
 
                     <div className={style.basket}>
-                        <h3 onClick={onDisplayMyPersonalData}>Mon profil</h3>
+
+                        <h3 onClick={ () => {onDisplay(setDisplayMyPersonalData, displayMyPersonalData)} }>Mon profil</h3>
                         {
                             displayMyPersonalData && (
                                 <MyPersonalData />
@@ -82,7 +77,8 @@ const Basket = () => {
                         }
 
 
-                        <h3 onClick={onDisplayCurrentOrder}>Mon panier</h3>
+
+                        <h3 onClick={ () => {onDisplay(setDisplayCurrentOrder, displayCurrentOrder)} }>Mon panier</h3>
                         {
                             (displayCurrentOrder) && (
                                 <CurrentOrder />
@@ -91,7 +87,7 @@ const Basket = () => {
                         
 
 
-                        <h3 onClick={onDisplayAllOrders}>Voir mes commandes</h3>
+                        <h3 onClick={ () => {onDisplay(setDisplayAllOrders, displayAllOrders)} }>Voir mes commandes</h3>
                         {
                             ( displayAllOrders) && (
                                 <AllOrders />

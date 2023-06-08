@@ -2,7 +2,7 @@
 // auth.reducer.jsx
 
 import { createReducer } from '@reduxjs/toolkit'; 
-import { loginUser, registerUser, logoutUser, updateUser } from '../actions/auth.action'; 
+import { loginUser, registerUser, logoutUser, popupUpdateUser } from '../actions/auth.action'; 
 
 const initialState = { 
     // auth
@@ -91,7 +91,7 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressPostalCode = null;
             state.userAddressCountry = '';
         }) 
-        .addCase(updateUser, (state) => {
+        .addCase(popupUpdateUser, (state) => {
             state.popupUpdateProfile = true;
         })
 }); 

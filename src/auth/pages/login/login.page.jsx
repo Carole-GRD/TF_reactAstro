@@ -44,7 +44,8 @@ const LoginPage = () => {
             navigate('/account'); 
         } 
 
-    }, [isConnected, navigate]);
+    }, [isConnected/*, navigate*/]);
+
     
  
     

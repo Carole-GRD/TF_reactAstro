@@ -33,7 +33,7 @@ export const loginUser = createAsyncThunk('user/login',
 export const logoutUser = createAction('user/logout');
 
 
-export const updateUser = createAction('user/update');
+export const popupUpdateUser = createAction('user/popupUpdate');
 
 
 
