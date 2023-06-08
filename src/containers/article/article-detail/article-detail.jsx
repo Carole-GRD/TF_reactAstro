@@ -10,6 +10,12 @@ import { currentOrderActionAddArticle, currentOrderActionSave } from '../../../s
 
 
 
+
+    // TODO : créer des composants pour article-detail (popup (+ détails ?) )
+
+
+
+    
 const ArticleDetail = () => {
 
     const { articleId, storeId } = useParams();

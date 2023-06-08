@@ -33,7 +33,19 @@ export const loginUser = createAsyncThunk('user/login',
 export const logoutUser = createAction('user/logout');
 
 
-export const popupUpdateUser = createAction('user/popupUpdate');
+// export const popupUpdateUser = createAction('user/popupUpdate');
+
+
+export const getUserById = createAsyncThunk('user/getById',
+
+    async (userId) => {
+
+        const response = await axios.get(`http://localhost:8080/api/user/${userId}`);
+        return response.data.result;
+
+    }
+
+);
 
 
 
