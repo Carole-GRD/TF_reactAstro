@@ -18,20 +18,46 @@ import { useState } from "react";
 
 const MyPersonalDataForm = ( { onSetOpenForm } ) => {
 
+    // /////////////////////////////////////////////////
+    // ---------------   Store   ----------------------
+    // /////////////////////////////////////////////////
     const auth = useSelector(state => state.auth);
     const userId = auth.userId;
 
+
+    // /////////////////////////////////////////////////
+    // ---------------   State   ----------------------
+    // /////////////////////////////////////////////////
     const [form, setForm] = useState('');
+    const [showCurrentPassword, setShowCurrentPassword] = useState('password');
+    const [showNewPassword, setShowNewPassword] = useState('password');
+    const [showConfirmPassword, setShowConfirmPassword] = useState('password');
 
+
+    // /////////////////////////////////////////////////
+    // ---------------   Hooks   ----------------------
+    // /////////////////////////////////////////////////
     const dispatch = useDispatch();
-
     const { register, handleSubmit, reset } = useForm();
 
+    
+    // /////////////////////////////////////////////////
+    // -------------   Fonctions   --------------------
+    // /////////////////////////////////////////////////
 
+    
+    const onDisplay = (setDisplay, display) => {
+        // fonction qui affiche ou cache le mot de passe
+        if (display === 'password') {
+            setDisplay('text'); 
+        }
+        else {
+            setDisplay('password'); 
+        }
+    }
 
 
     const onValidAvatar = async (data) => {
-        console.log('avatar validé'); 
         const file = data.avatar[0];
         console.log(file);
         
@@ -48,12 +74,13 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
 
 
 
+    const onValidPassword = async (data) => {
+        console.log('my-personal-data-form.jsx - modification du mot de passe (data) : ', data);
 
-    const onValidPassword = () => {
-        console.log('mot de passe validé');
+        await axios.patch(`http://localhost:8080/api/user/${userId}/password`, data);
+        
         onSetOpenForm();
     }
-
 
 
     const onValidForm = async (data) => {
@@ -103,16 +130,21 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
     }
 
 
-
+    // /////////////////////////////////////////////////
+    // -----------   Render (Rendu)   ------------------
+    // /////////////////////////////////////////////////
     if (form === '') {
-
+        
+        // Popup affichant 4 boutons :
+        // - 3 boutons qui dirigent vers l'un des 3 fomrulaires présents ci-dessous (data, avatar ou password)
+        // - le 4e redirige vers le composant "my-personal-data" (si l'utilisateur ne veut finalement pas faire de modifications)
         return (
             <section className={style['article']}>
 
                 <div className={style['popup-btn']}>
-                    <button onClick={() => { setForm('data') }}>Modifer vos données</button>
-                    <button onClick={() => { setForm('avatar'); console.log('modifier l\'avatar'); }}>Modifier votre avatar</button>
-                    <button onClick={() => { setForm('password'); console.log('modifier le mot de passe'); }}>Modifier votre mot de passe</button>
+                    <button onClick={() => { setForm('data') }}>Modifer mes informations personnelles</button>
+                    <button onClick={() => { setForm('avatar') }}>Modifier mon avatar</button>
+                    <button onClick={() => { setForm('password') }}>Modifier mon mot de passe</button>
                     <button onClick={() => { onSetOpenForm() }}>Annuler</button>
                 </div>
 
@@ -128,11 +160,9 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
                 <form onSubmit={handleSubmit(onValidAvatar)}>
                     <div className={style['form-group']}> 
                         <label htmlFor="avatar">Avatar</label> 
-                        {/* <input id='avatar' type='text' placeholder='Avatar' {...register('avatar')} />  */}
                         <input id='avatar' type='file'  {...register('avatar')} /> 
-                        {/* <input id="avatar" type="file" onChange={e.target.value} /> */}
                     </div> 
-                    <button type="submit">Valider</button>
+                    <button type="submit">Modifier mon avatar</button>
                 </form>
                 
             </article>
@@ -146,10 +176,39 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
         
                 <form onSubmit={handleSubmit(onValidPassword)}>
                     <div className={style['form-group']}> 
-                        <label htmlFor="avatar">Mot de passe</label> 
-                        <input id='password' type='text' placeholder='Mot de passe' {...register('password')} /> 
+                        <label htmlFor="currentPassword">Mot de passe actuel</label>
+                        <div>
+                            <input id='currentPassword' type={showCurrentPassword} {...register('currentPassword')} /> 
+                            <button 
+                                onClick={() => {onDisplay(setShowCurrentPassword, showCurrentPassword)}}
+                                type="button">
+                                    Voir
+                            </button> 
+                        </div>
                     </div> 
-                    <button type="submit">Valider</button>
+                    <div className={style['form-group']}> 
+                        <label htmlFor="newPassword">Nouveau mot de passe</label> 
+                        <div>
+                            <input id='newPassword' type={showNewPassword} {...register('newPassword')} /> 
+                            <button 
+                                onClick={() => {onDisplay(setShowNewPassword, showNewPassword)}}
+                                type="button">
+                                    Voir
+                            </button> 
+                        </div>
+                    </div> 
+                    <div className={style['form-group']}> 
+                        <label htmlFor="confirmPassword">Confirmation du nouveau mot de passe</label> 
+                        <div>
+                            <input id='confirmPassword' type={showConfirmPassword} {...register('confirmPassword')} /> 
+                            <button 
+                                onClick={() => {onDisplay(setShowConfirmPassword, showConfirmPassword)}}
+                                type="button">
+                                    Voir
+                            </button> 
+                        </div>
+                    </div> 
+                    <button type="submit">Modifier mon mot de passe</button>
                 </form>
                 
             </article>
@@ -208,7 +267,7 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
                         <input id='country' type='text' placeholder={auth.userAddressCountry} {...register('address_country')} /> 
                     </div> 
     
-                    <button type="submit">Valider</button>
+                    <button type="submit">Modifier mes informations personnelles</button>
     
                 </form>
                 
