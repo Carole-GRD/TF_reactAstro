@@ -53,6 +53,7 @@ const LoginPage = () => {
 
         setLoading('Chargement...');
         dispatch(loginUser(data));
+
         if (errorMsg) {
             setLoading('');
         }

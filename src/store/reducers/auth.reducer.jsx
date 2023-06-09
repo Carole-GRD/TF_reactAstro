@@ -2,7 +2,7 @@
 // auth.reducer.jsx
 
 import { createReducer } from '@reduxjs/toolkit'; 
-import { loginUser, registerUser, logoutUser,/* popupUpdateUser,*/ getUserById } from '../actions/auth.action'; 
+import { loginUser, registerUser, logoutUser, getUserById } from '../actions/auth.action'; 
 
 const initialState = { 
     // auth
@@ -20,9 +20,7 @@ const initialState = {
     userAddressNumber: null,
     userAddressCity: '',
     userAddressPostalCode: null,
-    userAddressCountry: '',
-    // popup (Reconnexion après mise à jour du profil)
-    // popupUpdateProfile : false
+    userAddressCountry: ''
 }; 
 
 const authReducer = createReducer(initialState, (builder) => { 
@@ -43,7 +41,6 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressCity = action.payload.result.user.address_city;
             state.userAddressPostalCode = action.payload.result.user.address_postalCode;
             state.userAddressCountry = action.payload.result.user.address_country;
-            // state.popupUpdateProfile = false;
         }) 
         .addCase(loginUser.fulfilled, (state, action) => { 
             // console.log('loginUser - action.payload : ', action.payload);
@@ -63,7 +60,6 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressCity = action.payload.userToConnect.address_city;
             state.userAddressPostalCode = action.payload.userToConnect.address_postalCode;
             state.userAddressCountry = action.payload.userToConnect.address_country; 
-            // state.popupUpdateProfile = false;
         }) 
         .addCase(registerUser.rejected, (state, action) => { 
             state.errorMsg = 'Veuillez remplir toutes les données necessaires'; 
@@ -91,9 +87,6 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressPostalCode = null;
             state.userAddressCountry = '';
         }) 
-        // .addCase(popupUpdateUser, (state) => {
-        //     state.popupUpdateProfile = true;
-        // })
         .addCase(getUserById.fulfilled, (state, action) => {
             console.log('getUserById - action.payload : ', action.payload);
             state.userFirstname = action.payload.firstname; 

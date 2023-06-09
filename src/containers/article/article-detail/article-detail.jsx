@@ -15,7 +15,7 @@ import { currentOrderActionAddArticle, currentOrderActionSave } from '../../../s
 
 
 
-    
+
 const ArticleDetail = () => {
 
     const { articleId, storeId } = useParams();
@@ -156,9 +156,6 @@ const ArticleDetail = () => {
                  dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));
 
             }
-
-            
-            
   
         }
     }
@@ -226,10 +223,9 @@ const ArticleDetail = () => {
                         </section> 
                     )
                 }
-
-                
                
             </div>
+            
         </div>
 
     )
