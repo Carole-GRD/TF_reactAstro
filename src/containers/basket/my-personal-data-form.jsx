@@ -41,18 +41,19 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
     const { register, handleSubmit, reset } = useForm();
 
     
+
     // /////////////////////////////////////////////////
     // -------------   Fonctions   --------------------
     // /////////////////////////////////////////////////
 
-    
-    const onDisplay = (setDisplay, display) => {
-        // fonction qui affiche ou cache le mot de passe
-        if (display === 'password') {
-            setDisplay('text'); 
+
+    const onDisplay = (setShowPassword, showPassword) => {
+        //  fonction qui affiche ou cache le mot de passe (type de l'input)
+        if (showPassword === 'password') {
+            setShowPassword('text'); 
         }
         else {
-            setDisplay('password'); 
+            setShowPassword('password'); 
         }
     }
 
@@ -81,6 +82,7 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
         
         onSetOpenForm();
     }
+
 
 
     const onValidForm = async (data) => {
@@ -130,25 +132,21 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
     }
 
 
+
     // /////////////////////////////////////////////////
     // -----------   Render (Rendu)   ------------------
     // /////////////////////////////////////////////////
     if (form === '') {
         
-        // Popup affichant 4 boutons :
-        // - 3 boutons qui dirigent vers l'un des 3 fomrulaires présents ci-dessous (data, avatar ou password)
-        // - le 4e redirige vers le composant "my-personal-data" (si l'utilisateur ne veut finalement pas faire de modifications)
+        // 3 boutons qui dirigent vers l'un des 3 fomrulaires présents ci-dessous (data, avatar ou password)
+        // le 4e redirige vers le composant "my-personal-data" (si l'utilisateur ne veut finalement pas faire de modifications)
         return (
-            <section className={style['article']}>
-
                 <div className={style['popup-btn']}>
                     <button onClick={() => { setForm('data') }}>Modifer mes informations personnelles</button>
                     <button onClick={() => { setForm('avatar') }}>Modifier mon avatar</button>
                     <button onClick={() => { setForm('password') }}>Modifier mon mot de passe</button>
                     <button onClick={() => { onSetOpenForm() }}>Annuler</button>
                 </div>
-
-            </section>
         )
 
     }
@@ -162,7 +160,10 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
                         <label htmlFor="avatar">Avatar</label> 
                         <input id='avatar' type='file'  {...register('avatar')} /> 
                     </div> 
-                    <button type="submit">Modifier mon avatar</button>
+                    <div className={style['popup-btn']}>
+                        <button type="submit">Modifier mon avatar</button>
+                        <button type="button" onClick={() => { onSetOpenForm() }}>Annuler</button>
+                    </div>
                 </form>
                 
             </article>
@@ -178,7 +179,7 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
                     <div className={style['form-group']}> 
                         <label htmlFor="currentPassword">Mot de passe actuel</label>
                         <div>
-                            <input id='currentPassword' type={showCurrentPassword} {...register('currentPassword')} /> 
+                            <input id='currentPassword' type={showCurrentPassword} {...register('currentPassword')} />  
                             <button 
                                 onClick={() => {onDisplay(setShowCurrentPassword, showCurrentPassword)}}
                                 type="button">
@@ -208,7 +209,10 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
                             </button> 
                         </div>
                     </div> 
-                    <button type="submit">Modifier mon mot de passe</button>
+                    <div className={style['popup-btn']}>
+                        <button type="submit">Modifier mon mot de passe</button>
+                        <button type="button" onClick={() => { onSetOpenForm() }}>Annuler</button>
+                    </div>
                 </form>
                 
             </article>
@@ -266,9 +270,10 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
                         <label htmlFor="country">Pays</label> 
                         <input id='country' type='text' placeholder={auth.userAddressCountry} {...register('address_country')} /> 
                     </div> 
-    
-                    <button type="submit">Modifier mes informations personnelles</button>
-    
+                    <div className={style['popup-btn']}>
+                        <button type="submit">Modifier mes informations personnelles</button>
+                        <button type="button" onClick={() => { onSetOpenForm() }}>Annuler</button>
+                    </div>
                 </form>
                 
             </article>
