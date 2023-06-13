@@ -138,7 +138,7 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
     // /////////////////////////////////////////////////
     if (form === '') {
         
-        // 3 boutons qui dirigent vers l'un des 3 fomrulaires présents ci-dessous (data, avatar ou password)
+        // 3 boutons qui dirigent vers l'un des 3 fomrulaires présents ci-dessous (avatar, password ou data)
         // le 4e redirige vers le composant "my-personal-data" (si l'utilisateur ne veut finalement pas faire de modifications)
         return (
                 <div className={style['popup-btn']}>
