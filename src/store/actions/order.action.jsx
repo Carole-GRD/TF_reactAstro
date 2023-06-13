@@ -7,25 +7,41 @@ import axios from 'axios';
 // Récupérer la commande en cours pour l'affichage
 // -----------------------------------------------
 export const currentOrderActionSave = createAsyncThunk(
-  // 'currentOrder/save',
-  'ordersByUser/save',
-  async (_, thunkAPI) => {
-    try {
-      // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
-      const userState = thunkAPI.getState().auth;
-      // console.log('orderState:', orderState);
-      const userId = userState.userId;
-      // console.log('Order ID:', orderId);
+    // 'currentOrder/save',
+    'ordersByUser/save',
+    async (_, thunkAPI) => {
 
-      const response = await axios.get(`http://localhost:8080/api/order/user/${userId}`);
-      // console.log('response.data.results : ', response.data.results);
+        try {
+            // Utiliser une Promise pour attendre que l'ID de l'utilisateur soit disponible
+            await new Promise((resolve) => {
+                const intervalId = setInterval(() => {
+                    // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
+                    const state = thunkAPI.getState();
+                    const userId = state.auth.userId;
+                    if (userId) {
+                        clearInterval(intervalId);
+                        resolve();
+                    }
+                }, 100); // Attendre 100 millisecondes avant chaque vérification
+            });
 
-      return response.data.results;
-    } catch (error) {
-      console.error('Erreur lors de la sauvegarde de la commande : ', error);
-      throw error;
+            // Une fois que l'ID est disponible, on le récupère
+            const state = thunkAPI.getState();
+            const userId = state.auth.userId;
+            if (!userId) {
+                throw new Error('User ID is not available.');
+            }
+
+            const response = await axios.get(`http://localhost:8080/api/order/user/${userId}`);
+            // console.log('response.data.results : ', response.data.results);
+
+            return response.data.results;
+
+        } catch (error) {
+            console.error('Erreur lors de la sauvegarde de la commande : ', error);
+            throw error;
+        }
     }
-  }
 );
 
 
@@ -41,12 +57,6 @@ export const currentOrderActionAddArticle = createAsyncThunk(
   'ordersByUser/addArticle',
   async ({articleId, newQuantity, storeId, orderId}, thunkAPI) => {
     try {
-
-      // // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
-      // const orderState = thunkAPI.getState().order;
-      // // console.log('orderState:', orderState);
-      // const orderId = orderState.currentOrder.id;
-      // // console.log('Order ID:', orderId);
 
       const articleData = {
         ArticleId: articleId,

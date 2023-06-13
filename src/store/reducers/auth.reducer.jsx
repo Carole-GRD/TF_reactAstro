@@ -2,7 +2,12 @@
 // auth.reducer.jsx
 
 import { createReducer } from '@reduxjs/toolkit'; 
-import { loginUser, registerUser, logoutUser, getUserById } from '../actions/auth.action'; 
+import { loginUser, registerUser, logoutUser, getUserById, autoAuthenticate } from '../actions/auth.action'; 
+
+// const storedToken = localStorage.getItem('authToken') ?? null;
+// const storedToken = localStorage.getItem('authToken') ? JSON.parse(localStorage.getItem('authToken')) : null;
+// const storedUserFirstname = localStorage.getItem('persist:root') ? JSON.parse(localStorage.getItem('persist:root')).userFirstname : '';
+// const storedUserLastname = localStorage.getItem('persist:root') ? JSON.parse(localStorage.getItem('persist:root')).userLastname : '';
 
 const initialState = { 
     // auth
@@ -43,7 +48,7 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressCountry = action.payload.result.user.address_country;
         }) 
         .addCase(loginUser.fulfilled, (state, action) => { 
-            // console.log('loginUser - action.payload : ', action.payload);
+            console.log('loginUser - action.payload : ', action.payload);
             // auth
             state.isConnected = true; 
             state.token = action.payload.token; 
@@ -99,6 +104,25 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressCity = action.payload.address_city;
             state.userAddressPostalCode = action.payload.address_postalCode;
             state.userAddressCountry = action.payload.address_country; 
+        })
+        .addCase(autoAuthenticate.fulfilled, (state, action) =>  {
+            // console.log('autoAuthenticate - action.payload : ', action.payload);
+            // auth
+            state.isConnected = true; 
+            state.token = localStorage.getItem('authToken'); 
+            state.userId = action.payload.userToConnect.id; 
+            state.userRole = action.payload.userToConnect.role; 
+            state.userFirstname = action.payload.userToConnect.firstname; 
+            state.userLastname = action.payload.userToConnect.lastname; 
+            state.userPseudo = action.payload.userToConnect.pseudo;
+            state.userEmail = action.payload.userToConnect.email;
+            state.errorMsg = null; 
+            state.userAvatar = action.payload.userToConnect.avatar;
+            state.userAddressStreet = action.payload.userToConnect.address_street;
+            state.userAddressNumber = action.payload.userToConnect.address_number;
+            state.userAddressCity = action.payload.userToConnect.address_city;
+            state.userAddressPostalCode = action.payload.userToConnect.address_postalCode;
+            state.userAddressCountry = action.payload.userToConnect.address_country; 
         })
 }); 
 

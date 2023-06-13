@@ -5,15 +5,16 @@ import Header from './containers/header/header'
 import Footer from './containers/footer/footer'
 
 
+
 function App() {
 
-  return (
-    <>
-      <Header />
-      <Outlet />
-      <Footer />
-    </>
-  )
+    return (
+        <>
+            <Header />
+            <Outlet />
+            <Footer />
+        </>
+    )
 }
 
 export default App

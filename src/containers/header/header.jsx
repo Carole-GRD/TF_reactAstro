@@ -1,20 +1,20 @@
 import './header.module.css';
 import style from './header.module.css';
 
+
 import planetLogo6 from '../../assets/planet-6.png';
-// import planetLogo5 from '../../assets/planet-5.png';
-// import planetLogo3 from '../../assets/planet-3.png';
+
 
 import CustomNavlink from '../../components/custom-navlink/custom-navlink';
 import { Link } from "react-router-dom";
 
 import clsx from 'clsx';
 
-import { logoutUser } from '../../store/actions/auth.action'; 
+import { autoAuthenticate, logoutUser } from '../../store/actions/auth.action'; 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
-import { currentOrderActionClear } from '../../store/actions/order.action';
+import { currentOrderActionClear, currentOrderActionSave } from '../../store/actions/order.action';
 import { useEffect } from 'react';
 
 const Header = () => {
@@ -24,9 +24,23 @@ const Header = () => {
 
     const countArticlesInCurrentOrder = useSelector(state => state.order.currentOrder?.Article_Orders.length);
     // console.log('countArticlesInCurrentOrder : ', countArticlesInCurrentOrder);
-    
+
 
     const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem('authToken');
+        // Si le token est stocké dans le Local Storage
+        if (storedToken) {
+            // On reconnecte l'utilisateur 
+            dispatch(autoAuthenticate(storedToken));
+            // On récupère les infos sur ses commandes
+            dispatch(currentOrderActionSave());   
+        }
+    }, [])
+
+    
 
     const onLogout = () => { 
         // console.log('isConnected - onLogout : ', isConnected);
