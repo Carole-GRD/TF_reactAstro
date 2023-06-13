@@ -6,6 +6,7 @@ import LoginPage from '../auth/pages/login/login.page';
 import RegisterPage from '../auth/pages/register/register.page';
 import AccountPage from "../pages/account/account.page";
 import ArticleDetail from "../containers/article/article-detail/article-detail";
+import ArticleForm from "../containers/article/article-form/article-form";
 
 
 export const route = [
@@ -24,6 +25,10 @@ export const route = [
             {
                 path: 'articleDetail/:articleId/store/:storeId',
                 element: <ArticleDetail />
+            },
+            {
+                path: 'articleForm/:articleId/store/:storeId',
+                element: <ArticleForm />
             },
             {
                 path: 'login',

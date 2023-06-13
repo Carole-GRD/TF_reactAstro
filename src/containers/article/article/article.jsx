@@ -6,6 +6,7 @@ import articleDefaultIMG from '../../../assets/article.png';
 import { Link } from 'react-router-dom';
 
 
+
 const Article = ({id, name, Stores}) => {
 
 
@@ -26,7 +27,7 @@ const Article = ({id, name, Stores}) => {
                             </Link>
                             
                             {/* <button onClick={() => { onAddToCurrentOrder(id, store.store_id) }}>Ajouter au panier</button> */}
-                            
+
                         </section>
                     </div>
                 )

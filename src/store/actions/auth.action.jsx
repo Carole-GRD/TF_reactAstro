@@ -101,7 +101,7 @@ export const autoAuthenticate = createAsyncThunk(
             // Appeler l'API pour valider le token et obtenir les informations de l'utilisateur
             // voir fichier "api/auth.api.js"
             const response = await validateToken(storedToken);
-            
+
             // Si la validation du token est réussie et les informations de l'utilisateur sont obtenues
             if (response.success) {
                 return response;

@@ -18,6 +18,12 @@ import { currentOrderActionAddArticle, currentOrderActionSave } from '../../../s
 
 const ArticleDetail = () => {
 
+
+    const userRole = useSelector(state => state.auth.userRole);
+    console.log('userRole : ', userRole);
+
+
+
     const { articleId, storeId } = useParams();
     // console.warn('articleId : ', articleId);
     // console.warn('storeId : ', storeId);
@@ -35,21 +41,6 @@ const ArticleDetail = () => {
     const userId = useSelector(state => state.auth.userId);
     const currentOrder = useSelector(state => state.order.currentOrder);
     
-    
-
-    // // TODO : Vérifier l'utilité du code suivant...
-    // let orderId = null;
-    // useEffect(() => {
-        
-    //     // console.log('orderId : ', orderId); 
-    //     if (currentOrder) {
-    //         dispatch(currentOrderActionSave());
-    //         orderId = currentOrder.id;
-    //     }
-    // }, [isConnected, currentOrder])
-
-
-
 
 
     useEffect(() => {
@@ -160,6 +151,13 @@ const ArticleDetail = () => {
         }
     }
 
+
+    const onArticleUpdate = (articleId, storeId) => {
+        console.log('Naviguer vers le formulaire pour modifier l\article !');
+        console.log('articleId : ', articleId);
+        console.log('storeId : ', storeId);
+    }
+
     
 
 
@@ -219,6 +217,12 @@ const ArticleDetail = () => {
                             <button onClick={() => { onAddToCurrentOrder(storeInfos.ArticleId, storeInfos.StoreId, userId) }}>
                                 Ajouter au panier
                             </button>
+
+                            {
+                                (userRole === 'Admin' || userRole === 'Sous-Admin') && (
+                                    <button type="button" onClick={() => {onArticleUpdate(storeInfos.ArticleId, storeInfos.StoreId)}}>Modifier</button>
+                                )
+                            }
 
                         </section> 
                     )
