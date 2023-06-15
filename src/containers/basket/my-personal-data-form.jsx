@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -6,8 +7,7 @@ import axios from 'axios';
 
 import { getUserById } from "../../store/actions/auth.action";
 import style from './basket.module.css';
-import { useState } from "react";
-
+import defaultAvatar from '../../assets/avatar.jpg'; 
 
 
 // //////////////////////////
@@ -20,6 +20,7 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
 
 
     const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
+    const URL__API__ASTRO_PUBLIC = import.meta.env.VITE_URL__API__ASTRO_PUBLIC;
 
 
     // /////////////////////////////////////////////////
@@ -162,6 +163,10 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
                 <form onSubmit={handleSubmit(onValidAvatar)}>
                     <div className={style['form-group']}> 
                         <label htmlFor="avatar">Avatar</label> 
+                        {
+                            auth.userAvatar ? (<img src={`${URL__API__ASTRO_PUBLIC}${auth.userAvatar}`} alt={`Avatar de ${auth.userFirstname} ${auth.userLastname}`} />) : (<img src={defaultAvatar} alt="Avatar par défaut" />)
+                        }
+                        {/* TODO : afficher le nouvel avatar choisi */}
                         <input id='avatar' type='file'  {...register('avatar')} /> 
                     </div> 
                     <div className={style['popup-btn']}>

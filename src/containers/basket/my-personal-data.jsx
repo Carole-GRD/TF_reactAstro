@@ -73,10 +73,10 @@ const MyPersonalData = () => {
                 <p>Pays : {auth.userAddressCountry}</p>
                 
                 <button onClick={onOpenForm}>Mettre à jour</button>
-             </article>
+            </article>
         )
     }
-   
+    
 }
 
 export default MyPersonalData;

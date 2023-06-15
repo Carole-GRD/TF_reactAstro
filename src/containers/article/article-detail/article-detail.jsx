@@ -5,20 +5,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import style from './article-detail.module.css';
-import article from '../../../assets/article.png';
+import articleIMGDefault from '../../../assets/article.png';
 import { currentOrderActionAddArticle, currentOrderActionSave } from '../../../store/actions/order.action';
 
-
-
-const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
 
 
     // TODO : créer des composants pour article-detail (popup (+ détails ?) )
 
 
 
-
 const ArticleDetail = () => {
+
+    const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
+
 
 
     const userRole = useSelector(state => state.auth.userRole);
@@ -146,10 +145,10 @@ const ArticleDetail = () => {
                 const orderId = currentOrder.id;
 
                 // Lancer l'action currentOrderActionAddArtticle
-                 dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));
+                dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));
 
             }
-  
+
         }
     }
 
@@ -166,7 +165,7 @@ const ArticleDetail = () => {
 
     return (
         <div className={style['articleDetail-container']}>
-   
+
             <Link to="/articles" className={style['link-back']}>
                 Retour à la liste des articles
             </Link>
@@ -199,7 +198,7 @@ const ArticleDetail = () => {
 
                             <p>Référence : {details.reference}</p>
                         
-                            <img src={article} alt={`Image de ${details.name}`} />
+                            <img src={articleIMGDefault} alt={`Image de ${details.name}`} />
 
                             <p className={style.description}>{details.description}</p>
 
