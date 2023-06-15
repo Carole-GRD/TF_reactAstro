@@ -153,9 +153,10 @@ const ArticleDetail = () => {
 
 
     const onArticleUpdate = (articleId, storeId) => {
-        console.log('Naviguer vers le formulaire pour modifier l\article !');
+        console.log('Naviguer vers le formulaire pour modifier l\'article !');
         console.log('articleId : ', articleId);
         console.log('storeId : ', storeId);
+        navigate(`/articleForm/${articleId}/store/${storeId}`);
     }
 
     
