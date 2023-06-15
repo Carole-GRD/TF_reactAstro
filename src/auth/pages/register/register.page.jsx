@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom';
 import authStyle from '../../pages/auth.page.module.css';
 // import style from './login.module.css';
 import clsx from 'clsx';
+import { useState } from 'react';
 
 
 const AuthNavlink = ({ to, text }) => (
@@ -20,11 +21,15 @@ const AuthNavlink = ({ to, text }) => (
 
 
 const RegisterPage = () => { 
+
     const { handleSubmit, register, reset } = useForm(); 
+
     const dispatch = useDispatch(); 
     // const isConnected = useSelector(state => state.auth.isConnected); 
     const errorMsg = useSelector(state => state.auth.errorMsg); 
     const navigate = useNavigate(); 
+
+    const [showPassword, setShowPassword] = useState('password');
 
     // ↓ Pas d'intérêt ca mon bouton "Login" disparait lorsque l'utilisateur est connecté
     // useEffect(() => { 
@@ -37,7 +42,19 @@ const RegisterPage = () => {
         reset(); 
         navigate('/account');
     } 
+
+
+    const onDisplay = () => {
+        //  fonction qui affiche ou cache le mot de passe (type de l'input)
+        if (showPassword === 'password') {
+            setShowPassword('text'); 
+        }
+        else {
+            setShowPassword('password'); 
+        }
+    }
     
+
     return (
         <> 
             
@@ -78,7 +95,10 @@ const RegisterPage = () => {
                                 </div> 
                                 <div className={authStyle['form-group']}> 
                                     <label htmlFor="password">Mot de passe</label> 
-                                    <input id='password' type='password' placeholder='Mot de passe' {...register('password')} /> 
+                                    <div>
+                                        <input id='password' type={showPassword} placeholder='Mot de passe' {...register('password')} /> 
+                                        <button type="button" onClick={onDisplay}>Voir</button>
+                                    </div>
                                 </div> 
 
                             </article>

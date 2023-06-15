@@ -13,6 +13,11 @@ export const registerUser = createAsyncThunk('user/register',
     async (data, thunkAPI) => { 
         
         const response = await axios.post('http://localhost:8080/api/auth/register', data); 
+        
+        const token = response.data.result.token;
+        console.log('auth.action.jsx - token : ', token);
+        localStorage.setItem('authToken', token);
+
         return response.data; 
 
     } 

@@ -76,8 +76,9 @@ const authReducer = createReducer(initialState, (builder) => {
         }) 
         .addCase(logoutUser, (state, action) => { 
             // auth
-            state.isConnected = false; 
+            state.isConnected = false;
             state.token = null; 
+            localStorage.clear();
             state.userId = ''; 
             state.userRole = ''; 
             state.userFirstname = ''; 

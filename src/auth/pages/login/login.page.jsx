@@ -30,6 +30,7 @@ const LoginPage = () => {
     
     // const [buttonText, setButtonText] = useState('Connexion');
     const [loading, setLoading] = useState('');
+    const [showPassword, setShowPassword] = useState('password');
     
 
     const dispatch = useDispatch(); 
@@ -60,6 +61,18 @@ const LoginPage = () => {
         reset();
 
       };
+
+
+
+      const onDisplay = () => {
+        //  fonction qui affiche ou cache le mot de passe (type de l'input)
+        if (showPassword === 'password') {
+            setShowPassword('text'); 
+        }
+        else {
+            setShowPassword('password'); 
+        }
+    }
     
     
     return (
@@ -87,7 +100,10 @@ const LoginPage = () => {
 
                         <div className={authStyle['form-group']}> 
                             <label htmlFor="password">Mot de passe</label> 
-                            <input id='password' type='password' placeholder='Mot de passe' {...register('password')} /> 
+                            <div>
+                                <input id='password' type={showPassword} placeholder='Mot de passe' {...register('password')} /> 
+                                <button type="button" onClick={onDisplay}>Voir</button>
+                            </div>
                         </div> 
 
                         <div className={authStyle.btn}> 
