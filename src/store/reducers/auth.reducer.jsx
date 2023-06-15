@@ -48,7 +48,7 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressCountry = action.payload.result.user.address_country;
         }) 
         .addCase(loginUser.fulfilled, (state, action) => { 
-            console.log('loginUser - action.payload : ', action.payload);
+            // console.log('loginUser - action.payload : ', action.payload);
             // auth
             state.isConnected = true; 
             state.token = action.payload.token; 
@@ -94,7 +94,7 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressCountry = '';
         }) 
         .addCase(getUserById.fulfilled, (state, action) => {
-            console.log('getUserById - action.payload : ', action.payload);
+            // console.log('getUserById - action.payload : ', action.payload);
             state.userFirstname = action.payload.firstname; 
             state.userLastname = action.payload.lastname; 
             state.userPseudo = action.payload.pseudo;

@@ -4,15 +4,19 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit'; 
 import axios from 'axios'; 
 
-
 import { validateToken } from '../../api/auth.api'; 
 
+const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
+
+
 // /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 export const registerUser = createAsyncThunk('user/register', 
 
     async (data, thunkAPI) => { 
         
-        const response = await axios.post('http://localhost:8080/api/auth/register', data); 
+        const response = await axios.post(`${URL__API__ASTRO}/auth/register`, data); 
         
         const token = response.data.result.token;
         console.log('auth.action.jsx - token : ', token);
@@ -23,28 +27,17 @@ export const registerUser = createAsyncThunk('user/register',
     } 
 ); 
 
-// export const registerUserToken = createAsyncThunk('user/registerToken', 
-
-//     async (data, thunkAPI) => { 
-        
-//         const response = await axios.post('http://localhost:8080/api/auth/register', data); 
-//         return response.data.token; 
-
-//     } 
-// ); 
-
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////
 export const loginUser = createAsyncThunk('user/login', 
 
     async (data, thunkAPI) => { 
 
         try {
 
-            const response = await axios.post('http://localhost:8080/api/auth/login', data); 
+            const response = await axios.post(`${URL__API__ASTRO}/auth/login`, data); 
             
             const token = response.data.result.token;
             localStorage.setItem('authToken', token);
@@ -59,30 +52,21 @@ export const loginUser = createAsyncThunk('user/login',
     } 
 ); 
 
-// export const loginUserToken = createAsyncThunk('user/loginToken', 
 
-//     async (data, thunkAPI) => { 
-
-//         const response = await axios.post('http://localhost:8080/api/auth/login', data); 
-//         return response.data.result.token; 
-        
-//     } 
-// ); 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 export const logoutUser = createAction('user/logout');
 
 
-// export const popupUpdateUser = createAction('user/popupUpdate');
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 export const getUserById = createAsyncThunk('user/getById',
 
     async (userId) => {
         
-        const response = await axios.get(`http://localhost:8080/api/user/${userId}`);
+        const response = await axios.get(`${URL__API__ASTRO}/user/${userId}`);
         return response.data.result;
         
 
@@ -91,8 +75,7 @@ export const getUserById = createAsyncThunk('user/getById',
 );
 
 
-
-
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Rester connecter lors de la réactualisation de la page

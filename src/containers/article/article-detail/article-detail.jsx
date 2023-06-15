@@ -10,6 +10,8 @@ import { currentOrderActionAddArticle, currentOrderActionSave } from '../../../s
 
 
 
+const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
+
 
     // TODO : créer des composants pour article-detail (popup (+ détails ?) )
 
@@ -41,14 +43,14 @@ const ArticleDetail = () => {
     const userId = useSelector(state => state.auth.userId);
     const currentOrder = useSelector(state => state.order.currentOrder);
     
-
+    
 
     useEffect(() => {
 
         // On récuprère l'article afin d'accéder à ses détails (nom, description, référence, auteur, MarkId)
         // et grâce au "MarkId", on peut récupérer le nom de la marque
         axios
-            .get(`http://localhost:8080/api/article/${articleId}`)
+        .get(`${URL__API__ASTRO}/article/${articleId}`)
             .then((article) => {
                 setDetails(article.data.result);
                 const markId = article.data.result.MarkId;    
@@ -59,7 +61,7 @@ const ArticleDetail = () => {
                 if (markId) {
                     // le "markId" fourni dans les parenthèses est envoyé par le "return" de la requête (voir le "then" ci-desssus)
                     axios
-                    .get(`http://localhost:8080/api/mark/${markId}`)
+                    .get(`${URL__API__ASTRO}/mark/${markId}`)
                         .then((mark) => {
                             setMark(mark.data.result.name)
                         }) 
@@ -74,7 +76,7 @@ const ArticleDetail = () => {
         
         // On récupère les informations sur l'article (prix, réduction, stock) en fonction du magasin dans lequel il se trouve
         axios
-            .get(`http://localhost:8080/api/article/${articleId}/store/${storeId}`)
+            .get(`${URL__API__ASTRO}/article/${articleId}/store/${storeId}`)
             .then((response) => {
                 setStoreInfos(response.data.result)
             })
@@ -114,7 +116,7 @@ const ArticleDetail = () => {
                     UserId: userId
                 }
                 // console.log('orderData : ', orderData);
-                await axios.post('http://localhost:8080/api/order', orderData)
+                await axios.post(`${URL__API__ASTRO}/order`, orderData)
                             .then((newOrder) => {
                                 // console.log('newOrder (id) : ', newOrder.data.result.id);
                                 const orderId =  newOrder.data.result.id;

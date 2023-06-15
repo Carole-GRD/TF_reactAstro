@@ -18,6 +18,10 @@ import { useState } from "react";
 
 const MyPersonalDataForm = ( { onSetOpenForm } ) => {
 
+
+    const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
+
+
     // /////////////////////////////////////////////////
     // ---------------   Store   ----------------------
     // /////////////////////////////////////////////////
@@ -60,13 +64,13 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
 
     const onValidAvatar = async (data) => {
         const file = data.avatar[0];
-        console.log(file);
+        // console.log(file);
         
         const formData = new FormData();
         formData.append('avatar', file);
-        console.log(formData);
+        // console.log(formData);
 
-        await axios.patch(`http://localhost:8080/api/user/${userId}/avatar`, formData);
+        await axios.patch(`${URL__API__ASTRO}/user/${userId}/avatar`, formData);
         
         dispatch(getUserById(userId));
 
@@ -76,9 +80,9 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
 
 
     const onValidPassword = async (data) => {
-        console.log('my-personal-data-form.jsx - modification du mot de passe (data) : ', data);
+        // console.log('my-personal-data-form.jsx - modification du mot de passe (data) : ', data);
 
-        await axios.patch(`http://localhost:8080/api/user/${userId}/password`, data);
+        await axios.patch(`${URL__API__ASTRO}/user/${userId}/password`, data);
         
         onSetOpenForm();
     }
@@ -121,9 +125,9 @@ const MyPersonalDataForm = ( { onSetOpenForm } ) => {
             data.address_country = auth.userAddressCountry;
         }
         
-        console.log(data);
+        // console.log(data);
         
-        await axios.put(`http://localhost:8080/api/user/${userId}`, data);
+        await axios.put(`${URL__API__ASTRO}/user/${userId}`, data);
         
         dispatch(getUserById(userId));
         

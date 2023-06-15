@@ -1,18 +1,8 @@
 
-/* 
-    ATTENTION : dans le fichier "auth.page.module.css", 
-                article:first-of-type: 40%
-                article:last-of-type: 40%
-                ce fichier est-il prioritaire car plus haut dans la hiérarchie ?
-                j'ai donc remis article: 100vw
-*/
-article {
-    min-width : 100vw;
-}
 
 
-.articleForm-container {
-    margin: 0;
+.article-container {
+
     min-height: calc(100vh - 6rem);
     max-width: 100vw;
 
@@ -23,5 +13,51 @@ article {
     background-color: #efefef;
     color: #060c37;
     
+}
+
+article.data {
+    width: 100%;
+    border-left: 1px solid #060c37;
+    margin: 1rem 0;
+}
+
+
+
+form {
+    width: fit-content;
+    margin: 0 0 0 1rem;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+.form-group label {
+    color: #060c37;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input {
+    background-color: rgba(255, 255, 255, 0);
+    padding: 0.5rem;
+    letter-spacing: .1rem;
+    border: none;
+    border-bottom: 1px solid #777;
+    margin-bottom: 1rem;
+}
+.form-group input::placeholder {
+    color: #777;
+}
+.form-group input:focus {
+    color: #060c37;
+    outline: none;
+}
+
+button {
+    width: fit-content;
+    margin: 0.5rem 0 0.5rem 1rem;
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
 }
 

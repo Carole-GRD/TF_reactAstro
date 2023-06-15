@@ -26,6 +26,9 @@ const CurrentOrder = () => {
     const { register, handleSubmit, reset } = useForm();
 
 
+    const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
+
+
     // ===============================================================================================================================
     // Si l'utilisateur n'a pas de commande en cours, on retourne un message ...
     // ===============================================================================================================================
@@ -95,7 +98,7 @@ const CurrentOrder = () => {
     const handlePaymentMethod = (data) => {
         // console.log('data : (mode de paiement) : ', data);
 
-        axios.put(`http://localhost:8080/api/order/${orderId}`, data);
+        axios.put(`${URL__API__ASTRO}/order/${orderId}`, data);
 
         dispatch(currentOrderActionSave());
         
@@ -105,7 +108,7 @@ const CurrentOrder = () => {
 
     const handleChangePaymentMethod = () => {
 
-        axios.put( `http://localhost:8080/api/order/${orderId}`, {payment_method: null} );
+        axios.put( `${URL__API__ASTRO}/order/${orderId}`, {payment_method: null} );
 
         dispatch(currentOrderActionSave());
     }

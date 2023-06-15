@@ -1,8 +1,13 @@
 import axios from 'axios';
 
+
+
 export const validateToken = async (token) => {
     try {
-        const response = await axios.post('http://localhost:8080/api/auth/validateToken', { token }); 
+
+        const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
+        
+        const response = await axios.post(`${URL__API__ASTRO}/auth/validateToken`, { token }); 
         // console.log('response : ', response);
         // console.log('response.data : ', response.data);
         return response.data;

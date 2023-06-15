@@ -11,9 +11,14 @@ const ArticlesPage = () => {
 
     const [listArticles, setListArticles] = useState([]);
 
+    
+
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/article')
+
+        const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
+
+        axios.get(`${URL__API__ASTRO}/article`)
             .then((response) => {
                 setListArticles(response.data.results);
             })

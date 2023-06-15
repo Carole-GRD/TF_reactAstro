@@ -3,6 +3,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
 
 // Récupérer la commande en cours pour l'affichage
 // -----------------------------------------------
@@ -32,7 +33,7 @@ export const currentOrderActionSave = createAsyncThunk(
                 throw new Error('User ID is not available.');
             }
 
-            const response = await axios.get(`http://localhost:8080/api/order/user/${userId}`);
+            const response = await axios.get(`${URL__API__ASTRO}/order/user/${userId}`);
             // console.log('response.data.results : ', response.data.results);
 
             return response.data.results;
@@ -66,7 +67,7 @@ export const currentOrderActionAddArticle = createAsyncThunk(
       // console.log('articleData : ', articleData);
 
 
-      const response = await axios.post(`http://localhost:8080/api/order/${orderId}/createArticle`, articleData);
+      const response = await axios.post(`${URL__API__ASTRO}/order/${orderId}/createArticle`, articleData);
       // console.log('createArticle.api (response.data) : ', response.data);
 
 
@@ -103,7 +104,7 @@ export const currentOrderActionRemoveArticle = createAsyncThunk(
       const orderId = orderState.currentOrder.id;
       // console.log('Order ID:', orderId);
 
-      await axios.delete(`http://localhost:8080/api/order/${orderId}/deleteArticle`, { data : {link: article_order_Id} });
+      await axios.delete(`${URL__API__ASTRO}/order/${orderId}/deleteArticle`, { data : {link: article_order_Id} });
 
 
       // Appeler l'action qui permet de récupérer les commandes (après avoir supprimer l'article)
@@ -119,7 +120,7 @@ export const currentOrderActionRemoveArticle = createAsyncThunk(
 
       // S'il n'y a plus d'article dans la commande en cours, on supprime la commande en cours
       if (isArticle === 0) {
-        await axios.delete(`http://localhost:8080/api/order/${orderId}`);
+        await axios.delete(`${URL__API__ASTRO}/order/${orderId}`);
         // Actualiser les commandes après suppression du lien
         thunkAPI.dispatch(currentOrderActionSave());
       }

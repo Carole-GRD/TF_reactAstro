@@ -11,6 +11,9 @@ import MyPersonalDataForm from "./my-personal-data-form";
 
 const MyPersonalData = () => {
 
+    const URL__API__ASTRO_PUBLIC = import.meta.env.VITE_URL__API__ASTRO_PUBLIC;
+
+
     const auth = useSelector(state => state.auth);
     // console.log(auth.userAvatar);
 
@@ -60,7 +63,7 @@ const MyPersonalData = () => {
                 <p>Avatar : </p>
                 {/* TODO : ajouter l'avatar de la DB */}
                 {
-                    auth.userAvatar ? (<img src={`http://localhost:8080/public${auth.userAvatar}`} alt={`Avatar de ${auth.userFirstname} ${auth.userLastname}`} />) : (<img src={defaultAvatar} alt="Avatar par défaut" />)
+                    auth.userAvatar ? (<img src={`${URL__API__ASTRO_PUBLIC}${auth.userAvatar}`} alt={`Avatar de ${auth.userFirstname} ${auth.userLastname}`} />) : (<img src={defaultAvatar} alt="Avatar par défaut" />)
                 }
                 <p>Email : {auth.userEmail}</p>
                 <p>Rue : {auth.userAddressStreet}</p>
