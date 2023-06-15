@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 
+import style from './article-form.module.css';
 
 const ArticleForm = () => {
 
@@ -15,8 +16,7 @@ const ArticleForm = () => {
     }
   
     return (
-        // <article className={style['data']}>
-        <article>
+        <article className={style['articleForm-container']}>
         
                 <form onSubmit={handleSubmit(onValidateArticle)}>
 

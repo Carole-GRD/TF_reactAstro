@@ -1,0 +1,27 @@
+
+/* 
+    ATTENTION : dans le fichier "auth.page.module.css", 
+                article:first-of-type: 40%
+                article:last-of-type: 40%
+                ce fichier est-il prioritaire car plus haut dans la hiérarchie ?
+                j'ai donc remis article: 100vw
+*/
+article {
+    min-width : 100vw;
+}
+
+
+.articleForm-container {
+    margin: 0;
+    min-height: calc(100vh - 6rem);
+    max-width: 100vw;
+
+    font-family: Lato, Helvetica, sans-serif;
+    
+    padding: 8vh 10vw 8vh;
+
+    background-color: #efefef;
+    color: #060c37;
+    
+}
+
