@@ -95,10 +95,10 @@ const CurrentOrder = () => {
     // ===============================================================================================================================
     // Choix du mode de paiement
     // ===============================================================================================================================
-    const handlePaymentMethod = (data) => {
+    const handlePaymentMethod = async (data) => {
         // console.log('data : (mode de paiement) : ', data);
 
-        axios.put(`${URL__API__ASTRO}/order/${orderId}`, data);
+        await axios.put(`${URL__API__ASTRO}/order/${orderId}`, data);
 
         dispatch(currentOrderActionSave());
         
@@ -106,9 +106,9 @@ const CurrentOrder = () => {
     }
 
 
-    const handleChangePaymentMethod = () => {
+    const handleChangePaymentMethod = async () => {
 
-        axios.put( `${URL__API__ASTRO}/order/${orderId}`, {payment_method: null} );
+        await axios.put( `${URL__API__ASTRO}/order/${orderId}`, {payment_method: null} );
 
         dispatch(currentOrderActionSave());
     }
