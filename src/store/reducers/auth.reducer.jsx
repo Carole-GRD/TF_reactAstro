@@ -4,10 +4,7 @@
 import { createReducer } from '@reduxjs/toolkit'; 
 import { loginUser, registerUser, logoutUser, getUserById, autoAuthenticate } from '../actions/auth.action'; 
 
-// const storedToken = localStorage.getItem('authToken') ?? null;
-// const storedToken = localStorage.getItem('authToken') ? JSON.parse(localStorage.getItem('authToken')) : null;
-// const storedUserFirstname = localStorage.getItem('persist:root') ? JSON.parse(localStorage.getItem('persist:root')).userFirstname : '';
-// const storedUserLastname = localStorage.getItem('persist:root') ? JSON.parse(localStorage.getItem('persist:root')).userLastname : '';
+
 
 const initialState = { 
     // auth
@@ -31,12 +28,13 @@ const initialState = {
 const authReducer = createReducer(initialState, (builder) => { 
     builder 
         .addCase(registerUser.fulfilled, (state, action) => { 
+            // payload -> response.data
             state.isConnected = true; 
-            state.token = action.payload.result.token;                      // payload -> response.data 
-            state.userId = action.payload.result.user.id;                   // payload -> response.data 
-            state.userRole = action.payload.result.user.role;               // payload -> response.data 
-            state.userFirstname = action.payload.result.user.firstname;     // payload -> response.data  
-            state.userLastname = action.payload.result.user.lastname;       // payload -> response.data 
+            state.token = action.payload.result.token;                      
+            state.userId = action.payload.result.user.id;                   
+            state.userRole = action.payload.result.user.role;               
+            state.userFirstname = action.payload.result.user.firstname;      
+            state.userLastname = action.payload.result.user.lastname;      
             state.userPseudo = action.payload.result.user.pseudo;
             state.userEmail = action.payload.result.user.email;
             state.errorMsg = null; 
@@ -48,8 +46,7 @@ const authReducer = createReducer(initialState, (builder) => {
             state.userAddressCountry = action.payload.result.user.address_country;
         }) 
         .addCase(loginUser.fulfilled, (state, action) => { 
-            console.log('loginUser - action.payload : ', action.payload);
-            // auth
+            // console.log('loginUser - action.payload : ', action.payload);
             state.isConnected = true; 
             state.token = action.payload.token; 
             state.userId = action.payload.userToConnect.id; 
@@ -74,11 +71,10 @@ const authReducer = createReducer(initialState, (builder) => {
             state.errorMsg = 'Vos données sont invalides !'; 
             console.log(action); 
         }) 
-        .addCase(logoutUser, (state, action) => { 
-            // auth
+        .addCase(logoutUser.fulfilled, (state, action) => { 
             state.isConnected = false;
             state.token = null; 
-            localStorage.clear();
+            // localStorage.clear();
             state.userId = ''; 
             state.userRole = ''; 
             state.userFirstname = ''; 
@@ -108,7 +104,6 @@ const authReducer = createReducer(initialState, (builder) => {
         })
         .addCase(autoAuthenticate.fulfilled, (state, action) =>  {
             // console.log('autoAuthenticate - action.payload : ', action.payload);
-            // auth
             state.isConnected = true; 
             state.token = localStorage.getItem('authToken'); 
             state.userId = action.payload.userToConnect.id; 

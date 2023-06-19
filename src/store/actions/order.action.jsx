@@ -13,7 +13,7 @@ export const currentOrderActionSave = createAsyncThunk(
     async (_, thunkAPI) => {
 
         try {
-            // Utiliser une Promise pour attendre que l'ID de l'utilisateur soit disponible
+            // Utiliser une Promesse pour attendre que l'ID de l'utilisateur soit disponible
             await new Promise((resolve) => {
                 const intervalId = setInterval(() => {
                     // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...

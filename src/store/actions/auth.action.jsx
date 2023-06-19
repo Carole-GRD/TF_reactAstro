@@ -56,7 +56,21 @@ export const loginUser = createAsyncThunk('user/login',
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-export const logoutUser = createAction('user/logout');
+// export const logoutUser = createAction('user/logout');
+// ↑ avec ce code (createAction), 
+// le token est supprimé du Local Storage dans le fichier "auth.reducer.jsx"
+// dans le fichier "auth.reducer.jsx" :
+//      => supprimer ".fulfilled"
+//      => décommenter "localStorage.clear();" ou remplacer par "localStorage.removeItem('authToken');"
+
+
+export const logoutUser = createAsyncThunk('user/logout', 
+    
+    async () => {
+        localStorage.removeItem('authToken');
+        return;
+    }
+);
 
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,32 +96,31 @@ export const getUserById = createAsyncThunk('user/getById',
 export const autoAuthenticate = createAsyncThunk(
     'auth/autoAuthenticate',
     async (storedToken, thunkAPI) => {
-      try {
+        try {
 
-        
-        if (storedToken) {
-            // Appeler l'API pour valider le token et obtenir les informations de l'utilisateur
-            // voir fichier "api/auth.api.js"
-            const response = await validateToken(storedToken);
+            if (storedToken) {
+                // Appeler l'API pour valider le token et obtenir les informations de l'utilisateur
+                // voir fichier "api/auth.api.js"
+                const response = await validateToken(storedToken);
 
-            // Si la validation du token est réussie et les informations de l'utilisateur sont obtenues
-            if (response.success) {
-                return response;
-            } else {
-                // Si la validation du token échoue, dispatcher une action pour déconnecter l'utilisateur
+                // Si la validation du token est réussie et les informations de l'utilisateur sont obtenues
+                if (response.success) {
+                    return response;
+                } else {
+                    // Si la validation du token échoue, dispatcher une action pour déconnecter l'utilisateur
+                    thunkAPI.dispatch(logoutUser());
+                }
+            }
+            else {
+                // Si aucun token n'est trouvé dans le localStorage, dispatcher une action pour déconnecter l'utilisateur
                 thunkAPI.dispatch(logoutUser());
-              }
+            }
+        } catch (error) {
+            // Gérez les erreurs si la validation du token échoue
+            console.log('Erreur lors de l\'authentification automatique :', error);
         }
-        else {
-            // Si aucun token n'est trouvé dans le localStorage, dispatcher une action pour déconnecter l'utilisateur
-            thunkAPI.dispatch(logoutUser());
-          }
-      } catch (error) {
-        // Gérez les erreurs si la validation du token échoue
-        console.log('Erreur lors de l\'authentification automatique :', error);
-      }
     }
-  );
+);
 
 
 
