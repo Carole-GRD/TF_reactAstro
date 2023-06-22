@@ -95,7 +95,7 @@ const RegisterPage = () => {
                                 </div> 
                                 <div className={authStyle['form-group']}> 
                                     <label htmlFor="password">Mot de passe</label> 
-                                    <div>
+                                    <div className={authStyle['register-pwd']}>
                                         <input id='password' type={showPassword} placeholder='Mot de passe' {...register('password')} /> 
                                         <button type="button" onClick={onDisplay}>Voir</button>
                                     </div>

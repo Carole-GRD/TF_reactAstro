@@ -60,11 +60,11 @@ const LoginPage = () => {
         }
         reset();
 
-      };
+    };
 
 
 
-      const onDisplay = () => {
+    const onDisplay = () => {
         //  fonction qui affiche ou cache le mot de passe (type de l'input)
         if (showPassword === 'password') {
             setShowPassword('text'); 

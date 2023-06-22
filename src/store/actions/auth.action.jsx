@@ -4,7 +4,8 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit'; 
 import axios from 'axios'; 
 
-import { validateToken } from '../../api/auth.api'; 
+import { validateToken } from '../../api/auth.api.jsx'; 
+// import { validateToken } from '../../api/auth.api'; 
 
 const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
 

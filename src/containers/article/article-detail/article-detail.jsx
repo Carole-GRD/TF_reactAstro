@@ -177,7 +177,7 @@ const ArticleDetail = () => {
                     popup ? (
                         <section className={style['article']}>
 
-                            <p>Connectez-vous ou créez un compte</p>
+                            <p className={style['popup-text']}>Connectez-vous ou créez un compte</p>
 
                             <div className={style['popup-btn']}>
                                 <button onClick={() => { navigate('/login') }}>Se connecter</button>
@@ -229,7 +229,7 @@ const ArticleDetail = () => {
                         </section> 
                     )
                 }
-               
+
             </div>
             
         </div>
