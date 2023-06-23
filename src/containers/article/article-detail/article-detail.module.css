@@ -10,7 +10,7 @@
     padding: 8vh 10vw 3vh;
 
     background-color: #efefef;
-    color: #060c37;
+    color: rgb(6, 12, 55);
     
 }
 
@@ -36,7 +36,7 @@
     background-color: white;
     padding: 1rem 2rem;
     min-width : 20em;
-
+    box-shadow: 6px 6px 10px 1px rgba(6, 12,55, 0.2);
     /* border: 1px solid red; */
 }
 
