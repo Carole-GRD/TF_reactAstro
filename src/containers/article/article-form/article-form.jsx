@@ -1,3 +1,8 @@
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ---------------------   FORMULAIRE POUR MODIFIER UN ARTICLE   --------------------------
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -73,7 +78,7 @@ const ArticleForm = () => {
         axios
             .get(`${URL__API__ASTRO}/mark`)
             .then((response) => {
-                console.log('response.data.results : ', response.data.results);
+                // console.log('response.data.results : ', response.data.results);
                 setAllMark(response.data.results);
             })
             
@@ -130,8 +135,8 @@ const ArticleForm = () => {
                 const markData = {
                     MarkId: data.mark
                 }
-                console.log('markData : ', markData.MarkId);
-                console.log('mark : ', mark.id);
+                // console.log('markData : ', markData.MarkId);
+                // console.log('mark : ', mark.id);
                 await onUpdateMarkLink(articleId, markData); 
             }
         }
@@ -142,7 +147,7 @@ const ArticleForm = () => {
             const storeData = {
                 StoreId: storeId,
                 price: data.price,
-                discount: data.discount/100,
+                discount: data.discount / 100,
                 stock: data.stock
             }
             if (data.price === '') {
@@ -188,7 +193,7 @@ const ArticleForm = () => {
                             <div className={style['form-group']}> 
                                 <label htmlFor="mark">Marque</label>
                                 {/* <select id='mark' {...register('mark')}> */}
-                                <select id='mark' placeholder={mark?.name} {...register('mark')}>
+                                <select id='mark' {...register('mark')}>
                                     <option value='' placeholder={mark?.name}>-- Sélectionnez une marque --</option>
                                     {   
                                         allMark

@@ -21,7 +21,7 @@ const ArticleDetail = () => {
 
 
     const userRole = useSelector(state => state.auth.userRole);
-    console.log('userRole : ', userRole);
+    // console.log('userRole : ', userRole);
 
 
 
@@ -153,7 +153,7 @@ const ArticleDetail = () => {
     }
 
 
-    const onArticleForm = (articleId, storeId) => {
+    const onUpdateArticleForm = (articleId, storeId) => {
         // console.log('Naviguer vers le formulaire pour modifier l\'article !');
         // console.log('articleId : ', articleId);
         // console.log('storeId : ', storeId);
@@ -222,7 +222,7 @@ const ArticleDetail = () => {
 
                             {
                                 (userRole === 'Admin' || userRole === 'Sous-Admin') && (
-                                    <button type="button" onClick={() => {onArticleForm(storeInfos.ArticleId, storeInfos.StoreId)}}>Modifier</button>
+                                    <button type="button" onClick={() => {onUpdateArticleForm(storeInfos.ArticleId, storeInfos.StoreId)}}>Modifier</button>
                                 )
                             }
 

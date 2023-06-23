@@ -7,11 +7,13 @@ import { Link } from 'react-router-dom';
 
 
 
+
 const Article = ({id, name, Stores}) => {
 
 
     return (
-        <>
+        <>  
+
             {
                 Stores.map(store =>
                     <div key={store.store_id} >
@@ -32,6 +34,7 @@ const Article = ({id, name, Stores}) => {
                     </div>
                 )
             }
+
         </>
     );
 
