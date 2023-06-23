@@ -21,7 +21,7 @@ const CurrentOrder = () => {
 
     // articles ? console.log('article') : console.log('vide');
     // articles.length !== 0 ? console.log('article') : console.log('vide');
-   
+
 
     const { register, handleSubmit, reset } = useForm();
 
@@ -49,7 +49,7 @@ const CurrentOrder = () => {
     for (let article_order of currentOrder.Article_Orders) {
         // console.log('total : ', total.toFixed(2));
         // console.warn('article_order : ', article_order);
-       
+
         // total += prix * réduction * quantité;
         total +=    article_order.Article.Stores.find(store => store.id === article_order.store).MM_Article_Store.price
                     * 

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import axios from 'axios';
 
 import style from './article-form.module.css';
 import articleIMGDefault from '../../../assets/article.png';
+import { onUpdateArticle, onUpdateArticleStore, onUpdateMarkLink } from "../../../api/updateArticle";
 
 
 
@@ -23,6 +23,7 @@ const ArticleForm = () => {
 
     const [details, setDetails] = useState([]);
     const [mark, setMark] = useState();
+    const [allMark, setAllMark] = useState([]);
     const [storeInfos, setStoreInfos] = useState();
 
 
@@ -44,7 +45,9 @@ const ArticleForm = () => {
                         axios
                         .get(`${URL__API__ASTRO}/mark/${markId}`)
                             .then((mark) => {
-                                setMark(mark.data.result.name)
+                                console.log(mark.data.result)
+                                // setMark(mark.data.result.name)
+                                setMark(mark.data.result)
                             }) 
                             .catch((error) => {
                                 console.error('Error fetching mark:', error);
@@ -59,21 +62,107 @@ const ArticleForm = () => {
         axios
             .get(`${URL__API__ASTRO}/article/${articleId}/store/${storeId}`)
             .then((response) => {
-                console.log(response.data.result);
+                // console.log(response.data.result);
                 setStoreInfos(response.data.result);
             })
             .catch((error) => {
                 console.error('Error fetching Article By Id And By Store :', error);
             });
+
+        // On récupère toutes les "Mark" de la table
+        axios
+            .get(`${URL__API__ASTRO}/mark`)
+            .then((response) => {
+                console.log('response.data.results : ', response.data.results);
+                setAllMark(response.data.results);
+            })
             
     }, []);
 
+    
 
+    // TODO : ajouter des validations (trim, required ...)
 
+    const onValidateArticle = async (data) => {
+        // console.log('modifier l\'article');
+        // console.log('data : ', data);
+        
 
-    const onValidateArticle = () => {
-        console.log('modifier l\'article');
+        // Requête pour les informations concernant la table "Article"
+        // -----------------------------------------------------------
+        if (data.name !== '' || data.author !== '' || data.reference !== '' || data.description !== '') {
+            const articleData = {
+                name: data.name,
+                author: data.author,
+                reference: data.reference,
+                description: data.description
+            }
+            if (data.name === '') {
+                articleData.name = details.name;
+            }
+            if (data.author === '') {
+                // TODO : vérifier la condition lorsque la requête pour le changement de marque sera faite
+                // S'il y a une "Mark", c'est que l'article n'est pas un livre et donc il n'y a pas d'auteur 
+                if (data.mark !== null) {
+                    articleData.author = null;
+                }
+                else {
+                    articleData.author = details.author;
+                }
+            }
+            if (data.reference === '') {
+                articleData.reference = details.reference;
+            }
+            if (data.description === '') {
+                articleData.description = details.description;
+            }
+            // console.log('articleData : ', articleData);
+            
+            await onUpdateArticle(articleId, articleData);
+        }
+
+        // Requête pour les informations concernant la table "Mark"
+        // --------------------------------------------------------
+        // Vérifier si l'utilisateur a sélectionné une marque
+        if (data.mark !== "") {
+            // Vérifier si l'utilisateur a sélectionné une marque différente
+            if (mark.id !== data.mark) {
+                const markData = {
+                    MarkId: data.mark
+                }
+                console.log('markData : ', markData.MarkId);
+                console.log('mark : ', mark.id);
+                await onUpdateMarkLink(articleId, markData); 
+            }
+        }
+        
+        // Requête pour les informations concernant la table "MM_Article_Store"
+        // --------------------------------------------------------------------
+        if (data.price !== '' || data.discount !== '' || data.stock !== '') {
+            const storeData = {
+                StoreId: storeId,
+                price: data.price,
+                discount: data.discount/100,
+                stock: data.stock
+            }
+            if (data.price === '') {
+                storeData.price = storeInfos.price;
+            }
+            if (data.discount === '') {
+                storeData.discount = storeInfos.discount;
+            }
+            if (data.stock === '') {
+                storeData.stock = storeInfos.stock;
+            }
+            // console.log('storeData : ', storeData);
+            
+            await onUpdateArticleStore(articleId, storeData);
+        }
+        
+        navigate(`/articleDetail/${articleId}/store/${storeId}`);
+
     }
+
 
 
 
@@ -92,9 +181,24 @@ const ArticleForm = () => {
                                 <input id='name' type='text' placeholder={details.name} {...register('name')} />  
                             </div> 
 
-                            <div className={style['form-group']}> 
+                            {/* <div className={style['form-group']}> 
                                 <label htmlFor="mark">Marque</label>
                                 <input id='mark' type='text' placeholder={mark} {...register('mark')} />  
+                            </div>  */}
+                            <div className={style['form-group']}> 
+                                <label htmlFor="mark">Marque</label>
+                                {/* <select id='mark' {...register('mark')}> */}
+                                <select id='mark' placeholder={mark?.name} {...register('mark')}>
+                                    <option value='' placeholder={mark?.name}>-- Sélectionnez une marque --</option>
+                                    {   
+                                        allMark
+                                            .map(eachMark => (
+                                                <option key={eachMark.id} value={eachMark.id}>
+                                                    {eachMark.name}
+                                                </option>
+                                            ))
+                                    }
+                                </select>
                             </div> 
 
                             <div className={style['form-group']}> 
@@ -122,17 +226,18 @@ const ArticleForm = () => {
 
                             <div className={style['form-group']}> 
                                 <label htmlFor="price">Prix (en euros)</label>
-                                <input id='price' type='text' placeholder={`${storeInfos.price.toFixed(2)} €`} {...register('price')} />  
+                                {/* <input id='price' type='text' placeholder={storeInfos ? storeInfos.price.toFixed(2) + '€' : ''} {...register('price')} />   */}
+                                <input id='price' type='text' placeholder={storeInfos?.price?.toFixed(2) + '€'} {...register('price')} />  
                             </div> 
 
                             <div className={style['form-group']}> 
                                 <label htmlFor="discount">Réduction (en pourcentage)</label>
-                                <input id='discount' type='text' placeholder={`${storeInfos.discount * 100}%`} {...register('discount')} />  
+                                <input id='discount' type='text' placeholder={storeInfos ? storeInfos.discount * 100 + '%' : ''} {...register('discount')} />  
                             </div> 
 
                             <div className={style['form-group']}> 
                                 <label htmlFor="stock">Stock</label>
-                                <input id='stock' type='text' placeholder={storeInfos.stock} {...register('stock')} />  
+                                <input id='stock' type='text' placeholder={storeInfos ? storeInfos.stock : ''} {...register('stock')} />  
                             </div> 
                         
                             

@@ -153,10 +153,10 @@ const ArticleDetail = () => {
     }
 
 
-    const onArticleUpdate = (articleId, storeId) => {
-        console.log('Naviguer vers le formulaire pour modifier l\'article !');
-        console.log('articleId : ', articleId);
-        console.log('storeId : ', storeId);
+    const onArticleForm = (articleId, storeId) => {
+        // console.log('Naviguer vers le formulaire pour modifier l\'article !');
+        // console.log('articleId : ', articleId);
+        // console.log('storeId : ', storeId);
         navigate(`/articleForm/${articleId}/store/${storeId}`);
     }
 
@@ -222,7 +222,7 @@ const ArticleDetail = () => {
 
                             {
                                 (userRole === 'Admin' || userRole === 'Sous-Admin') && (
-                                    <button type="button" onClick={() => {onArticleUpdate(storeInfos.ArticleId, storeInfos.StoreId)}}>Modifier</button>
+                                    <button type="button" onClick={() => {onArticleForm(storeInfos.ArticleId, storeInfos.StoreId)}}>Modifier</button>
                                 )
                             }
 

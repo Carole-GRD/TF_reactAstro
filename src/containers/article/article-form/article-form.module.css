@@ -57,9 +57,15 @@ form {
 
 
 .articleDetail-content img {
-    max-width: 10vw;
-    max-height: 15vh;
+    max-width: 5vw;
+    /* max-height: 15vh; */
     margin: 1rem;
+}
+
+
+.form-group textarea {
+    min-height: 25vh;
+    margin-bottom: 1rem;
 }
 
 
