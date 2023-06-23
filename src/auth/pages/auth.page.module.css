@@ -265,3 +265,109 @@
         margin: 0;
     }
 }
+
+
+/* ========================================================================================= */
+/* ========================================================================================= */
+
+
+@media screen and (min-width: 1800px) {
+
+    .nav-links > li {
+        padding: 1.2rem 2rem;
+    }
+
+
+    /* Formulaire de connexion */
+    .form-login form {
+        /* border: 2px solid yellowgreen; */
+        margin-top: 5rem;
+    }
+    .form-login .btn {
+        margin-top: 3rem;
+    }
+    .form-login .form-group:nth-child(1) > label {
+        /* border: 2px solid yellowgreen; */
+        margin-bottom: 0;
+    }
+    .form-login .form-group:nth-child(2) > label {
+        /* border: 2px solid red; */
+        margin-bottom: 0;
+    }
+    .form-login .form-group:nth-child(1) > input {
+        /* border: 2px solid blue; */
+        margin-bottom: 3rem;
+        margin-top: 1rem;
+    }
+    .form-login .form-group:nth-child(2) > div {
+        /* border: 2px solid orange; */
+        display: flex;
+        justify-content: space-between;
+    }
+    .form-login .form-group:nth-child(2) input {
+        /* border: 2px solid white; */
+        min-width: 75%;
+        margin-top: 1rem;
+    }
+    .form-login .btn button {
+        /* border: 2px solid pink; */
+        margin-top: 3rem;
+    }
+    
+
+
+    /* Formulaire de création de compte */
+    .form-register form {
+        /* border: 2px solid yellowgreen; */
+        margin: 0;
+        width: 100%;
+        margin-top: 1.5rem;
+        /* height: 50vh; */
+    }
+    .form-register label {
+        font-size: 1rem;
+        margin-bottom: 0;
+        margin: 0;
+    }
+    .form-register input {
+        font-size: 1rem;
+        padding: 0.3rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    .register-pwd {
+        /* border: 2px solid orange; */
+        display: flex;
+        justify-content: space-between;
+    }
+    .register-pwd input {
+        min-width: 70%;
+    }
+    .register-pwd button {
+        margin: 0;
+        padding: 0.8rem 1.5rem;
+    }
+
+
+    section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    article:first-of-type {
+        width: 40%;
+    }
+    article:last-of-type {
+        width: 40%;
+    }
+
+
+    .btn button {
+        /* border: 2px solid pink; */
+        margin: 0;
+        margin-top: 2rem;
+        padding: 1rem 2rem;
+    }
+}
