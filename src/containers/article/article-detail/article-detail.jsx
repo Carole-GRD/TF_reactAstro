@@ -7,27 +7,19 @@ import axios from 'axios';
 import style from './article-detail.module.css';
 import articleIMGDefault from '../../../assets/article.png';
 import { currentOrderActionAddArticle, currentOrderActionSave } from '../../../store/actions/order.action';
-
+import { articleActionDelete, articleActionGetAll } from '../../../store/actions/article.action';
 
 
     // TODO : créer des composants pour article-detail (popup (+ détails ?) )
-
 
 
 const ArticleDetail = () => {
 
     const URL__API__ASTRO = import.meta.env.VITE_URL__API__ASTRO;
 
-
-
     const userRole = useSelector(state => state.auth.userRole);
-    // console.log('userRole : ', userRole);
-
-
 
     const { articleId, storeId } = useParams();
-    // console.warn('articleId : ', articleId);
-    // console.warn('storeId : ', storeId);
 
     const [details, setDetails] = useState([]);
     const [mark, setMark] = useState();
@@ -85,9 +77,6 @@ const ArticleDetail = () => {
             
     }, []);
 
-    // console.log('details : ', details);
-    // console.log('mark : ', mark);
-    // console.log('storeInfos : ', storeInfos);
 
 
 
@@ -97,13 +86,7 @@ const ArticleDetail = () => {
             setPopup(!popup); // Mettez à jour l'état de popup en utilisant setPopup
         }
         else {
-            // console.warn('ajouter l\'article');
-            // console.log('articleId : ', articleId);
-            // console.log('storeId : ', storeId);
-
-
             let newQuantity = 1;
-
             // Vérifier si l'utilisateur a déjà une commande en cours pour pouvoir ajouter l'article
             // S'il n'a pas de commande en cours, il faut commencer par créer une commande, avant d'ajouter l'article !!!
             if (!currentOrder) {
@@ -156,13 +139,16 @@ const ArticleDetail = () => {
 
 
     const onUpdateArticleForm = (articleId, storeId) => {
-        // console.log('Naviguer vers le formulaire pour modifier l\'article !');
-        // console.log('articleId : ', articleId);
-        // console.log('storeId : ', storeId);
         navigate(`/articleForm/${articleId}/store/${storeId}`);
     }
 
     
+    const onDeleteArticle = () => {
+        dispatch(articleActionDelete(articleId));
+        dispatch(articleActionGetAll());
+        navigate('/articles');
+    }
+
 
 
     return (
@@ -224,7 +210,10 @@ const ArticleDetail = () => {
 
                             {
                                 (userRole === 'Admin' || userRole === 'Sous-Admin') && (
-                                    <button type="button" onClick={() => {onUpdateArticleForm(storeInfos.ArticleId, storeInfos.StoreId)}}>Modifier</button>
+                                    <div>
+                                        <button type="button" onClick={() => {onUpdateArticleForm(storeInfos.ArticleId, storeInfos.StoreId)}}>Modifier</button>
+                                        <button type='button' onClick={onDeleteArticle}>Supprimer l'article</button>
+                                    </div>
                                 )
                             }
 
