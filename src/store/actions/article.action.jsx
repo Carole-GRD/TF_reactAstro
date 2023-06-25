@@ -15,3 +15,10 @@ export const articleActionGetAll = createAsyncThunk(
         return response.data.results;
     }
 );
+
+export const articleActionDelete = createAsyncThunk(
+    'article/delete',
+    async (articleId) => {
+        const response = await axios.delete(`${URL__API__ASTRO}/article/${articleId}`);
+    }
+)

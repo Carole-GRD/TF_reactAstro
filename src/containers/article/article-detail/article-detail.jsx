@@ -122,6 +122,7 @@ const ArticleDetail = () => {
                                 dispatch(currentOrderActionSave());
                                 // Lancer l'action currentOrderActionAddArtticle
                                 dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));
+                                dispatch(currentOrderActionSave());
                             }) 
                             .catch((error) => {
                                 console.error('Error creating order:', error);
@@ -146,6 +147,7 @@ const ArticleDetail = () => {
 
                 // Lancer l'action currentOrderActionAddArtticle
                 dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));
+                dispatch(currentOrderActionSave());
 
             }
 

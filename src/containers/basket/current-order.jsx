@@ -73,16 +73,19 @@ const CurrentOrder = () => {
             // On ajoute un article
             newQuantity = quantity + 1;
             dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));
+            dispatch(currentOrderActionSave());
         }
         else if (increment === 'min' && quantity > 1) {
             // On retire un article (cas où l'article a une quantité supérieure à 1)
             newQuantity = quantity - 1;
-            dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId}));          
+            dispatch(currentOrderActionAddArticle({articleId, newQuantity, storeId, orderId})); 
+            dispatch(currentOrderActionSave());         
         }
         else {
             // On supprime un article (cas où l'article a une quantité égale à 1)
             // console.log(' -> supprimer l\'article !!!! ', ' -> LINK : ', link);
             dispatch(currentOrderActionRemoveArticle(article_order_Id));
+            dispatch(currentOrderActionSave());
         }    
 
     }

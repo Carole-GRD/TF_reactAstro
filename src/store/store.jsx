@@ -3,8 +3,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './reducers/auth.reducer';
 import currentOrderReducer from './reducers/order.reducer';
 import articleReducer from './reducers/article.reducer';
-
-
+import thunk from 'redux-thunk';
+import loggerMiddleware from 'redux-logger';
 
 const store = configureStore({
     reducer: {
@@ -12,7 +12,8 @@ const store = configureStore({
         order: currentOrderReducer,
         article: articleReducer
     },
-    devTools: import.meta.env.dev
+    devTools: import.meta.env.dev,
+    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(loggerMiddleware, thunk)
 });
 
 
@@ -84,9 +85,9 @@ export default store;
 //   whitelist: ['token']   // only navigation will be persisted
 //   // blacklist: ['auth', 'order']   
 // }
- 
+
 // const persistedReducer = persistReducer(persistConfig, rootReducer);
- 
+
 
 // export const store = configureStore({
 //     reducer: persistedReducer,

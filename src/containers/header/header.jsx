@@ -73,7 +73,7 @@ const Header = () => {
                                 <li>
                                     <CustomNavlink to='/account' text='Mon compte' />
                                     {
-                                        (currentOrder) && (
+                                        (currentOrder && countArticlesInCurrentOrder !== 0) && (
                                             <div className={style['count-display']}><p>{countArticlesInCurrentOrder}</p></div>
                                         )
                                     }

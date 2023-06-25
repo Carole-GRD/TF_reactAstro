@@ -72,7 +72,7 @@ export const currentOrderActionAddArticle = createAsyncThunk(
 
 
       // ThunkAPI => Permet d'obtenir dans l'action : le store, le distpacher, ...
-      thunkAPI.dispatch(currentOrderActionSave());
+      // thunkAPI.dispatch(currentOrderActionSave());
       // console.log('orderState:', orderState);
       
 
@@ -108,7 +108,7 @@ export const currentOrderActionRemoveArticle = createAsyncThunk(
 
 
       // Appeler l'action qui permet de récupérer les commandes (après avoir supprimer l'article)
-      await thunkAPI.dispatch(currentOrderActionSave());
+      // await thunkAPI.dispatch(currentOrderActionSave());
       // console.log('orderState:', orderState);
 
 
