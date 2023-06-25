@@ -19,7 +19,7 @@ const ArticlesPage = () => {
 
     useEffect(() => {
         dispatch(articleActionGetAll());
-    }, [])
+    }, [listArticles])
 
 
 
