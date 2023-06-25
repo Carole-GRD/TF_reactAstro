@@ -6,6 +6,7 @@ import articleReducer from './reducers/article.reducer';
 import thunk from 'redux-thunk';
 import loggerMiddleware from 'redux-logger';
 
+
 const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -15,8 +16,6 @@ const store = configureStore({
     devTools: import.meta.env.dev,
     // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(loggerMiddleware, thunk)
 });
-
-
 
 
 export default store;

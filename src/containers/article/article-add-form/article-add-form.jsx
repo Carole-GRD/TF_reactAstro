@@ -58,7 +58,7 @@ const ArticleAddForm = () => {
 
 
     const onAddArticle = async (data) => {
-        console.log(data.store);
+        // console.log(data.store);
 
         try {
             // Requête pour les informations concernant la table "Article"

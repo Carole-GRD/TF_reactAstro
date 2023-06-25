@@ -19,7 +19,7 @@ const Article = ({id, name, Stores}) => {
 
 
     const onDeleteArticle = () => {
-        console.log('suppresion article');
+        // console.log('suppresion article');
         dispatch(articleActionDelete(id));
         dispatch(articleActionGetAll());
     }
